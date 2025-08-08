@@ -2,7 +2,7 @@
 
 import { X } from "lucide-react";
 import { useForm, Controller } from "react-hook-form";
-import { useRatingHotelMutation } from "@/app/booking/services/bookingApi";
+// import { useRatingHotelMutation } from "@/app/booking/services/bookingApi";
 import { useAppSelector } from "@/utils/hooks";
 import { toast } from "react-toastify";
 import StarRating from "@/components/ui/StarRating";
@@ -25,7 +25,7 @@ export default function ReviewModal({
   onConfirmCancel,
   refetchBookings,
 }: ReviewModalProps) {
-  const [ratingHotel, { isLoading }] = useRatingHotelMutation();
+  // const [ratingHotel, { isLoading }] = null;
   const profile = useAppSelector((state) => state.profile?.data?.data);
 
   const {
@@ -45,22 +45,22 @@ export default function ReviewModal({
     //   return;
     // }
 
-    try {
-      await ratingHotel({
-        customerId: profile?._id,
-        comment: data.comment,
-        hotelId,
-        rating: data.rating,
-      }).unwrap();
+    // try {
+    //   await ratingHotel({
+    //     customerId: profile?._id,
+    //     comment: data.comment,
+    //     hotelId,
+    //     rating: data.rating,
+    //   }).unwrap();
 
-      toast.success("Review submitted successfully!");
-      onClose();
-      onConfirmCancel();
-      refetchBookings();
-    } catch (err: any) {
-      console.error("Rating error:", err);
-      toast.error(err?.data?.message || "Something went wrong.");
-    }
+    //   toast.success("Review submitted successfully!");
+    //   onClose();
+    //   onConfirmCancel();
+    //   refetchBookings();
+    // } catch (err: any) {
+    //   console.error("Rating error:", err);
+    //   toast.error(err?.data?.message || "Something went wrong.");
+    // }
   };
 
   return (
@@ -120,9 +120,9 @@ export default function ReviewModal({
             <button
               type="submit"
               className="w-full py-3 px-4 bg-primary-500 rounded-full font-medium text-white"
-              disabled={isLoading}
+              // disabled={isLoading}
             >
-              {isLoading ? "Submitting..." : "Submit Review"}
+              {/* {isLoading ? "Submitting..." : "Submit Review"} */}
             </button>
             <button
               type="button"
