@@ -48,7 +48,13 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-Inter);
-  overflow-x: hidden;
+  overflow-x: hidden !important;
+  width: 100vw !important;
+}
+
+.homeMain {
+  /* width: 100%;
+  overflow-x: hidden; */
 }
 
 button,

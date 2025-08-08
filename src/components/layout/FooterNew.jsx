@@ -34,7 +34,7 @@ const CustomPrevArrow = (props) => {
 
 function FooterNew() {
 
-    var settings = {
+    const settings = {
         dots: false,
         arrows: true,
         infinite: true,
@@ -43,12 +43,51 @@ function FooterNew() {
         slidesToScroll: 1,
         nextArrow: <CustomNextArrow />,
         prevArrow: <CustomPrevArrow />,
+        responsive: [
+            {
+                breakpoint: 1536, // 2xl
+                settings: {
+                    slidesToShow: 5,
+                },
+            },
+            {
+                breakpoint: 1280, // xl
+                settings: {
+                    slidesToShow: 4,
+                },
+            },
+            {
+                breakpoint: 1024, // lg
+                settings: {
+                    slidesToShow: 3,
+                },
+            },
+            {
+                breakpoint: 768, // md
+                settings: {
+                    slidesToShow: 2,
+                },
+            },
+            {
+                breakpoint: 640, // sm
+                settings: {
+                    slidesToShow: 2,
+                },
+            },
+            {
+                breakpoint: 480, // xs
+                settings: {
+                    slidesToShow: 2,
+                },
+            },
+        ],
     };
 
+
     return (
-        <div className='px-[30px] footerNew'>
-            <footer className='pt-[50px] px-[40px] pb-[27px] w-full bg-[#E4E4E4] rounded-t-[20px] rounded-b-none '>
-                <div className="w-full mx-auto px-[30px]">
+        <div className='md:px-[30px] footerNew'>
+            <footer className='pt-10 md:pt-[50px] px-5 md:px-[40px] pb-[27px] w-full bg-[#E4E4E4] md:rounded-t-[20px] rounded-b-none '>
+                <div className="w-full mx-auto md:px-[30px]">
                     <Slider {...settings}>
                         {["Hotel for the stay", "Short Stay hotel", "Room by the hour", "Day rooms", "Early check in hotels", "9 to 5 hotels"].map((a, i) => (
                             <div key={i}>
@@ -58,19 +97,19 @@ function FooterNew() {
                     </Slider>
                 </div>
 
-                <div className='w-full flex justify-between mt-[40px]'>
-                    <div className='w-[30%]'>
-                        <img src='/img/logo-black.png' className='w-[265px]' />
-                        <p className='text-[#4B4D4D] text-[16px] font-[400]'>
+                <div className='w-full flex justify-between flex-wrap md:flex-nowrap mt-[40px]'>
+                    <div className='w-full md:w-[30%]'>
+                        <img src='/img/logo-black.png' className='m-auto md:m-0 w-[265px]' />
+                        <p className='text-center md:text-left text-[#4B4D4D] text-[16px] font-[400]'>
                             Lorem ipsum dolor sit amet consectetur. Malesuada congue in vitae elementum suspendisse nec orci euismod enim. At dignissim id vel egestas in cursus.
                         </p>
-                        <div className='flex gap-2 mt-[25px]'>
+                        <div className='flex justify-center md:justify-start gap-2 mt-[25px]'>
                             <img src="/img/appStore.png" />
                             <img src="/img/playStore.png" />
                         </div>
                     </div>
-                    <div className='w-[59%] flex justify-between'>
-                        <div className='w-[32%]'>
+                    <div className='mt-10 md:mt-0 w-full md:w-[59%] flex justify-between flex-wrap md:flex-nowrap gap-y-10'>
+                        <div className='w-[49%] md:w-[32%]'>
                             <h3 className='text-[#4B4D4D] text-[16px] font-[700] mb-[20px] '>Countries</h3>
 
                             <ul>
@@ -81,7 +120,7 @@ function FooterNew() {
                                 <li className='text-[#4B4D4D] text-[16px] font-[400] mt-[16px] underline'>View more</li>
                             </ul>
                         </div>
-                        <div className='w-[32%]'>
+                        <div className='w-[49%] md:w-[32%]'>
                             <h3 className='text-[#4B4D4D] text-[16px] font-[700] mb-[20px] '>About</h3>
 
                             <ul>
@@ -91,7 +130,7 @@ function FooterNew() {
                                 <li className='text-[#4B4D4D] text-[16px] font-[400] mt-[16px]'>Carriers</li>
                             </ul>
                         </div>
-                        <div className='w-[32%]'>
+                        <div className='w-[49%] md:w-[32%]'>
                             <h3 className='text-[#4B4D4D] text-[16px] font-[700] mb-[20px] '>Help</h3>
 
                             <ul>
@@ -105,10 +144,10 @@ function FooterNew() {
                     </div>
                 </div>
 
-                <div className='flex justify-between mt-[60px] items-center'>
-                    <p className='text-[#4B4D4D] text-[14px] font-[400]'>© 2025 Timeflyz • All Rights Reserved</p>
+                <div className='flex justify-between flex-wrap md:flex-nowrap mt-[60px] items-center'>
+                    <p className='w-full text-center md:text-left md:w-auto text-[#4B4D4D] text-[14px] font-[400]'>© 2025 Timeflyz • All Rights Reserved</p>
 
-                    <div className='flex items-center gap-[18px]'>
+                    <div className='flex items-center justify-center w-full md:justify-end md:w-auto mt-5 md:mt-0 gap-[18px]'>
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path fillRule="evenodd" clipRule="evenodd" d="M6.18182 10.3333C5.20406 10.3333 5 10.5252 5 11.4444V13.1111C5 14.0304 5.20406 14.2222 6.18182 14.2222H8.54545V20.8889C8.54545 21.8081 8.74951 22 9.72727 22H12.0909C13.0687 22 13.2727 21.8081 13.2727 20.8889V14.2222H15.9267C16.6683 14.2222 16.8594 14.0867 17.0631 13.4164L17.5696 11.7497C17.9185 10.6014 17.7035 10.3333 16.4332 10.3333H13.2727V7.55556C13.2727 6.94191 13.8018 6.44444 14.4545 6.44444H17.8182C18.7959 6.44444 19 6.25259 19 5.33333V3.11111C19 2.19185 18.7959 2 17.8182 2H14.4545C11.191 2 8.54545 4.48731 8.54545 7.55556V10.3333H6.18182Z" fill="#989898" />
                         </svg>

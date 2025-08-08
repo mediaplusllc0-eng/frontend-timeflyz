@@ -57,7 +57,7 @@ export default function Navbar({
     const [isLangDropdownOpen, setIsLangDropdownOpen] = useState(false);
     const [isCurrencyDropdownOpen, setIsCurrencyDropdownOpen] = useState(false);
     const [selectedLanguage, setSelectedLanguage] = useState("English");
-    const [selectedCurrency, setSelectedCurrency] = useState("INR");
+    const [selectedCurrency, setSelectedCurrency] = useState("AED");
     const [isSearchOpen, setIsSearchOpen] = useState(false);
     const langDropdownRef = useRef(null);
     const currencyDropdownRef = useRef(null);
@@ -263,7 +263,7 @@ export default function Navbar({
 
                     {/* Desktop Buttons */}
                     <div className="flex items-center space-x-4 md:space-x-4 flex-wrap justify-end md:justify-start">
-                        <div ref={dropdownRef} className="relative">
+                        <div ref={dropdownRef} className="relative hidden md:block">
                             <button
                                 onClick={() => setIsLnDropdownOpen(!isLnDropdownOpen)}
                                 className="flex items-center space-x-2 py-2 md:py-2 md:px-2 px-4 border-gray-300"
@@ -438,6 +438,16 @@ export default function Navbar({
                                                         exit={{ opacity: 0, y: 10 }}
                                                         className="absolute left-0 top-full mt-1 w-40 bg-white rounded-xl shadow-lg py-2 z-50 border border-gray-100"
                                                     >
+                                                        <button
+                                                            className="w-full px-4 py-2 text-left text-sm hover:bg-gray-100 text-black"
+                                                            onClick={() => {
+                                                                setSelectedCurrency("AED");
+                                                                setIsCurrencyDropdownOpen(false);
+                                                                setIsLnDropdownOpen(false);
+                                                            }}
+                                                        >
+                                                            AED
+                                                        </button>
                                                         <button
                                                             className="w-full px-4 py-2 text-left text-sm hover:bg-gray-100 text-black"
                                                             onClick={() => {

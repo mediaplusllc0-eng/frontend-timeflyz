@@ -132,18 +132,18 @@ export default function Hero() {
         <main className="relative min-h-screen">
 
             {/* Main Content */}
-            <div className="relative z-10 flex flex-col items-center py-30">
+            <div className="relative z-10 flex flex-col items-center md:pt-[50px] md:py-[80px] py-[30px]">
                 <h1 className="text-[#4B4D4D] text-3xl md:text-6xl lg:text-7xl font-[700] leading-tight text-center">
                     Find dream country<br /> hotels to rent
                 </h1>
-                <p className="text-[16px] font-[400] mt-2">Book hotels in packs of 3, 6 or 24 hours and choose the check-in time you want.</p>
+                <p className="text-[16px] font-[400] mt-2 text-center">Book hotels in packs of 3, 6 or 24 hours and choose the check-in time you want.</p>
 
-                <div className="w-[1183px] container mx-auto bg-white p-[20px] flex justify-between mt-[60px] z-50 rounded-[12px]">
+                <div className="w-[100%] flex-wrap md:flex-nowrap md:w-[1183px] container mx-auto bg-white p-[20px] flex justify-between mt-10 md:mt-[60px] z-50 rounded-[12px]">
                     <div
                         tabIndex={0}
                         onClick={() => setShowDropdownRegion(true)}
                         onBlur={() => setTimeout(() => setShowDropdownRegion(false), 150)}
-                        className="relative cursor-pointer inputDiv flex flex-col rounded-[12px] bg-[#E4E4E4] py-[12px] px-[16px] w-[25.36%] h-[60px]">
+                        className="mb-5 md:mb-0 relative cursor-pointer inputDiv flex flex-col rounded-[12px] bg-[#E4E4E4] py-[12px] px-[16px] w-[100%] md:w-[25.36%] h-[60px]">
                         <label className="cursor-pointer m-0 text-[16px] text-[#4B4D4D] font-[500] mt-[-2px]">Where</label>
                         <span
                             className="inline-block w-full text-[16px] text-[#848484] font-[400] mt-[-5px] cursor-pointer">Select region(s)</span>
@@ -183,7 +183,7 @@ export default function Hero() {
                         )}
                     </div>
 
-                    <div className="inputDiv flex flex-col rounded-[12px] bg-[#E4E4E4] py-[12px] px-[16px] w-[14.37%] h-[60px]">
+                    <div className="mb-5 md:mb-0 inputDiv flex flex-col rounded-[12px] bg-[#E4E4E4] py-[12px] px-[16px] w-full md:w-[14.37%] h-[60px]">
                         <label className="m-0 text-[16px] text-[#4B4D4D] font-[500] mt-[-2px]">Check in</label>
                         <StyledDatePicker
                             className="border-0 outline-0 mt-[-5px]"
@@ -197,7 +197,7 @@ export default function Hero() {
                         />
                     </div>
 
-                    <div className="inputDiv flex flex-col rounded-[12px] bg-[#E4E4E4] py-[12px] px-[16px] w-[14.37%] h-[60px]">
+                    <div className="mb-5 md:mb-0 inputDiv flex flex-col rounded-[12px] bg-[#E4E4E4] py-[12px] px-[16px] w-full md:w-[14.37%] h-[60px]">
                         <label className="m-0 text-[16px] text-[#4B4D4D] font-[500] mt-[-2px]">Check out</label>
                         <StyledDatePicker
                             selectedDate={selectedDate}
@@ -214,7 +214,7 @@ export default function Hero() {
                         tabIndex={0}
                         onClick={() => setShowDropdownWho(true)}
                         onBlur={() => setTimeout(() => setShowDropdownWho(false), 150)}
-                        className="relative cursor-pointer inputDiv flex flex-col rounded-[12px] bg-[#E4E4E4] py-[12px] px-[16px] w-[25.36%] h-[60px]">
+                        className="mb-5 md:mb-0 relative cursor-pointer inputDiv flex flex-col rounded-[12px] bg-[#E4E4E4] py-[12px] px-[16px] w-[100%] md:w-[25.36%] h-[60px]">
                         <label className="cursor-pointer m-0 text-[16px] text-[#4B4D4D] font-[500] mt-[-2px]">Who</label>
                         <span
                             className="inline-block w-full text-[16px] text-[#848484] font-[400] mt-[-5px] cursor-pointer">Add guests</span>
@@ -265,10 +265,10 @@ export default function Hero() {
                         )}
                     </div>
 
-                    <Button fullWidth={false} className="w-[14.37%] rounded-[12px] h-[60px]" onClick={handleSearch}>Search</Button>
+                    <Button fullWidth={false} className="w-full md:w-[14.37%] rounded-[12px] h-[60px]" onClick={handleSearch}>Search</Button>
                 </div>
 
-                <div className="sliderDiv w-full mx-auto mt-[-50px] px-[30px]">
+                <div className="sliderDiv w-full mx-auto md:mt-[-50px] px-5 md:px-[30px]">
                     <Slider touchMove={false} pauseOnHover={false} autoplay autoplaySpeed={2000} {...settings}>
                         <div className="text-black">
                             <img src="/img/heroSlide1.png" className="w-full rounded-[20px]" />

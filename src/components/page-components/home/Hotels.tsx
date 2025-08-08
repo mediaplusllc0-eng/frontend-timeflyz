@@ -37,7 +37,7 @@ interface Hotel {
 }
 
 const SkeletonCard = () => (
-  <div className="bg-white rounded-2xl shadow-md animate-pulse overflow-hidden flex flex-col h-full w-[24%]">
+  <div className="bg-white rounded-2xl shadow-md animate-pulse overflow-hidden flex flex-col h-full w-full md:w-[24%]">
     <div className="relative h-52 w-full bg-gray-200" />
     <div className="flex flex-col justify-between p-5 gap-4 flex-1">
       <div>
@@ -83,19 +83,19 @@ export default function Hotels() {
   );
 
   return (
-    <section className="px-[30px] md:pt-0 pt-0 pb-[80px]">
-      <h5 className="text-[16px] text-[#4B4D4D] font-[400]">Hotels and destinations</h5>
-      <h2 className="text-[55px] font-[700] text-[#4B4D4D] mb-10 tracking-normal">
+    <section className="md:px-[30px] px-5 md:pt-0 pt-0 pb-[30px] md:pb-[80px]">
+      <h5 className="text-center md:text-left text-[16px] text-[#4B4D4D] font-[400]">Hotels and destinations</h5>
+      <h2 className="text-center md:text-left text-[28px] md:text-[55px] font-[700] text-[#4B4D4D] mb-10 tracking-normal">
         Anytime, Anywhere
       </h2>
 
       {/* Location Filters */}
       <div className="rounded-full text-base font-semibold transition">
-        <div className="flex flex-wrap mb-6 space-x-4">
+        <div className="flex flex-wrap mb-6 md:space-x-4 justify-between md:justify-start">
           {countries.map((country) => (
             <button
               key={country}
-              className={`capitalize px-5 py-2 rounded-full text-base font-semibold transition md:my-0 my-2 ${selectedCountry === country
+              className={`w-[48%] md:w-auto capitalize px-5 py-2 rounded-full text-base font-semibold transition md:my-0 my-2 ${selectedCountry === country
                 ? "bg-[#F1F1F1] text-[#EF4A23] border-[1px]"
                 : "bg-[#F1F1F1] text-gray-70 border-[1px] border-[transparent] hover:bg-[#F1F1F1] hover:text-[#EF4A23] hover:border-[1px] hover:border-[#EF4A23]"
                 }`}
@@ -108,18 +108,18 @@ export default function Hotels() {
       </div>
 
       {/* Hotel Cards or Skeleton */}
-      <div className="container max-w-[100%] flex items-center gap-[18px] mt-[28px]">
+      <div className="container max-w-[100%] flex items-center flex-wrap gap-[18px] mt-[28px]">
         {isLoading || isFetching ? (
           Array.from({ length: 4 }).map((_, idx) => <SkeletonCard key={idx} />)
         ) : hotels.length > 0 ? (
           hotels.map((hotel) => (
-            <Link className="w-[24%]" href={`/hoteldetail/${hotel.id}`} key={hotel.id}>
+            <Link className="md:w-[24%] w-full md:border-0 border-b-1 mb-5 pb-5 md:pb-0 md:mb-0 border-[lightgrey]" href={`/hoteldetail/${hotel.id}`} key={hotel.id}>
               <div className="w-full bg-white overflow-hidden transition-all duration-300 transform hover:-translate-y-1 group flex flex-col h-full">
                 <div className="relative w-full overflow-hidden">
                   <img
                     src={hotel?.images[0]}
                     alt={"abc"}
-                    className="h-[164px] w-full rounded-[20px] object-cover"
+                    className="h-[200px] md:h-[164px] w-full rounded-[20px] object-cover"
                   />
                 </div>
 

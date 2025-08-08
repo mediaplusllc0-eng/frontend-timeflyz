@@ -23,21 +23,65 @@ function HotelChains() {
         { name: "Millennium", src: "/img/millennium.png" },
     ];
 
-    var settings = {
-        dots: false,
-        arrows: false,
-        speed: 500,
-        slidesToShow: 6,
-        slidesToScroll: 1,
-        centerMode: true,
-        centerPadding: "80px", // shows half-slide left and right
-        arrows: true,
-    };
+var settings = {
+    dots: false,
+    arrows: true,
+    speed: 500,
+    slidesToShow: 6,
+    slidesToScroll: 1,
+    centerMode: true,
+    centerPadding: "80px",
+    responsive: [
+        {
+            breakpoint: 1536, // 2xl
+            settings: {
+                slidesToShow: 5,
+                centerPadding: "60px",
+            },
+        },
+        {
+            breakpoint: 1280, // xl
+            settings: {
+                slidesToShow: 4,
+                centerPadding: "60px",
+            },
+        },
+        {
+            breakpoint: 1024, // lg
+            settings: {
+                slidesToShow: 3,
+                centerPadding: "40px",
+            },
+        },
+        {
+            breakpoint: 768, // md
+            settings: {
+                slidesToShow: 2,
+                centerPadding: "30px",
+            },
+        },
+        {
+            breakpoint: 640, // sm
+            settings: {
+                slidesToShow: 2,
+                centerPadding: "20px",
+            },
+        },
+        {
+            breakpoint: 480, // mobile
+            settings: {
+                slidesToShow: 2,
+                centerPadding: "10px",
+            },
+        },
+    ],
+};
+
 
     return (
-        <div className='px-[30px] hotelChain pb-[80px]'>
-            <h5 className="text-[16px] text-[#4B4D4D] font-[400]">Hotel chains</h5>
-            <h2 className="text-[55px] font-[700] text-[#4B4D4D] mb-10 tracking-normal">
+        <div className='px-5 md:px-[30px] hotelChain pb-[80px] w-full overflow-x-hidden'>
+            <h5 className="text-center md:text-left text-[16px] text-[#4B4D4D] font-[400]">Hotel chains</h5>
+            <h2 className="text-center md:text-left text-[28px] md:text-[55px] font-[700] text-[#4B4D4D] mb-10 tracking-normal">
                 Always with the best
             </h2>
 
