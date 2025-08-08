@@ -402,17 +402,17 @@ function page() {
         <div className='HotelListingMain'>
             <Navbar />
 
-            <div className="shadow-[0_4px_50px_0_rgba(0,0,0,0.25)] w-[1183px] container mx-auto bg-white p-[20px] flex justify-between mt-[60px] z-50 rounded-[12px]">
+            <div className="md:shadow-[0_4px_50px_0_rgba(0,0,0,0.25)] w-[100%] flex-wrap md:flex-nowrap md:w-[1183px] container mx-auto bg-white p-[20px] flex justify-between mt-10 md:mt-[60px] z-50 rounded-[12px]">
                 <div
                     tabIndex={0}
                     onClick={() => setShowDropdownRegion(true)}
                     onBlur={() => setTimeout(() => setShowDropdownRegion(false), 150)}
-                    className="relative cursor-pointer inputDiv flex flex-col rounded-[12px] bg-[#E4E4E4] py-[12px] px-[16px] w-[25.36%] h-[60px]">
+                    className="mb-5 md:mb-0 relative cursor-pointer inputDiv flex flex-col rounded-[12px] bg-[#E4E4E4] py-[12px] px-[16px] w-[100%] md:w-[25.36%] h-[60px]">
                     <label className="cursor-pointer m-0 text-[16px] text-[#4B4D4D] font-[500] mt-[-2px]">Where</label>
                     <span
                         className="inline-block w-full text-[16px] text-[#848484] font-[400] mt-[-5px] cursor-pointer">Select region(s)</span>
                     {showDropdownRegion && regionList.length > 0 && (
-                        <ul className="z-[50] pb-3 absolute left-0 top-[50px] w-[100%] mt-1 bg-white border border-gray-200 rounded-[12px] shadow-[0_4px_25px_0_rgba(0,0,0,0.25)] z-10 max-h-auto overflow-y-auto">
+                        <ul className="pb-3 absolute left-0 top-[50px] w-[100%] mt-1 bg-white border border-gray-200 rounded-[12px] shadow-[0_4px_25px_0_rgba(0,0,0,0.25)] z-10 max-h-auto overflow-y-auto">
                             <li className=" mb-2 flex items-center justify-between px-3 sm:px-4 py-3 border-b-1 border-b-gray-100">
                                 Regions
                                 <svg
@@ -447,10 +447,10 @@ function page() {
                     )}
                 </div>
 
-                <div className="inputDiv flex flex-col rounded-[12px] bg-[#E4E4E4] py-[12px] px-[16px] w-[14.37%] h-[60px]">
+                <div className="mb-5 md:mb-0 inputDiv flex flex-col rounded-[12px] bg-[#E4E4E4] py-[12px] px-[16px] w-full md:w-[14.37%] h-[60px]">
                     <label className="m-0 text-[16px] text-[#4B4D4D] font-[500] mt-[-2px]">Check in</label>
                     <StyledDatePicker
-                        className="z-[50] border-0 outline-0 mt-[-5px]"
+                        className="border-0 outline-0 mt-[-5px]"
                         selectedDate={selectedDate}
                         icon={
                             <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gray-900 text-white flex items-center justify-center rounded-full">
@@ -461,12 +461,12 @@ function page() {
                     />
                 </div>
 
-                <div className="inputDiv flex flex-col rounded-[12px] bg-[#E4E4E4] py-[12px] px-[16px] w-[14.37%] h-[60px]">
+                <div className="mb-5 md:mb-0 inputDiv flex flex-col rounded-[12px] bg-[#E4E4E4] py-[12px] px-[16px] w-full md:w-[14.37%] h-[60px]">
                     <label className="m-0 text-[16px] text-[#4B4D4D] font-[500] mt-[-2px]">Check out</label>
                     <StyledDatePicker
                         selectedDate={selectedDate}
                         icon={
-                            <div className="z-[50] w-8 h-8 sm:w-10 sm:h-10 bg-gray-900 text-white flex items-center justify-center rounded-full">
+                            <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gray-900 text-white flex items-center justify-center rounded-full">
                                 <CalendarDays size={20} />
                             </div>
                         }
@@ -478,12 +478,12 @@ function page() {
                     tabIndex={0}
                     onClick={() => setShowDropdownWho(true)}
                     onBlur={() => setTimeout(() => setShowDropdownWho(false), 150)}
-                    className="relative cursor-pointer inputDiv flex flex-col rounded-[12px] bg-[#E4E4E4] py-[12px] px-[16px] w-[25.36%] h-[60px]">
+                    className="mb-5 md:mb-0 relative cursor-pointer inputDiv flex flex-col rounded-[12px] bg-[#E4E4E4] py-[12px] px-[16px] w-[100%] md:w-[25.36%] h-[60px]">
                     <label className="cursor-pointer m-0 text-[16px] text-[#4B4D4D] font-[500] mt-[-2px]">Who</label>
                     <span
                         className="inline-block w-full text-[16px] text-[#848484] font-[400] mt-[-5px] cursor-pointer">Add guests</span>
                     {showDropdownWho && whoList.length > 0 && (
-                        <ul className="z-[50] pb-3 absolute left-0 top-[50px] w-[100%] mt-1 bg-white border border-gray-200 rounded-[12px] shadow-[0_4px_25px_0_rgba(0,0,0,0.25)] max-h-auto overflow-y-auto">
+                        <ul className="pb-3 absolute left-0 top-[50px] w-[100%] mt-1 bg-white border border-gray-200 rounded-[12px] shadow-[0_4px_25px_0_rgba(0,0,0,0.25)] z-10 max-h-auto overflow-y-auto">
                             <li className=" mb-2 flex items-center justify-between px-3 sm:px-4 py-3 border-b-1 border-b-gray-100">
                                 Select
                                 <svg
@@ -529,12 +529,12 @@ function page() {
                     )}
                 </div>
 
-                <Button fullWidth={false} className="w-[14.37%] rounded-[12px] h-[60px]" onClick={handleSearch}>Search</Button>
+                <Button fullWidth={false} className="w-full md:w-[14.37%] rounded-[12px] h-[60px]" onClick={handleSearch}>Search</Button>
             </div>
 
-            <div className='sortFilterDiv mt-[50px] w-[1183px] mx-auto flex items-center pb-[35px]'>
-                <div className='flex gap-[10px]'>
-                    <div>
+            <div className='px-5 md:px-auto flex-wrap md:flex-nowrap w-full sortFilterDiv mt-[50px] md:w-[1183px] mx-auto flex items-center pb-[35px]'>
+                <div className='w-[100%] flex-wrap md:flex-nowrap flex gap-[10px]'>
+                    <div className='w-full md:w-auto'>
                         <div
                             ref={dropdownRef}
                             tabIndex={0}
@@ -542,7 +542,7 @@ function page() {
                             className='relative cursor-pointer w-full flex flex-col'
                         >
                             <label className="text-[16px] text-[#4B4D4D] font-[500]">Sort by</label>
-                            <span className='justify-between mt-[6px] text-[#848484] text-[16px] font-[400] flex items-center border-1 border-[#CECECE] py-[8px] px-[15px] rounded-[30px] h-[35px] w-[178px]'>
+                            <span className='justify-between mt-[6px] text-[#848484] text-[16px] font-[400] flex items-center border-1 border-[#CECECE] py-[8px] px-[15px] rounded-[30px] h-[35px] w-full md:w-[178px]'>
                                 Featured days
                                 <svg width="12" height="8" viewBox="0 0 12 8" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M11.0001 1.00001L6.00005 6.00001L0.999976 1" stroke="#848484" strokeWidth="1.5" strokeLinecap="round" />
@@ -580,7 +580,7 @@ function page() {
                             )}
                         </div>
                     </div>
-                    <div>
+                    <div className='w-full md:w-auto'>
                         <div
                             ref={dropdownRef2}
                             tabIndex={0}
@@ -588,7 +588,7 @@ function page() {
                             className='relative cursor-pointer w-full flex flex-col'
                         >
                             <label className="text-[16px] text-[#4B4D4D] font-[500]">Filters</label>
-                            <span className='justify-between mt-[6px] text-[#848484] text-[16px] font-[400] flex items-center border-1 border-[#CECECE] py-[8px] px-[15px] rounded-[30px] h-[35px] w-[178px]'>
+                            <span className='justify-between mt-[6px] text-[#848484] text-[16px] font-[400] flex items-center border-1 border-[#CECECE] py-[8px] px-[15px] rounded-[30px] h-[35px] w-full md:w-[178px]'>
                                 Select
                                 <svg width="12" height="8" viewBox="0 0 12 8" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M11.0001 1.00001L6.00005 6.00001L0.999976 1" stroke="#848484" strokeWidth="1.5" strokeLinecap="round" />
@@ -743,12 +743,10 @@ function page() {
                             )}
                         </div>
                     </div>
-                    <div>
+                    <div className='w-full md:w-auto'>
                         <div className='w-full flex flex-col'>
                             <label className="text-[16px] text-[#4B4D4D] font-[500] ">Price</label>
-                            <span
-                                className='justify-between mt-[6px] text-[#848484] text-[16px] font-[400] flex items-center border-1 border-[#CECECE] py-[8px] px-[15px] rounded-[30px] h-[35px] w-[178px] '
-                            >
+                            <span className='justify-between mt-[6px] text-[#848484] text-[16px] font-[400] flex items-center border-1 border-[#CECECE] py-[8px] px-[15px] rounded-[30px] h-[35px] w-full md:w-[178px]'>
                                 Select
                                 <svg width="12" height="8" viewBox="0 0 12 8" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M11.0001 1.00001L6.00005 6.00001L0.999976 1" stroke="#848484" strokeWidth="1.5" strokeLinecap="round" />
@@ -756,12 +754,10 @@ function page() {
                             </span>
                         </div>
                     </div>
-                    <div>
+                    <div className='w-full md:w-auto'>
                         <div className='w-full flex flex-col'>
                             <label className="text-[16px] text-[#4B4D4D] font-[500] ">Location</label>
-                            <span
-                                className='justify-between mt-[6px] text-[#848484] text-[16px] fonLocationt-[400] flex items-center border-1 border-[#CECECE] py-[8px] px-[15px] rounded-[30px] h-[35px] w-[178px] '
-                            >
+                          <span className='justify-between mt-[6px] text-[#848484] text-[16px] font-[400] flex items-center border-1 border-[#CECECE] py-[8px] px-[15px] rounded-[30px] h-[35px] w-full md:w-[178px]'>
                                 Select
                                 <svg width="12" height="8" viewBox="0 0 12 8" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M11.0001 1.00001L6.00005 6.00001L0.999976 1" stroke="#848484" strokeWidth="1.5" strokeLinecap="round" />
@@ -770,7 +766,7 @@ function page() {
                         </div>
                     </div>
                 </div>
-                <div className='w-[37%] mt-[30px]'>
+                <div className='w-full md:w-[37%] mt-[30px]'>
                     <div className="relative w-full">
                         {/* Left arrow */}
                         <button
@@ -809,8 +805,8 @@ function page() {
                 </div>
             </div>
 
-            <div className='listingDiv bg-[#F4F4F4] px-[30px] flex justify-between py-[15px]'>
-                <div className='Lists w-[50%] pr-[20px]'>
+            <div className='listingDiv bg-[#F4F4F4] px-5 md:px-[30px] flex justify-between flex-wrap md:flex-nowrap py-[15px]'>
+                <div className='mb-5 md:mb-0 Lists w-full md:w-[50%] pr-[20px]'>
                     <h5 className='mt-[20px] text-[#4B4D4D] text-[12px] font-[400] '>We found <b>{hotelsData?.data?.length ?? 0} hotels</b></h5>
 
                     <div className='Listings mt-[10px] flex flex-col gap-[10px]'>
@@ -819,9 +815,9 @@ function page() {
                                 <div
                                     onMouseEnter={() => selectHotel(item)}
                                     key={index}
-                                    className="bg-[#FFFFFF] w-full h-[175px] rounded-[20px] p-[8px] flex gap-[16px] transition-all duration-300"
+                                    className="bg-[#FFFFFF] w-full h-auto md:h-[175px] rounded-[20px] md:p-[8px] p-[15px] flex flex-wrap md:flex-nowrap gap-[16px] transition-all duration-300"
                                 >
-                                    <div className="relative w-[159px] h-full rounded-[12px] overflow-hidden">
+                                    <div className="relative w-full md:w-[159px] h-full rounded-[12px] overflow-hidden">
                                         <img
                                             src={item.images[imageIndex[index]?.imageIndex]}
                                             alt="hotel"
@@ -875,8 +871,8 @@ function page() {
                                         </div>
                                     </div>
 
-                                    <div className='flex w-[calc(100%-159px)] justify-between'>
-                                        <div className='w-[59%]'>
+                                    <div className='flex flex-wrap md:flex-nowrap w-full md:w-[calc(100%-159px)] justify-between'>
+                                        <div className='w-full md:w-[59%]'>
                                             <h2 className='text-[#4B4D4D] text-[16px] font-[700] mt-[5px] '>
                                                 {item.name?.length > 25 ? `${item.name?.slice(0, 25)}...` : item.name}
                                             </h2>
@@ -922,8 +918,8 @@ function page() {
                                                 </span>
                                             </div>
                                         </div>
-                                        <div className='w-[41%] h-full flex flex-col justify-between pr-[8px] py-[5px]'>
-                                            <div className='text-right'>
+                                        <div className='mt md:mt-0-5 w-full md:w-[41%] h-full flex md:flex-col justify-between pr-[8px] py-[5px]'>
+                                            <div className='text-left md:text-right'>
                                                 <h3 className='text-[#4B4D4D] text-[16px] font-[700] '>AED {item.price}</h3>
                                                 <span className='text-[#6B6B6B] text-[12px] font-[400] '>for 3 hours</span>
                                             </div>
@@ -1129,7 +1125,7 @@ function page() {
                         ))} */}
                     </div>
                 </div>
-                <div className="w-[50%] h-[calc(100vh-110px)] rounded-[20px] overflow-hidden sticky top-[95px]">
+                <div className="w-full md:w-[50%] h-[300px] md:h-[calc(100vh-110px)] rounded-[20px] overflow-hidden sticky top-[95px]">
                     <MapWithInfoWindow selectedCity={"sydney"} hotelsData={hotelsData} selectedHotelProps={selectedHotel} />
                 </div>
             </div>
