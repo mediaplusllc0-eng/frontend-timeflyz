@@ -1,0 +1,33 @@
+version: 0.2
+
+env:
+  variables:
+    ENV_NAME: uat
+
+phases:
+  install:
+    commands:
+      - echo Installing Node.js and dependencies...
+      - curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
+      - sudo apt-get install -y nodejs
+      - npm install
+
+  build:
+    commands:
+      - echo Building Next.js for $ENV_NAME
+      - npm run build
+      - mkdir -p build
+      - cp -r .next public package.json build/
+
+  post_build:
+    commands:
+      - echo Copying environment-specific deployment files...
+      - cp ci-cd/uat/appspec.yml ./appspec.yml
+      - cp ci-cd/uat/deploy.sh ./deploy.sh
+      - chmod +x ./deploy.sh
+
+artifacts:
+  files:
+    - build/**/*
+    - appspec.yml
+    - deploy.sh

@@ -1,0 +1,12 @@
+version: 0.0
+os: linux
+files:
+  - source: /
+    destination: /home/ubuntu/frontend-uat
+file_exists_behavior: OVERWRITE
+
+hooks:
+  ApplicationStart:
+    - location: deploy.sh
+      timeout: 300
+      runas: ubuntu

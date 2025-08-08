@@ -1,0 +1,1147 @@
+'use client'
+import React, { useEffect, useRef, useState } from 'react'
+import Navbar from "@/components/layout/Header-new";
+import StyledDatePicker from "@/components/ui/StyledDatePicker";
+import { CalendarDays } from "lucide-react";
+import Button from "@/components/ui/Button";
+import Slider from 'react-slick';
+import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
+
+import { useSearchHotelsQuery } from "../slots/Services/slotsApi";
+
+import MapWithInfoWindow from "./Map";
+import CTA from '@/components/page-components/home/CTA';
+import HotelChains from '../../components/page-components/home/HotelChains';
+import FooterNew from '../../components/layout/FooterNew';
+
+
+function page() {
+    const [selectedDate, setSelectedDate] = useState(
+        new Date()
+    );
+    const [showDropdownRegion, setShowDropdownRegion] = useState(false);
+    const [regionList, setRegionList] = useState([
+        {
+            name: "Dubai",
+            checked: false
+        },
+        {
+            name: "Sydney",
+            checked: false
+        },
+        {
+            name: "Sharjah",
+            checked: false
+        },
+        {
+            name: "Melbourne",
+            checked: false
+        },
+    ])
+
+    const [showDropdownWho, setShowDropdownWho] = useState(false);
+    const [whoList, setWhoList] = useState([
+        {
+            name: "Guests",
+            value: 0
+        },
+        {
+            name: "Bedrooms",
+            value: 0
+        },
+        {
+            name: "Bathrooms",
+            value: 0
+        }
+    ])
+
+    const handleSearch = () => {
+        if (!query.trim() || !selectedDate) return;
+
+        const now = new Date();
+        const checkInDateTime = new Date(
+            selectedDate.setHours(now.getHours(), now.getMinutes(), 0, 0)
+        );
+
+        const durationInHours = parseInt(duration); // default: 3
+        const checkOutDateTime = new Date(
+            checkInDateTime.getTime() + durationInHours * 60 * 60 * 1000
+        );
+
+        const checkInDate = checkInDateTime.toISOString().split("T")[0];
+        const checkInTime = checkInDateTime.toLocaleTimeString("en-US", {
+            hour: "2-digit",
+            minute: "2-digit",
+            second: "2-digit",
+            hour12: true,
+        });
+
+        const checkOutDate = checkOutDateTime.toISOString().split("T")[0];
+        const checkOutTime = checkOutDateTime.toLocaleTimeString("en-US", {
+            hour: "2-digit",
+            minute: "2-digit",
+            second: "2-digit",
+            hour12: true,
+        });
+
+        router.push(
+            `/slots?city=${encodeURIComponent(
+                query.trim()
+            )}&checkInDate=${checkInDate}&checkInTime=${checkInTime}&checkOutDate=${checkOutDate}&checkOutTime=${checkOutTime}&duration=${duration}`
+        );
+    };
+
+    const scrollRef = useRef(null);
+
+    const scroll = (offset) => {
+        scrollRef.current.scrollBy({ left: offset, behavior: "smooth" });
+    };
+
+    const filters = [
+        "Rating 8.0+",
+        "Al Ain",
+        "Shahrjah",
+        "Free cancellation",
+        "Breakfast included",
+        "Near city center",
+        "Pets allowed",
+        "WiFi"
+    ];
+
+    let queryParams = { city: 'sydney', checkInDate: '2025-08-05' }
+
+    const {
+        data: hotelsData,
+        isLoading,
+        error,
+        refetch: refetchHotels,
+    } = useSearchHotelsQuery(queryParams);
+
+    let [selectedHotel, setSelectedHotel] = useState(false)
+
+    useEffect(() => {
+        if (hotelsData?.data) {
+            setSelectedHotel(hotelsData?.data[0])
+        }
+    }, [hotelsData])
+
+    const selectHotel = (hotel) => {
+        if (selectedHotel?.id !== hotel.id) {
+            setSelectedHotel(hotel);
+        }
+    };
+
+    const dropdownRef = useRef(null);
+    const [showDropdownFeatureFilter, setShowDropdownFeatureFilter] = useState(false);
+    const [featureFilterList, setFeatureFilterList] = useState([
+        {
+            name: "Featured stays",
+            checked: false
+        },
+        {
+            name: "Rating & Recommended",
+            checked: false
+        },
+        {
+            name: "Price & Recommended",
+            checked: false
+        },
+        {
+            name: "Distance & Recommended",
+            checked: false
+        },
+        {
+            name: "Top guest ratings",
+            checked: false
+        },
+        {
+            name: "Price only",
+            checked: false
+        },
+        {
+            name: "Distance from city center",
+            checked: false
+        },
+    ])
+
+    const dropdownRef2 = useRef(null);
+    const [showDropdownFilters, setShowDropdownFilter] = useState(false);
+    const [filterList, setFilterList] = useState([
+        {
+            name: "Popular filters",
+            values: [
+                {
+                    name: "Breakfast included",
+                    checked: false
+                },
+                {
+                    name: "Free cancellation",
+                    checked: false
+                },
+                {
+                    name: "Parking",
+                    checked: false
+                },
+                {
+                    name: "Pool",
+                    checked: false
+                },
+                {
+                    name: "Beach",
+                    checked: false
+                },
+                {
+                    name: "Free WiFi",
+                    checked: false
+                },
+                {
+                    name: "Pet-friendly",
+                    checked: false
+                },
+                {
+                    name: "Spa",
+                    checked: false
+                },
+                {
+                    name: "Air conditioning",
+                    checked: false
+                },
+                {
+                    name: "Kitchen",
+                    checked: false
+                },
+            ]
+        },
+        {
+            name: "Payment",
+            values: [
+                {
+                    name: "Free cancellation",
+                    checked: false
+                },
+                {
+                    name: "Pay at the property",
+                    checked: false
+                },
+            ]
+        },
+        {
+            name: "Property type",
+            values: [
+                {
+                    name: "Hotels",
+                    label: "Hotels, resorts and more",
+                    checked: false
+                },
+                {
+                    name: "Apartments",
+                    label: "Entire houses / apartments",
+                    checked: false
+                },
+                {
+                    name: "Budget stays",
+                    label: "B&Bs, hostels and more",
+                    checked: false
+                },
+            ]
+        },
+        {
+            name: "Meal options",
+            values: [
+                {
+                    name: "Breakfast included",
+                    label: "",
+                    checked: false
+                },
+                {
+                    name: "All-inclusive",
+                    label: "All meals + some drinks and snacks included",
+                    checked: false
+                },
+                {
+                    name: "Half board",
+                    label: "Breakfast and dinner included",
+                    checked: false
+                },
+                {
+                    name: "Full board",
+                    label: "Breakfast, lunch and dinner included",
+                    checked: false
+                },
+            ]
+        },
+        {
+            name: "Property amenities",
+            values: [
+                {
+                    name: "Parking",
+                    checked: false
+                },
+                {
+                    name: "Pool",
+                    checked: false
+                },
+                {
+                    name: "Beach",
+                    checked: false
+                },
+                {
+                    name: "Free WiFi",
+                    checked: false
+                },
+                {
+                    name: "Pet-friendly",
+                    checked: false
+                },
+                {
+                    name: "Spa",
+                    checked: false
+                },
+                {
+                    name: "Hot tub",
+                    checked: false
+                },
+                {
+                    name: "Air conditioning",
+                    checked: false
+                },
+                {
+                    name: "Kitchen",
+                    checked: false
+                },
+                {
+                    name: "Restaurant",
+                    checked: false
+                },
+                {
+                    name: "Gym",
+                    checked: false
+                },
+                {
+                    name: "24-hour reception",
+                    checked: false
+                },
+                {
+                    name: "Airport shuttle",
+                    checked: false
+                },
+                {
+                    name: "EV charger",
+                    checked: false
+                },
+                {
+                    name: "Sauna",
+                    checked: false
+                },
+                {
+                    name: "Indoor pool",
+                    checked: false
+                },
+                {
+                    name: "Sun umbrellas",
+                    checked: false
+                },
+                {
+                    name: "Adults only",
+                    checked: false
+                },
+                {
+                    name: "Fridge",
+                    checked: false
+                },
+                {
+                    name: "Hotel bar",
+                    checked: false
+                },
+                {
+                    name: "Non-smoking rooms",
+                    checked: false
+                },
+                {
+                    name: "Balcony",
+                    checked: false
+                },
+            ]
+        },
+    ])
+
+    useEffect(() => {
+        function handleClickOutside(event) {
+            if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+                setShowDropdownFeatureFilter(false);
+            }
+
+            if (dropdownRef2.current && !dropdownRef2.current.contains(event.target)) {
+                setShowDropdownFilter(false);
+            }
+        }
+
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, []);
+
+    let [imageIndex, setImageIndex] = useState([])
+
+    useEffect(() => {
+        if (hotelsData?.data) {
+            let arr = hotelsData?.data?.map((a) => {
+                return {
+                    imageIndex: 0,
+                    imagesLength: a.images?.length
+                }
+            })
+            setImageIndex(arr)
+
+            console.log(arr)
+        }
+    }, [hotelsData])
+
+    return (
+        <div className='HotelListingMain'>
+            <Navbar />
+
+            <div className="shadow-[0_4px_50px_0_rgba(0,0,0,0.25)] w-[1183px] container mx-auto bg-white p-[20px] flex justify-between mt-[60px] z-50 rounded-[12px]">
+                <div
+                    tabIndex={0}
+                    onClick={() => setShowDropdownRegion(true)}
+                    onBlur={() => setTimeout(() => setShowDropdownRegion(false), 150)}
+                    className="relative cursor-pointer inputDiv flex flex-col rounded-[12px] bg-[#E4E4E4] py-[12px] px-[16px] w-[25.36%] h-[60px]">
+                    <label className="cursor-pointer m-0 text-[16px] text-[#4B4D4D] font-[500] mt-[-2px]">Where</label>
+                    <span
+                        className="inline-block w-full text-[16px] text-[#848484] font-[400] mt-[-5px] cursor-pointer">Select region(s)</span>
+                    {showDropdownRegion && regionList.length > 0 && (
+                        <ul className="z-[50] pb-3 absolute left-0 top-[50px] w-[100%] mt-1 bg-white border border-gray-200 rounded-[12px] shadow-[0_4px_25px_0_rgba(0,0,0,0.25)] z-10 max-h-auto overflow-y-auto">
+                            <li className=" mb-2 flex items-center justify-between px-3 sm:px-4 py-3 border-b-1 border-b-gray-100">
+                                Regions
+                                <svg
+                                    onClick={() => setTimeout(() => setShowDropdownRegion(false), 150)}
+                                    width="20" height="20" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M24 8L8.00108 23.9989M23.9989 24L8 8.00113" stroke="#4B4D4D" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                                </svg>
+                            </li>
+                            {regionList.map((item, index) => (
+                                <li
+                                    key={index}
+                                    onMouseDown={() => {
+                                        // setQuery(location);
+                                        // setShowDropdown(false);
+                                    }}
+                                    className="flex items-center gap-2 px-3 sm:px-4 py-2 hover:bg-gray-100 cursor-pointer text-sm md:text-sm text-gray-700"
+                                >
+                                    <input
+                                        onChange={(e) => {
+                                            let arr = [...regionList]
+                                            arr[index].checked = e.target.checked
+                                            setRegionList(arr)
+                                        }}
+                                        className="accent-[#EF4A23]"
+                                        checked={item.checked} type="checkbox" id={`checkbox${index}`} />
+                                    <label htmlFor={`checkbox${index}`}>
+                                        {item.name}
+                                    </label>
+                                </li>
+                            ))}
+                        </ul>
+                    )}
+                </div>
+
+                <div className="inputDiv flex flex-col rounded-[12px] bg-[#E4E4E4] py-[12px] px-[16px] w-[14.37%] h-[60px]">
+                    <label className="m-0 text-[16px] text-[#4B4D4D] font-[500] mt-[-2px]">Check in</label>
+                    <StyledDatePicker
+                        className="z-[50] border-0 outline-0 mt-[-5px]"
+                        selectedDate={selectedDate}
+                        icon={
+                            <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gray-900 text-white flex items-center justify-center rounded-full">
+                                <CalendarDays size={20} />
+                            </div>
+                        }
+                        setSelectedDate={(date) => setSelectedDate(date)}
+                    />
+                </div>
+
+                <div className="inputDiv flex flex-col rounded-[12px] bg-[#E4E4E4] py-[12px] px-[16px] w-[14.37%] h-[60px]">
+                    <label className="m-0 text-[16px] text-[#4B4D4D] font-[500] mt-[-2px]">Check out</label>
+                    <StyledDatePicker
+                        selectedDate={selectedDate}
+                        icon={
+                            <div className="z-[50] w-8 h-8 sm:w-10 sm:h-10 bg-gray-900 text-white flex items-center justify-center rounded-full">
+                                <CalendarDays size={20} />
+                            </div>
+                        }
+                        setSelectedDate={(date) => setSelectedDate(date)}
+                    />
+                </div>
+
+                <div
+                    tabIndex={0}
+                    onClick={() => setShowDropdownWho(true)}
+                    onBlur={() => setTimeout(() => setShowDropdownWho(false), 150)}
+                    className="relative cursor-pointer inputDiv flex flex-col rounded-[12px] bg-[#E4E4E4] py-[12px] px-[16px] w-[25.36%] h-[60px]">
+                    <label className="cursor-pointer m-0 text-[16px] text-[#4B4D4D] font-[500] mt-[-2px]">Who</label>
+                    <span
+                        className="inline-block w-full text-[16px] text-[#848484] font-[400] mt-[-5px] cursor-pointer">Add guests</span>
+                    {showDropdownWho && whoList.length > 0 && (
+                        <ul className="z-[50] pb-3 absolute left-0 top-[50px] w-[100%] mt-1 bg-white border border-gray-200 rounded-[12px] shadow-[0_4px_25px_0_rgba(0,0,0,0.25)] max-h-auto overflow-y-auto">
+                            <li className=" mb-2 flex items-center justify-between px-3 sm:px-4 py-3 border-b-1 border-b-gray-100">
+                                Select
+                                <svg
+                                    onClick={() => setTimeout(() => setShowDropdownWho(false), 150)}
+                                    width="20" height="20" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M24 8L8.00108 23.9989M23.9989 24L8 8.00113" stroke="#4B4D4D" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                                </svg>
+                            </li>
+                            {whoList.map((item, index) => (
+                                <li
+                                    key={index}
+                                    onMouseDown={() => {
+                                        // setQuery(location);
+                                        // setShowDropdown(false);
+                                    }}
+                                    className="flex items-center justify-between gap-2 px-3 py-3 hover:bg-gray-100 cursor-pointer text-sm md:text-sm text-gray-700"
+                                >
+                                    {item.name}
+                                    <div className="w-full flex items-center justify-between w-max gap-2">
+                                        <div
+                                            onClick={() => {
+                                                let arr = [...whoList]
+                                                if (Number(arr[index].value) > 0) {
+                                                    arr[index].value = Number(arr[index].value) - 1
+                                                }
+                                                setWhoList(arr)
+                                            }}
+                                            className="cursor-pointer w-[30px] h-[30px] rounded-[30px] border-[1px] border-[lightgrey] flex items-center justify-center text-[16px] text-[gray]"
+                                        >-</div>
+                                        <span className="w-[30px] h-[30px] rounded-[5px] border-[1px] border-[lightgrey] flex items-center justify-center text-[16px] text-[gray]" >{item.value ? item.value : 0}</span>
+                                        <div
+                                            onClick={() => {
+                                                let arr = [...whoList]
+                                                arr[index].value = Number(arr[index].value) + 1
+                                                setWhoList(arr)
+                                            }}
+                                            className="cursor-pointer w-[30px] h-[30px] rounded-[30px] border-[1px] border-[lightgrey] flex items-center justify-center text-[16px] text-[gray]"
+                                        >+</div>
+                                    </div>
+                                </li>
+                            ))}
+                        </ul>
+                    )}
+                </div>
+
+                <Button fullWidth={false} className="w-[14.37%] rounded-[12px] h-[60px]" onClick={handleSearch}>Search</Button>
+            </div>
+
+            <div className='sortFilterDiv mt-[50px] w-[1183px] mx-auto flex items-center pb-[35px]'>
+                <div className='flex gap-[10px]'>
+                    <div>
+                        <div
+                            ref={dropdownRef}
+                            tabIndex={0}
+                            onClick={() => setShowDropdownFeatureFilter(true)}
+                            className='relative cursor-pointer w-full flex flex-col'
+                        >
+                            <label className="text-[16px] text-[#4B4D4D] font-[500]">Sort by</label>
+                            <span className='justify-between mt-[6px] text-[#848484] text-[16px] font-[400] flex items-center border-1 border-[#CECECE] py-[8px] px-[15px] rounded-[30px] h-[35px] w-[178px]'>
+                                Featured days
+                                <svg width="12" height="8" viewBox="0 0 12 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M11.0001 1.00001L6.00005 6.00001L0.999976 1" stroke="#848484" strokeWidth="1.5" strokeLinecap="round" />
+                                </svg>
+                            </span>
+
+                            {showDropdownFeatureFilter && featureFilterList.length > 0 && (
+                                <ul className="pt-[20px] z-[50] pb-3 absolute left-0 top-[70px] w-[300px] mt-1 bg-white border border-gray-200 rounded-[12px] shadow-[0_4px_25px_0_rgba(0,0,0,0.25)] max-h-auto overflow-y-auto">
+                                    {featureFilterList.map((item, index) => (
+                                        <li
+                                            key={index}
+                                            className="flex items-center gap-2 px-3 sm:px-4 py-2 hover:bg-gray-100 cursor-pointer text-sm md:text-sm text-gray-700"
+                                        >
+                                            <input
+                                                type="radio"
+                                                name="featureFilter"
+                                                id={`radio${index}`}
+                                                className="accent-[#EF4A23]"
+                                                checked={item.checked}
+                                                onChange={() => {
+                                                    const updatedList = featureFilterList.map((feature, i) => ({
+                                                        ...feature,
+                                                        checked: i === index,
+                                                    }));
+                                                    setFeatureFilterList(updatedList);
+                                                }}
+                                            />
+                                            <label htmlFor={`radio${index}`}>{item.name}</label>
+                                        </li>
+                                    ))}
+                                    <li className='text-right px-[20px] pb-0 pt-[10px] mt-[10px] border-t-1 border-[#80808035]'>
+                                        <Button fullWidth={false} className="w-auto rounded-[12px] h-[40px] text-[14px]">Apply</Button>
+                                    </li>
+                                </ul>
+                            )}
+                        </div>
+                    </div>
+                    <div>
+                        <div
+                            ref={dropdownRef2}
+                            tabIndex={0}
+                            onClick={() => setShowDropdownFilter(true)}
+                            className='relative cursor-pointer w-full flex flex-col'
+                        >
+                            <label className="text-[16px] text-[#4B4D4D] font-[500]">Filters</label>
+                            <span className='justify-between mt-[6px] text-[#848484] text-[16px] font-[400] flex items-center border-1 border-[#CECECE] py-[8px] px-[15px] rounded-[30px] h-[35px] w-[178px]'>
+                                Select
+                                <svg width="12" height="8" viewBox="0 0 12 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M11.0001 1.00001L6.00005 6.00001L0.999976 1" stroke="#848484" strokeWidth="1.5" strokeLinecap="round" />
+                                </svg>
+                            </span>
+
+                            {showDropdownFilters && filterList.length > 0 && (
+                                <ul className="pt-[20px] max-h-[500px] flex justify-between items-center gap-2 flex-wrap z-[50] pb-3 absolute left-0 top-[70px] w-[650px] mt-1 bg-white border border-gray-200 rounded-[12px] shadow-[0_4px_25px_0_rgba(0,0,0,0.25)] max-h-auto overflow-y-auto">
+                                    {filterList.map((item, index) => (
+                                        item?.name == "Popular filters" ?
+                                            <>
+                                                <li className='w-[100%] text-[16px] font-[700] px-3 sm:px-4 py-2 '>{item?.name}</li>
+                                                {item?.values?.map((value, i) => (
+                                                    <li
+                                                        key={index}
+                                                        className="w-[49%] flex items-center gap-2 px-3 sm:px-4 py-2 hover:bg-gray-100 cursor-pointer text-sm md:text-sm text-gray-700"
+                                                    >
+                                                        <input
+                                                            type="checkbox"
+                                                            name="featureFilter"
+                                                            id={`radio${index}`}
+                                                            className="accent-[#EF4A23]"
+                                                            checked={value.checked}
+                                                            onChange={() => {
+                                                                // const updatedList = filterList[index]?.values.map((feature, i) => ({
+                                                                //     ...feature,
+                                                                //     checked: i === index,
+                                                                // }));
+                                                                // setFilterList(updatedList);
+                                                            }}
+                                                        />
+                                                        <label htmlFor={`radio${index}`}>{value.name}</label>
+                                                    </li>
+                                                ))}
+                                            </>
+                                            :
+                                            item?.name == "Payment" ?
+                                                <>
+                                                    <li className='w-[100%] text-[16px] font-[700] px-3 sm:px-4 py-2 '>{item?.name}</li>
+                                                    {item?.values?.map((value, i) => (
+                                                        <li
+                                                            key={index}
+                                                            className="w-[49%] flex items-center gap-2 px-3 sm:px-4 py-2 hover:bg-gray-100 cursor-pointer text-sm md:text-sm text-gray-700"
+                                                        >
+                                                            <input
+                                                                type="checkbox"
+                                                                name="featureFilter"
+                                                                id={`radio${index}`}
+                                                                className="accent-[#EF4A23]"
+                                                                checked={value.checked}
+                                                                onChange={() => {
+                                                                    // const updatedList = filterList[index]?.values.map((feature, i) => ({
+                                                                    //     ...feature,
+                                                                    //     checked: i === index,
+                                                                    // }));
+                                                                    // setFilterList(updatedList);
+                                                                }}
+                                                            />
+                                                            <label htmlFor={`radio${index}`}>{value.name}</label>
+                                                        </li>
+                                                    ))}
+                                                </>
+                                                :
+                                                item?.name == "Property type" ?
+                                                    <>
+                                                        <li className='w-[100%] text-[16px] font-[700] px-3 sm:px-4 py-2 '>{item?.name}</li>
+                                                        {item?.values?.map((value, i) => (
+                                                            <li
+                                                                key={index}
+                                                                className="w-[100%] flex items-center gap-2 px-3 sm:px-4 py-2 hover:bg-gray-100 cursor-pointer text-sm md:text-sm text-gray-700"
+                                                            >
+                                                                <input
+                                                                    type="checkbox"
+                                                                    name="featureFilter"
+                                                                    id={`radio${index}`}
+                                                                    className="accent-[#EF4A23]"
+                                                                    checked={value.checked}
+                                                                    onChange={() => {
+                                                                        // const updatedList = filterList[index]?.values.map((feature, i) => ({
+                                                                        //     ...feature,
+                                                                        //     checked: i === index,
+                                                                        // }));
+                                                                        // setFilterList(updatedList);
+                                                                    }}
+                                                                />
+                                                                <label className='flex flex-col' htmlFor={`radio${index}`}>
+                                                                    {value.name}
+                                                                    <span className='text-[12px] text-[lightgray]'>{value.label}</span>
+                                                                </label>
+                                                            </li>
+                                                        ))}
+                                                    </>
+                                                    :
+                                                    item?.name == "Meal options" ?
+                                                        <>
+                                                            <li className='w-[100%] text-[16px] font-[700] px-3 sm:px-4 py-2 '>{item?.name}</li>
+                                                            {item?.values?.map((value, i) => (
+                                                                <li
+                                                                    key={index}
+                                                                    className="w-[49%] flex items-center gap-2 px-3 sm:px-4 py-2 hover:bg-gray-100 cursor-pointer text-sm md:text-sm text-gray-700"
+                                                                >
+                                                                    <input
+                                                                        type="checkbox"
+                                                                        name="featureFilter"
+                                                                        id={`radio${index}`}
+                                                                        className="accent-[#EF4A23]"
+                                                                        checked={value.checked}
+                                                                        onChange={() => {
+                                                                            // const updatedList = filterList[index]?.values.map((feature, i) => ({
+                                                                            //     ...feature,
+                                                                            //     checked: i === index,
+                                                                            // }));
+                                                                            // setFilterList(updatedList);
+                                                                        }}
+                                                                    />
+                                                                    <label className='flex flex-col' htmlFor={`radio${index}`}>
+                                                                        {value.name}
+                                                                        <span className='text-[12px] text-[lightgray]'>{value.label}</span>
+                                                                    </label>
+                                                                </li>
+                                                            ))}
+                                                        </>
+                                                        :
+                                                        item?.name == "Property amenities" &&
+                                                        <>
+                                                            <li className='w-[100%] text-[16px] font-[700] px-3 sm:px-4 py-2 '>{item?.name}</li>
+                                                            {item?.values?.map((value, i) => (
+                                                                <li
+                                                                    key={index}
+                                                                    className="w-[49%] flex items-center gap-2 px-3 sm:px-4 py-2 hover:bg-gray-100 cursor-pointer text-sm md:text-sm text-gray-700"
+                                                                >
+                                                                    <input
+                                                                        type="checkbox"
+                                                                        name="featureFilter"
+                                                                        id={`radio${index}`}
+                                                                        className="accent-[#EF4A23]"
+                                                                        checked={value.checked}
+                                                                        onChange={() => {
+                                                                            // const updatedList = filterList[index]?.values.map((feature, i) => ({
+                                                                            //     ...feature,
+                                                                            //     checked: i === index,
+                                                                            // }));
+                                                                            // setFilterList(updatedList);
+                                                                        }}
+                                                                    />
+                                                                    <label htmlFor={`radio${index}`}>{value.name}</label>
+                                                                </li>
+                                                            ))}
+                                                        </>
+                                    ))}
+                                </ul>
+                            )}
+                        </div>
+                    </div>
+                    <div>
+                        <div className='w-full flex flex-col'>
+                            <label className="text-[16px] text-[#4B4D4D] font-[500] ">Price</label>
+                            <span
+                                className='justify-between mt-[6px] text-[#848484] text-[16px] font-[400] flex items-center border-1 border-[#CECECE] py-[8px] px-[15px] rounded-[30px] h-[35px] w-[178px] '
+                            >
+                                Select
+                                <svg width="12" height="8" viewBox="0 0 12 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M11.0001 1.00001L6.00005 6.00001L0.999976 1" stroke="#848484" strokeWidth="1.5" strokeLinecap="round" />
+                                </svg>
+                            </span>
+                        </div>
+                    </div>
+                    <div>
+                        <div className='w-full flex flex-col'>
+                            <label className="text-[16px] text-[#4B4D4D] font-[500] ">Location</label>
+                            <span
+                                className='justify-between mt-[6px] text-[#848484] text-[16px] fonLocationt-[400] flex items-center border-1 border-[#CECECE] py-[8px] px-[15px] rounded-[30px] h-[35px] w-[178px] '
+                            >
+                                Select
+                                <svg width="12" height="8" viewBox="0 0 12 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M11.0001 1.00001L6.00005 6.00001L0.999976 1" stroke="#848484" strokeWidth="1.5" strokeLinecap="round" />
+                                </svg>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div className='w-[37%] mt-[30px]'>
+                    <div className="relative w-full">
+                        {/* Left arrow */}
+                        <button
+                            onClick={() => scroll(-150)}
+                            className="shadow-[0_0_30px_25px_rgb(255,255,255)] absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white rounded-full p-1"
+                        >
+                            <FaChevronLeft className="text-gray-500" />
+                        </button>
+
+                        {/* Scrollabel container */}
+                        <div
+                            ref={scrollRef}
+                            className="flex overflow-x-auto gap-3 px-[25px] py-2 
+             [scrollbar-width:none] 
+             [-ms-overflow-style:none] 
+             [&::-webkit-scrollbar]:hidden"
+                        >
+                            {filters.map((label, i) => (
+                                <div
+                                    key={i}
+                                    className="cursor-pointer flex-shrink-0 bg-[#F1F1F1] text-[#4B4D4D] text-[14px] font-[500] px-4 py-1.5 rounded-full whitespace-nowrap"
+                                >
+                                    {label}
+                                </div>
+                            ))}
+                        </div>
+
+                        {/* Right arrow */}
+                        <button
+                            onClick={() => scroll(150)}
+                            className="shadow-[0_0_30px_25px_rgb(255,255,255)] absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white rounded-full p-1"
+                        >
+                            <FaChevronRight className="text-gray-500" />
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div className='listingDiv bg-[#F4F4F4] px-[30px] flex justify-between py-[15px]'>
+                <div className='Lists w-[50%] pr-[20px]'>
+                    <h5 className='mt-[20px] text-[#4B4D4D] text-[12px] font-[400] '>We found <b>{hotelsData?.data?.length ?? 0} hotels</b></h5>
+
+                    <div className='Listings mt-[10px] flex flex-col gap-[10px]'>
+                        {hotelsData?.data?.map((item, index) => {
+                            return (
+                                <div
+                                    onMouseEnter={() => selectHotel(item)}
+                                    key={index}
+                                    className="bg-[#FFFFFF] w-full h-[175px] rounded-[20px] p-[8px] flex gap-[16px] transition-all duration-300"
+                                >
+                                    <div className="relative w-[159px] h-full rounded-[12px] overflow-hidden">
+                                        <img
+                                            src={item.images[imageIndex[index]?.imageIndex]}
+                                            alt="hotel"
+                                            className="w-full h-full object-cover rounded-[12px] opacity-0 transition-opacity duration-500 ease-in-out"
+                                            onLoad={(e) => {
+                                                e.currentTarget.style.opacity = 1;
+                                            }}
+                                            key={item.images[imageIndex[index]?.imageIndex]} // forces re-render on image change
+                                        />
+
+                                        <div className="flex justify-between items-center absolute top-0 left-0 p-[8px] w-full">
+                                            <span className="bg-[#29AF52] rounded-[30px] px-[10px] py-[2px] text-[11px] text-[#FFFF] font-[700]">
+                                                Popular choice
+                                            </span>
+                                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M10.4107 19.9677C7.58942 17.858 2 13.0348 2 8.69444C2 5.82563 4.10526 3.5 7 3.5C8.5 3.5 10 4 12 6C14 4 15.5 3.5 17 3.5C19.8947 3.5 22 5.82563 22 8.69444C22 13.0348 16.4106 17.858 13.5893 19.9677C12.6399 20.6776 11.3601 20.6776 10.4107 19.9677Z" fill="#E4E4E4" />
+                                            </svg>
+                                        </div>
+
+                                        <div className="absolute bottom-[8px] right-[8px]">
+                                            <span className="bg-[#4B4D4D] w-[35px] h-[20px] flex items-center justify-center rounded-[12px] text-[12px] text-[#FFFFFF] font-[400]">
+                                                {imageIndex[index]?.imageIndex + 1}/{imageIndex[index]?.imagesLength}
+                                            </span>
+                                        </div>
+
+                                        <div className="w-full px-[8px] absolute bottom-[50%] transform-[translate(0,50%)] flex justify-between items-center z-10">
+                                            <button
+                                                onClick={() => {
+                                                    const arr = [...imageIndex];
+                                                    if (arr[index].imageIndex > 0) {
+                                                        arr[index].imageIndex -= 1;
+                                                        setImageIndex(arr);
+                                                    }
+                                                }}
+                                                className="border-0 outline-0 bg-[#ffffff99] w-[20px] h-[20px] rounded-full flex items-center justify-center hover:bg-[#FFF] transition"
+                                            >
+                                                {"<"}
+                                            </button>
+                                            <button
+                                                onClick={() => {
+                                                    const arr = [...imageIndex];
+                                                    if (arr[index].imageIndex < arr[index].imagesLength - 1) {
+                                                        arr[index].imageIndex += 1;
+                                                        setImageIndex(arr);
+                                                    }
+                                                }}
+                                                className="border-0 outline-0 bg-[#ffffff99] w-[20px] h-[20px] rounded-full flex items-center justify-center hover:bg-[#FFF] transition"
+                                            >
+                                                {">"}
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <div className='flex w-[calc(100%-159px)] justify-between'>
+                                        <div className='w-[59%]'>
+                                            <h2 className='text-[#4B4D4D] text-[16px] font-[700] mt-[5px] '>
+                                                {item.name?.length > 25 ? `${item.name?.slice(0, 25)}...` : item.name}
+                                            </h2>
+                                            <div className='flex items-center gap-2 text-[#6B6B6B] text-[12px] font-[400] mt-[7px] '>
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="96" height="16" viewBox="0 0 96 16" fill="none">
+                                                    <path d="M8 0L9.79611 5.52786H15.6085L10.9062 8.94427L12.7023 14.4721L8 11.0557L3.29772 14.4721L5.09383 8.94427L0.391548 5.52786H6.20389L8 0Z" fill="#4B4D4D" />
+                                                    <path d="M48 0L49.7961 5.52786H55.6085L50.9062 8.94427L52.7023 14.4721L48 11.0557L43.2977 14.4721L45.0938 8.94427L40.3915 5.52786H46.2039L48 0Z" fill="#4B4D4D" />
+                                                    <path d="M28 0L29.7961 5.52786H35.6085L30.9062 8.94427L32.7023 14.4721L28 11.0557L23.2977 14.4721L25.0938 8.94427L20.3915 5.52786H26.2039L28 0Z" fill="#4B4D4D" />
+                                                    <path d="M68 0L69.7961 5.52786H75.6085L70.9062 8.94427L72.7023 14.4721L68 11.0557L63.2977 14.4721L65.0938 8.94427L60.3915 5.52786H66.2039L68 0Z" fill="#4B4D4D" />
+                                                    <path d="M88 0L89.7961 5.52786H95.6085L90.9062 8.94427L92.7023 14.4721L88 11.0557L83.2977 14.4721L85.0938 8.94427L80.3915 5.52786H86.2039L88 0Z" fill="#4B4D4D" />
+                                                </svg>
+                                                Hotel
+                                            </div>
+
+                                            <div className='flex items-start gap-2 mt-[6px]'>
+                                                <svg className='mt-[5px]' width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M6.66667 4.66666L6.32277 5.59602C5.87183 6.81466 5.64635 7.42399 5.20185 7.86852C4.75735 8.31299 4.14803 8.53846 2.92937 8.98946L2 9.33332L2.92937 9.67719C4.14803 10.1282 4.75735 10.3537 5.20185 10.7981C5.64635 11.2427 5.87183 11.852 6.32277 13.0706L6.66667 14L7.01053 13.0706C7.46153 11.852 7.687 11.2427 8.13147 10.7981C8.576 10.3537 9.18533 10.1282 10.4039 9.67719L11.3333 9.33332L10.4039 8.98946C9.18533 8.53846 8.576 8.31299 8.13147 7.86852C7.687 7.42399 7.46153 6.81466 7.01053 5.59602L6.66667 4.66666Z" stroke="#4B4D4D" strokeWidth="1.5" strokeLinejoin="round" />
+                                                    <path d="M12 2L11.8526 2.3983C11.6593 2.92058 11.5627 3.18173 11.3722 3.37222C11.1817 3.56272 10.9206 3.65935 10.3983 3.85261L10 4L10.3983 4.14739C10.9206 4.34065 11.1817 4.43728 11.3722 4.62778C11.5627 4.81827 11.6593 5.07942 11.8526 5.6017L12 6L12.1474 5.6017C12.3407 5.07942 12.4373 4.81827 12.6278 4.62777C12.8183 4.43728 13.0794 4.34065 13.6017 4.14739L14 4L13.6017 3.85261C13.0794 3.65935 12.8183 3.56272 12.6278 3.37222C12.4373 3.18173 12.3407 2.92058 12.1474 2.3983L12 2Z" stroke="#4B4D4D" strokeWidth="1.5" strokeLinejoin="round" />
+                                                </svg>
+
+                                                <span className='w-[calc(100%-16px)] text-[#6B6B6B] text-[12px] font-[400] '>
+                                                    Rooftop Pool and Whirlpool Bath, Memorable Events and Banquets
+                                                </span>
+                                            </div>
+
+                                            <div className='flex items-start gap-2 mt-[10px]'>
+                                                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M9.66659 5.99998C9.66659 6.92045 8.92039 7.66665 7.99992 7.66665C7.07945 7.66665 6.33325 6.92045 6.33325 5.99998C6.33325 5.07951 7.07945 4.33331 7.99992 4.33331C8.92039 4.33331 9.66659 5.07951 9.66659 5.99998Z" stroke="#4B4D4D" strokeWidth="1.5" />
+                                                    <path d="M8.83818 11.6624C8.61332 11.8789 8.31279 12 8.00005 12C7.68725 12 7.38672 11.8789 7.16185 11.6624C5.10279 9.66718 2.34338 7.43831 3.68906 4.20247C4.41665 2.45286 6.16321 1.33331 8.00005 1.33331C9.83685 1.33331 11.5834 2.45287 12.311 4.20247C13.655 7.43425 10.9023 9.67405 8.83818 11.6624Z" stroke="#4B4D4D" strokeWidth="1.5" />
+                                                    <path d="M12 13.3333C12 14.0697 10.2091 14.6666 8 14.6666C5.79086 14.6666 4 14.0697 4 13.3333" stroke="#4B4D4D" strokeWidth="1.5" strokeLinecap="round" />
+                                                </svg>
+
+                                                <span className='w-[calc(100%-16px)] text-[#6B6B6B] text-[12px] font-[400] '>
+                                                    4.8 miles to City center
+                                                </span>
+                                            </div>
+
+                                            <div className='flex items-start gap-2 mt-[10px]'>
+                                                <span className='w-[29px] h-[17px] flex items-center justify-center rounded-[12px] bg-[#29AF52] text-[12px] text-[#ffffff] font-[600] '>8.7</span>
+
+                                                <span className='w-[calc(100%-16px)] text-[#6B6B6B] text-[12px] font-[400] '>
+                                                    <b>Excellent</b> (19232 ratings)
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div className='w-[41%] h-full flex flex-col justify-between pr-[8px] py-[5px]'>
+                                            <div className='text-right'>
+                                                <h3 className='text-[#4B4D4D] text-[16px] font-[700] '>AED {item.price}</h3>
+                                                <span className='text-[#6B6B6B] text-[12px] font-[400] '>for 3 hours</span>
+                                            </div>
+                                            <div className='w-auto text-right'>
+                                                <Button fullWidth={false} className="w-auto rounded-[12px] h-[40px] text-[14px]" onClick={handleSearch}>Check Availability</Button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            )
+                        })}
+                        {/* {hotelsData?.data?.map((item, index) => (
+                            <div onMouseEnter={() => selectHotel(item)} key={index} className='bg-[#FFFFFF] w-full h-[175px] rounded-[20px] p-[8px] flex gap-[16px] '>
+                                <div className='w-[159px] h-full bg-cover rounded-[12px]' style={{ backgroundImage: `url(${item.images[0]})` }}>
+
+                                </div>
+                                <div className='flex w-[calc(100%-159px)] justify-between'>
+                                    <div className='w-[59%]'>
+                                        <h2 className='text-[#4B4D4D] text-[16px] font-[700] mt-[5px] '>
+                                            {item.name?.length > 25 ? `${item.name?.slice(0, 25)}...` : item.name}
+                                        </h2>
+                                        <div className='flex items-center gap-2 text-[#6B6B6B] text-[12px] font-[400] mt-[7px] '>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="96" height="16" viewBox="0 0 96 16" fill="none">
+                                                <path d="M8 0L9.79611 5.52786H15.6085L10.9062 8.94427L12.7023 14.4721L8 11.0557L3.29772 14.4721L5.09383 8.94427L0.391548 5.52786H6.20389L8 0Z" fill="#4B4D4D" />
+                                                <path d="M48 0L49.7961 5.52786H55.6085L50.9062 8.94427L52.7023 14.4721L48 11.0557L43.2977 14.4721L45.0938 8.94427L40.3915 5.52786H46.2039L48 0Z" fill="#4B4D4D" />
+                                                <path d="M28 0L29.7961 5.52786H35.6085L30.9062 8.94427L32.7023 14.4721L28 11.0557L23.2977 14.4721L25.0938 8.94427L20.3915 5.52786H26.2039L28 0Z" fill="#4B4D4D" />
+                                                <path d="M68 0L69.7961 5.52786H75.6085L70.9062 8.94427L72.7023 14.4721L68 11.0557L63.2977 14.4721L65.0938 8.94427L60.3915 5.52786H66.2039L68 0Z" fill="#4B4D4D" />
+                                                <path d="M88 0L89.7961 5.52786H95.6085L90.9062 8.94427L92.7023 14.4721L88 11.0557L83.2977 14.4721L85.0938 8.94427L80.3915 5.52786H86.2039L88 0Z" fill="#4B4D4D" />
+                                            </svg>
+                                            Hotel
+                                        </div>
+
+                                        <div className='flex items-start gap-2 mt-[6px]'>
+                                            <svg className='mt-[5px]' width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M6.66667 4.66666L6.32277 5.59602C5.87183 6.81466 5.64635 7.42399 5.20185 7.86852C4.75735 8.31299 4.14803 8.53846 2.92937 8.98946L2 9.33332L2.92937 9.67719C4.14803 10.1282 4.75735 10.3537 5.20185 10.7981C5.64635 11.2427 5.87183 11.852 6.32277 13.0706L6.66667 14L7.01053 13.0706C7.46153 11.852 7.687 11.2427 8.13147 10.7981C8.576 10.3537 9.18533 10.1282 10.4039 9.67719L11.3333 9.33332L10.4039 8.98946C9.18533 8.53846 8.576 8.31299 8.13147 7.86852C7.687 7.42399 7.46153 6.81466 7.01053 5.59602L6.66667 4.66666Z" stroke="#4B4D4D" strokeWidth="1.5" strokeLinejoin="round" />
+                                                <path d="M12 2L11.8526 2.3983C11.6593 2.92058 11.5627 3.18173 11.3722 3.37222C11.1817 3.56272 10.9206 3.65935 10.3983 3.85261L10 4L10.3983 4.14739C10.9206 4.34065 11.1817 4.43728 11.3722 4.62778C11.5627 4.81827 11.6593 5.07942 11.8526 5.6017L12 6L12.1474 5.6017C12.3407 5.07942 12.4373 4.81827 12.6278 4.62777C12.8183 4.43728 13.0794 4.34065 13.6017 4.14739L14 4L13.6017 3.85261C13.0794 3.65935 12.8183 3.56272 12.6278 3.37222C12.4373 3.18173 12.3407 2.92058 12.1474 2.3983L12 2Z" stroke="#4B4D4D" strokeWidth="1.5" strokeLinejoin="round" />
+                                            </svg>
+
+                                            <span className='w-[calc(100%-16px)] text-[#6B6B6B] text-[12px] font-[400] '>
+                                                Rooftop Pool and Whirlpool Bath, Memorable Events and Banquets
+                                            </span>
+                                        </div>
+
+                                        <div className='flex items-start gap-2 mt-[10px]'>
+                                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M9.66659 5.99998C9.66659 6.92045 8.92039 7.66665 7.99992 7.66665C7.07945 7.66665 6.33325 6.92045 6.33325 5.99998C6.33325 5.07951 7.07945 4.33331 7.99992 4.33331C8.92039 4.33331 9.66659 5.07951 9.66659 5.99998Z" stroke="#4B4D4D" strokeWidth="1.5" />
+                                                <path d="M8.83818 11.6624C8.61332 11.8789 8.31279 12 8.00005 12C7.68725 12 7.38672 11.8789 7.16185 11.6624C5.10279 9.66718 2.34338 7.43831 3.68906 4.20247C4.41665 2.45286 6.16321 1.33331 8.00005 1.33331C9.83685 1.33331 11.5834 2.45287 12.311 4.20247C13.655 7.43425 10.9023 9.67405 8.83818 11.6624Z" stroke="#4B4D4D" strokeWidth="1.5" />
+                                                <path d="M12 13.3333C12 14.0697 10.2091 14.6666 8 14.6666C5.79086 14.6666 4 14.0697 4 13.3333" stroke="#4B4D4D" strokeWidth="1.5" strokeLinecap="round" />
+                                            </svg>
+
+                                            <span className='w-[calc(100%-16px)] text-[#6B6B6B] text-[12px] font-[400] '>
+                                                4.8 miles to City center
+                                            </span>
+                                        </div>
+
+                                        <div className='flex items-start gap-2 mt-[10px]'>
+                                            <span className='w-[29px] h-[17px] flex items-center justify-center rounded-[12px] bg-[#29AF52] text-[12px] text-[#ffffff] font-[600] '>8.7</span>
+
+                                            <span className='w-[calc(100%-16px)] text-[#6B6B6B] text-[12px] font-[400] '>
+                                                <b>Excellent</b> (19232 ratings)
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div className='w-[41%] h-full flex flex-col justify-between pr-[8px] py-[5px]'>
+                                        <div className='text-right'>
+                                            <h3 className='text-[#4B4D4D] text-[16px] font-[700] '>AED {item.price}</h3>
+                                            <span className='text-[#6B6B6B] text-[12px] font-[400] '>for 3 hours</span>
+                                        </div>
+                                        <div className='w-auto text-right'>
+                                            <Button fullWidth={false} className="w-auto rounded-[12px] h-[40px] text-[14px]" onClick={handleSearch}>Check Availability</Button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        ))}
+                        {hotelsData?.data?.map((item, index) => (
+                            <div onMouseEnter={() => selectHotel(item)} key={index} className='bg-[#FFFFFF] w-full h-[175px] rounded-[20px] p-[8px] flex gap-[16px] '>
+                                <div className='w-[159px] h-full bg-cover rounded-[12px]' style={{ backgroundImage: `url(${item.images[0]})` }}>
+
+                                </div>
+                                <div className='flex w-[calc(100%-159px)] justify-between'>
+                                    <div className='w-[59%]'>
+                                        <h2 className='text-[#4B4D4D] text-[16px] font-[700] mt-[5px] '>
+                                            {item.name?.length > 25 ? `${item.name?.slice(0, 25)}...` : item.name}
+                                        </h2>
+                                        <div className='flex items-center gap-2 text-[#6B6B6B] text-[12px] font-[400] mt-[7px] '>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="96" height="16" viewBox="0 0 96 16" fill="none">
+                                                <path d="M8 0L9.79611 5.52786H15.6085L10.9062 8.94427L12.7023 14.4721L8 11.0557L3.29772 14.4721L5.09383 8.94427L0.391548 5.52786H6.20389L8 0Z" fill="#4B4D4D" />
+                                                <path d="M48 0L49.7961 5.52786H55.6085L50.9062 8.94427L52.7023 14.4721L48 11.0557L43.2977 14.4721L45.0938 8.94427L40.3915 5.52786H46.2039L48 0Z" fill="#4B4D4D" />
+                                                <path d="M28 0L29.7961 5.52786H35.6085L30.9062 8.94427L32.7023 14.4721L28 11.0557L23.2977 14.4721L25.0938 8.94427L20.3915 5.52786H26.2039L28 0Z" fill="#4B4D4D" />
+                                                <path d="M68 0L69.7961 5.52786H75.6085L70.9062 8.94427L72.7023 14.4721L68 11.0557L63.2977 14.4721L65.0938 8.94427L60.3915 5.52786H66.2039L68 0Z" fill="#4B4D4D" />
+                                                <path d="M88 0L89.7961 5.52786H95.6085L90.9062 8.94427L92.7023 14.4721L88 11.0557L83.2977 14.4721L85.0938 8.94427L80.3915 5.52786H86.2039L88 0Z" fill="#4B4D4D" />
+                                            </svg>
+                                            Hotel
+                                        </div>
+
+                                        <div className='flex items-start gap-2 mt-[6px]'>
+                                            <svg className='mt-[5px]' width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M6.66667 4.66666L6.32277 5.59602C5.87183 6.81466 5.64635 7.42399 5.20185 7.86852C4.75735 8.31299 4.14803 8.53846 2.92937 8.98946L2 9.33332L2.92937 9.67719C4.14803 10.1282 4.75735 10.3537 5.20185 10.7981C5.64635 11.2427 5.87183 11.852 6.32277 13.0706L6.66667 14L7.01053 13.0706C7.46153 11.852 7.687 11.2427 8.13147 10.7981C8.576 10.3537 9.18533 10.1282 10.4039 9.67719L11.3333 9.33332L10.4039 8.98946C9.18533 8.53846 8.576 8.31299 8.13147 7.86852C7.687 7.42399 7.46153 6.81466 7.01053 5.59602L6.66667 4.66666Z" stroke="#4B4D4D" strokeWidth="1.5" strokeLinejoin="round" />
+                                                <path d="M12 2L11.8526 2.3983C11.6593 2.92058 11.5627 3.18173 11.3722 3.37222C11.1817 3.56272 10.9206 3.65935 10.3983 3.85261L10 4L10.3983 4.14739C10.9206 4.34065 11.1817 4.43728 11.3722 4.62778C11.5627 4.81827 11.6593 5.07942 11.8526 5.6017L12 6L12.1474 5.6017C12.3407 5.07942 12.4373 4.81827 12.6278 4.62777C12.8183 4.43728 13.0794 4.34065 13.6017 4.14739L14 4L13.6017 3.85261C13.0794 3.65935 12.8183 3.56272 12.6278 3.37222C12.4373 3.18173 12.3407 2.92058 12.1474 2.3983L12 2Z" stroke="#4B4D4D" strokeWidth="1.5" strokeLinejoin="round" />
+                                            </svg>
+
+                                            <span className='w-[calc(100%-16px)] text-[#6B6B6B] text-[12px] font-[400] '>
+                                                Rooftop Pool and Whirlpool Bath, Memorable Events and Banquets
+                                            </span>
+                                        </div>
+
+                                        <div className='flex items-start gap-2 mt-[10px]'>
+                                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M9.66659 5.99998C9.66659 6.92045 8.92039 7.66665 7.99992 7.66665C7.07945 7.66665 6.33325 6.92045 6.33325 5.99998C6.33325 5.07951 7.07945 4.33331 7.99992 4.33331C8.92039 4.33331 9.66659 5.07951 9.66659 5.99998Z" stroke="#4B4D4D" strokeWidth="1.5" />
+                                                <path d="M8.83818 11.6624C8.61332 11.8789 8.31279 12 8.00005 12C7.68725 12 7.38672 11.8789 7.16185 11.6624C5.10279 9.66718 2.34338 7.43831 3.68906 4.20247C4.41665 2.45286 6.16321 1.33331 8.00005 1.33331C9.83685 1.33331 11.5834 2.45287 12.311 4.20247C13.655 7.43425 10.9023 9.67405 8.83818 11.6624Z" stroke="#4B4D4D" strokeWidth="1.5" />
+                                                <path d="M12 13.3333C12 14.0697 10.2091 14.6666 8 14.6666C5.79086 14.6666 4 14.0697 4 13.3333" stroke="#4B4D4D" strokeWidth="1.5" strokeLinecap="round" />
+                                            </svg>
+
+                                            <span className='w-[calc(100%-16px)] text-[#6B6B6B] text-[12px] font-[400] '>
+                                                4.8 miles to City center
+                                            </span>
+                                        </div>
+
+                                        <div className='flex items-start gap-2 mt-[10px]'>
+                                            <span className='w-[29px] h-[17px] flex items-center justify-center rounded-[12px] bg-[#29AF52] text-[12px] text-[#ffffff] font-[600] '>8.7</span>
+
+                                            <span className='w-[calc(100%-16px)] text-[#6B6B6B] text-[12px] font-[400] '>
+                                                <b>Excellent</b> (19232 ratings)
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div className='w-[41%] h-full flex flex-col justify-between pr-[8px] py-[5px]'>
+                                        <div className='text-right'>
+                                            <h3 className='text-[#4B4D4D] text-[16px] font-[700] '>AED {item.price}</h3>
+                                            <span className='text-[#6B6B6B] text-[12px] font-[400] '>for 3 hours</span>
+                                        </div>
+                                        <div className='w-auto text-right'>
+                                            <Button fullWidth={false} className="w-auto rounded-[12px] h-[40px] text-[14px]" onClick={handleSearch}>Check Availability</Button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        ))}
+                        {hotelsData?.data?.map((item, index) => (
+                            <div onMouseEnter={() => selectHotel(item)} key={index} className='bg-[#FFFFFF] w-full h-[175px] rounded-[20px] p-[8px] flex gap-[16px] '>
+                                <div className='w-[159px] h-full bg-cover rounded-[12px]' style={{ backgroundImage: `url(${item.images[0]})` }}>
+
+                                </div>
+                                <div className='flex w-[calc(100%-159px)] justify-between'>
+                                    <div className='w-[59%]'>
+                                        <h2 className='text-[#4B4D4D] text-[16px] font-[700] mt-[5px] '>
+                                            {item.name?.length > 25 ? `${item.name?.slice(0, 25)}...` : item.name}
+                                        </h2>
+                                        <div className='flex items-center gap-2 text-[#6B6B6B] text-[12px] font-[400] mt-[7px] '>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="96" height="16" viewBox="0 0 96 16" fill="none">
+                                                <path d="M8 0L9.79611 5.52786H15.6085L10.9062 8.94427L12.7023 14.4721L8 11.0557L3.29772 14.4721L5.09383 8.94427L0.391548 5.52786H6.20389L8 0Z" fill="#4B4D4D" />
+                                                <path d="M48 0L49.7961 5.52786H55.6085L50.9062 8.94427L52.7023 14.4721L48 11.0557L43.2977 14.4721L45.0938 8.94427L40.3915 5.52786H46.2039L48 0Z" fill="#4B4D4D" />
+                                                <path d="M28 0L29.7961 5.52786H35.6085L30.9062 8.94427L32.7023 14.4721L28 11.0557L23.2977 14.4721L25.0938 8.94427L20.3915 5.52786H26.2039L28 0Z" fill="#4B4D4D" />
+                                                <path d="M68 0L69.7961 5.52786H75.6085L70.9062 8.94427L72.7023 14.4721L68 11.0557L63.2977 14.4721L65.0938 8.94427L60.3915 5.52786H66.2039L68 0Z" fill="#4B4D4D" />
+                                                <path d="M88 0L89.7961 5.52786H95.6085L90.9062 8.94427L92.7023 14.4721L88 11.0557L83.2977 14.4721L85.0938 8.94427L80.3915 5.52786H86.2039L88 0Z" fill="#4B4D4D" />
+                                            </svg>
+                                            Hotel
+                                        </div>
+
+                                        <div className='flex items-start gap-2 mt-[6px]'>
+                                            <svg className='mt-[5px]' width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M6.66667 4.66666L6.32277 5.59602C5.87183 6.81466 5.64635 7.42399 5.20185 7.86852C4.75735 8.31299 4.14803 8.53846 2.92937 8.98946L2 9.33332L2.92937 9.67719C4.14803 10.1282 4.75735 10.3537 5.20185 10.7981C5.64635 11.2427 5.87183 11.852 6.32277 13.0706L6.66667 14L7.01053 13.0706C7.46153 11.852 7.687 11.2427 8.13147 10.7981C8.576 10.3537 9.18533 10.1282 10.4039 9.67719L11.3333 9.33332L10.4039 8.98946C9.18533 8.53846 8.576 8.31299 8.13147 7.86852C7.687 7.42399 7.46153 6.81466 7.01053 5.59602L6.66667 4.66666Z" stroke="#4B4D4D" strokeWidth="1.5" strokeLinejoin="round" />
+                                                <path d="M12 2L11.8526 2.3983C11.6593 2.92058 11.5627 3.18173 11.3722 3.37222C11.1817 3.56272 10.9206 3.65935 10.3983 3.85261L10 4L10.3983 4.14739C10.9206 4.34065 11.1817 4.43728 11.3722 4.62778C11.5627 4.81827 11.6593 5.07942 11.8526 5.6017L12 6L12.1474 5.6017C12.3407 5.07942 12.4373 4.81827 12.6278 4.62777C12.8183 4.43728 13.0794 4.34065 13.6017 4.14739L14 4L13.6017 3.85261C13.0794 3.65935 12.8183 3.56272 12.6278 3.37222C12.4373 3.18173 12.3407 2.92058 12.1474 2.3983L12 2Z" stroke="#4B4D4D" strokeWidth="1.5" strokeLinejoin="round" />
+                                            </svg>
+
+                                            <span className='w-[calc(100%-16px)] text-[#6B6B6B] text-[12px] font-[400] '>
+                                                Rooftop Pool and Whirlpool Bath, Memorable Events and Banquets
+                                            </span>
+                                        </div>
+
+                                        <div className='flex items-start gap-2 mt-[10px]'>
+                                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M9.66659 5.99998C9.66659 6.92045 8.92039 7.66665 7.99992 7.66665C7.07945 7.66665 6.33325 6.92045 6.33325 5.99998C6.33325 5.07951 7.07945 4.33331 7.99992 4.33331C8.92039 4.33331 9.66659 5.07951 9.66659 5.99998Z" stroke="#4B4D4D" strokeWidth="1.5" />
+                                                <path d="M8.83818 11.6624C8.61332 11.8789 8.31279 12 8.00005 12C7.68725 12 7.38672 11.8789 7.16185 11.6624C5.10279 9.66718 2.34338 7.43831 3.68906 4.20247C4.41665 2.45286 6.16321 1.33331 8.00005 1.33331C9.83685 1.33331 11.5834 2.45287 12.311 4.20247C13.655 7.43425 10.9023 9.67405 8.83818 11.6624Z" stroke="#4B4D4D" strokeWidth="1.5" />
+                                                <path d="M12 13.3333C12 14.0697 10.2091 14.6666 8 14.6666C5.79086 14.6666 4 14.0697 4 13.3333" stroke="#4B4D4D" strokeWidth="1.5" strokeLinecap="round" />
+                                            </svg>
+
+                                            <span className='w-[calc(100%-16px)] text-[#6B6B6B] text-[12px] font-[400] '>
+                                                4.8 miles to City center
+                                            </span>
+                                        </div>
+
+                                        <div className='flex items-start gap-2 mt-[10px]'>
+                                            <span className='w-[29px] h-[17px] flex items-center justify-center rounded-[12px] bg-[#29AF52] text-[12px] text-[#ffffff] font-[600] '>8.7</span>
+
+                                            <span className='w-[calc(100%-16px)] text-[#6B6B6B] text-[12px] font-[400] '>
+                                                <b>Excellent</b> (19232 ratings)
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div className='w-[41%] h-full flex flex-col justify-between pr-[8px] py-[5px]'>
+                                        <div className='text-right'>
+                                            <h3 className='text-[#4B4D4D] text-[16px] font-[700] '>AED {item.price}</h3>
+                                            <span className='text-[#6B6B6B] text-[12px] font-[400] '>for 3 hours</span>
+                                        </div>
+                                        <div className='w-auto text-right'>
+                                            <Button fullWidth={false} className="w-auto rounded-[12px] h-[40px] text-[14px]" onClick={handleSearch}>Check Availability</Button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        ))} */}
+                    </div>
+                </div>
+                <div className="w-[50%] h-[calc(100vh-110px)] rounded-[20px] overflow-hidden sticky top-[95px]">
+                    <MapWithInfoWindow selectedCity={"sydney"} hotelsData={hotelsData} selectedHotelProps={selectedHotel} />
+                </div>
+            </div>
+
+            <CTA />
+
+            <HotelChains />
+
+            <FooterNew />
+
+        </div >
+    )
+}
+
+export default page
