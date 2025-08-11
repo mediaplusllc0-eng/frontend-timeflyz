@@ -784,7 +784,7 @@ function page() {
                     </div>
 
                 </div>
-                <div className='w-[390px] h-[548px] bg-[#F4F4F4] rounded-[12px] sticky top-[90px] mt-[30px] p-[30px]'>
+                <div className='w-[390px] h-auto bg-[#F4F4F4] rounded-[12px] sticky top-[90px] mt-[30px] p-[30px]'>
                     <div className='flex items-center justify-between'>
                         <div className='flex flex-col'>
                             <h5 className='flex items-center gap-1 text-[#4B4D4D] text-[16px] font-[700] mb-[5px]'>
