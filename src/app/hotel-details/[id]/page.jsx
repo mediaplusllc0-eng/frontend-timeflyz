@@ -836,12 +836,20 @@ function page() {
                             <span>AED 150</span>
                         </p>
                         <p className='text-[#4B4D4D] text-[16px] font-[400] flex justify-between items-center'>
-                            <span>Convenience fee</span>
+                            <span>Tourism fee</span>
                             <span>AED 10</span>
                         </p>
                         <p className='text-[#4B4D4D] text-[16px] font-[400] flex justify-between items-center'>
-                            <span>Taxes and fees</span>
+                            <span>VAT</span>
                             <span>AED 15</span>
+                        </p>
+                         <p className='text-[#4B4D4D] text-[16px] font-[400] flex justify-between items-center'>
+                            <span>Service Charge</span>
+                            <span>AED 05</span>
+                        </p>
+                        <p className='text-[#4B4D4D] text-[16px] font-[400] flex justify-between items-center'>
+                            <span>Municipality fee</span>
+                            <span>AED 02</span>
                         </p>
                         <p className='text-[#4B4D4D] text-[16px] font-[400] flex justify-between items-center'>
                             <span>Discount 30%</span>
@@ -957,7 +965,7 @@ function page() {
             />
 
             <div className={`fixed inset-0 z-[1000] flex items-center justify-center transition-opacity duration-300 ${submitReviewOpen ? 'opacity-100 visible' : 'opacity-0 invisible'}`}>
-                 <div
+                <div
                     className={`absolute inset-0 bg-[#000000CC] transition-opacity duration-300 ${submitReviewOpen ? "opacity-100" : "opacity-0"
                         }`}
                     onClick={() => setSubmitReviewOpen(false)}

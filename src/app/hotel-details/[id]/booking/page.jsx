@@ -224,12 +224,20 @@ function page() {
               <span>AED 150</span>
             </p>
             <p className='text-[#4B4D4D] text-[16px] font-[400] flex justify-between items-center'>
-              <span>Convenience fee</span>
+              <span>Tourism fee</span>
               <span>AED 10</span>
             </p>
             <p className='text-[#4B4D4D] text-[16px] font-[400] flex justify-between items-center'>
-              <span>Taxes and fees</span>
+              <span>VAT</span>
               <span>AED 15</span>
+            </p>
+            <p className='text-[#4B4D4D] text-[16px] font-[400] flex justify-between items-center'>
+              <span>Service Charge</span>
+              <span>AED 05</span>
+            </p>
+            <p className='text-[#4B4D4D] text-[16px] font-[400] flex justify-between items-center'>
+              <span>Municipality fee</span>
+              <span>AED 02</span>
             </p>
             <p className='text-[#4B4D4D] text-[16px] font-[400] flex justify-between items-center'>
               <span>Discount 30%</span>
