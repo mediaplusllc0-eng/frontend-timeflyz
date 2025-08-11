@@ -10,9 +10,10 @@ interface ButtonProps {
   disabled?: boolean;
   loading?: boolean;
   variant?: "solid" | "gradient";
-  theme?: "primary" | "secondary" | "danger" | "success";
+  theme?: "primary" | "secondary" | "danger" | "success" | "outline";
   size?: "sm" | "md" | "lg";
   fullWidth?: boolean;
+  selectedBut?: boolean;
 }
 
 const themeClasses = {
@@ -31,6 +32,8 @@ const themeClasses = {
       "bg-gradient-to-r from-red-400 to-red-600 hover:from-red-500 hover:to-red-700 text-white",
     success:
       "bg-gradient-to-r from-green-400 to-green-600 hover:from-green-500 hover:to-green-700 text-white",
+    outline:
+      "bg-[#fff] text-[#EF4A23] border-[#EF4A23] border-[1px] hover:bg-[#EF4A23] hover:text-[#fff]",
   },
 };
 
@@ -51,6 +54,7 @@ const Button: React.FC<ButtonProps> = ({
   theme = "primary",
   size = "md",
   fullWidth = true,
+  selectedBut = false,
 }) => {
   const colorClass = themeClasses[variant][theme];
   const sizeClass = sizeClasses[size];

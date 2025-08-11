@@ -216,15 +216,21 @@ export default function Navbar({
                         <div
                             tabIndex={0}
                             className="cursor-pointer flex items-center gap-2 relative"
-                            onClick={() => setShowDropdown(true)}
-                            onBlur={() => setTimeout(() => setShowDropdown(false), 150)}
+                            onClick={() => setShowDropdown(!showDropdown)}
+                            onBlur={() => setTimeout(() => setShowDropdown(!showDropdown), 150)}
                         >
-                            <svg
-                                width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M13.3334 6.66667H26.6667" stroke="#4B4D4D" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                                <path d="M5.33337 16H26.6667" stroke="#4B4D4D" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                                <path d="M5.33337 25.3333H18.6667" stroke="#4B4D4D" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                            </svg>
+                            {showDropdown ?
+                                <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M24 8L8.00108 23.9989M23.9989 24L8 8.00113" stroke="#4B4D4D" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                </svg>
+                                :
+                                <svg
+                                    width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M13.3334 6.66667H26.6667" stroke="#4B4D4D" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                                    <path d="M5.33337 16H26.6667" stroke="#4B4D4D" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                                    <path d="M5.33337 25.3333H18.6667" stroke="#4B4D4D" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                                </svg>
+                            }
                             <p className="text-[12px] font-[400]">Menu</p>
                         </div>
 

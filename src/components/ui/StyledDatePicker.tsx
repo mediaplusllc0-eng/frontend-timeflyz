@@ -9,6 +9,7 @@ interface StyledDatePickerProps {
   setSelectedDate: (date: Date | null) => void;
   buttonClass?: string;
   icon?: any;
+  fromReview?: boolean
 }
 
 const StyledDatePicker: React.FC<StyledDatePickerProps> = ({
@@ -16,11 +17,12 @@ const StyledDatePicker: React.FC<StyledDatePickerProps> = ({
   setSelectedDate,
   buttonClass,
   icon,
+  fromReview
 }) => {
   const [open, setOpen] = React.useState(false);
 
   return (
-    <div className="relative w-fit border-0 outline-0 mt-[-5px] z-50">
+    <div className="relative w-full border-0 outline-0 mt-[-5px] z-50">
       <DatePicker
         selected={selectedDate}
         onChange={(date) => setSelectedDate(date)}
@@ -38,7 +40,7 @@ const StyledDatePicker: React.FC<StyledDatePickerProps> = ({
         calendarClassName="!p-4 !rounded-xl !shadow-xl !border !border-gray-200 z-[50]"
         customInput={
           <button
-            className={`flex items-center gap-4 rounded-md text-gray-400 text-sm w-48 justify-start cursor-pointer`}
+            className={`w-full flex items-center gap-4 rounded-md text-gray-400 text-sm justify-start cursor-pointer ${fromReview ? "datee" : ""}`}
             onClick={() => setOpen(!open)}
           >
             {selectedDate
