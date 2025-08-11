@@ -22,6 +22,7 @@ const themeClasses = {
     secondary: "bg-gray-600 text-white",
     danger: "bg-red-600 text-white",
     success: "bg-green-600 text-white",
+    outline: ""
   },
   gradient: {
     primary:
