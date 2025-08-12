@@ -39,35 +39,35 @@ function page() {
   }
 
   return (
-    <div className='bookingMain pb-[100px]'>
+    <div className='bookingMain pb-[50px] md:pb-[100px]'>
       <Navbar />
 
-      <div className='flex flex-wrap items-start justify-between px-[30px] mt-[80px] gap-[10px]'>
-        <div className='w-[calc(100%-420px)] mt-[30px]'>
+      <div className='flex flex-wrap items-start justify-between px-5 md:px-[30px] mt-[10px] md:mt-[80px] gap-[10px]'>
+        <div className='w-full md:w-[calc(100%-420px)] mt-[10px] md:mt-[30px]'>
 
-          <div className='w-full flex items-center hotelDetailTabs'>
+          <div className='w-full flex flex-wrap md:flex-nowrap items-center hotelDetailTabs'>
             <a
-              href='#overview'
+              href='#'
               // onClick={() => setActiveTab("overview")}
-              className={`active w-[50%] text-left text-[16px] font-[500] text-[#4B4D4D] h-[70px] flex items-center`}>
-              <span className='mr-[10px] h-[40px] w-[40px] rounded-[50px] bg-[#EF4A23] flex items-center justify-center text-[#FFFFFF] font-[700]'>1</span>
+              className={`active w-full md:w-[50%] text-left text-[12px] md:text-[16px] font-[500] text-[#4B4D4D] h-[40px] md:h-[70px] flex items-center`}>
+              <span className='mr-[10px] h-[20px] md:h-[40px] w-[20px] md:w-[40px] rounded-[50px] bg-[#EF4A23] flex items-center justify-center text-[#FFFFFF] font-[700]'>1</span>
               Required and Review Details
             </a>
             <a
-              href='#rooms'
+              href='#'
               // onClick={() => setActiveTab("rooms")}
-              className={`${reserveNowBool ? "active" : ""} w-[50%] text-left text-[16px] font-[500] text-[#4B4D4D] h-[70px] flex items-center`}>
-              <span className='mr-[10px] h-[40px] w-[40px] rounded-[50px] bg-[#EF4A23] flex items-center justify-center text-[#FFFFFF] font-[700]'>2</span>
+              className={`${reserveNowBool ? "active" : ""} w-full md:w-[50%] text-left text-[12px] md:text-[16px] font-[500] text-[#4B4D4D] h-[40px] md:h-[70px] flex items-center`}>
+              <span className='mr-[10px] h-[20px] md:h-[40px] w-[20px] md:w-[40px] rounded-[50px] bg-[#EF4A23] flex items-center justify-center text-[#FFFFFF] font-[700]'>2</span>
               Required Payment
             </a>
           </div>
 
-          <div className='mt-[30px]' id='rooms'>
-            <div className='flex shadow-[0_4px_10px_0_#00000026] p-[10px] rounded-[20px] mb-[20px]'>
-              <div className='w-[236px] h-[175px]'>
-                <img src='/img/hotelDetail1.png' className='h-full rounded-[12px] overflow-hidden' />
+          <div className='mt-5 md:mt-[30px]' id='rooms'>
+            <div className='flex flex-wrap md:flex-nowrap shadow-[0_4px_10px_0_#00000026] p-[10px] rounded-[20px] mb-[20px]'>
+              <div className='w-full md:w-[236px] h-[175px]'>
+                <img src='/img/hotelDetail1.png' className='w-full md:w-auto h-full rounded-[12px] overflow-hidden' />
               </div>
-              <div className='w-[calc(100%-159px)] flex justify-between px-[20px] py-[10px]'>
+              <div className='w-full md:w-[calc(100%-159px)] flex justify-between md:px-[20px] py-[10px]'>
                 <div className=''>
                   <div className='flex items-center gap-[5px] mb-[5px]'>
                     <div className='flex items-center'>
@@ -369,7 +369,7 @@ function page() {
           }
         </div>
 
-        <div className='w-[390px] h-auto bg-[#F4F4F4] rounded-[12px] sticky top-[90px] mt-[30px] p-[30px]'>
+        <div className='w-full md:w-[390px] h-auto bg-[#F4F4F4] rounded-[12px] sticky top-[90px] mt-[30px] p-[15px] md:p-[30px]'>
           <div className='flex items-center justify-between'>
             <div className='flex flex-col'>
               <h5 className='flex items-center gap-1 text-[#4B4D4D] text-[16px] font-[700] mb-[5px]'>
@@ -451,9 +451,7 @@ function page() {
 
           <div className='h-[1px] bg-[#CECECE] my-[10px]' />
 
-          {!reserveNowBool &&
-            <Button onClick={reserveNow} fullWidth={false} className="w-full md:w-full rounded-[12px] h-[60px] mt-[10px]">Reserve Now</Button>
-          }
+          <Button onClick={reserveNow} fullWidth={false} className="w-full md:w-full rounded-[12px] h-[60px] mt-[10px]">Reserve Now</Button>
 
           <p className='text-[#6B6B6B] text-[12px] font-[400] mt-[10px] text-center'>
             Lorem ipsum dolor sit amet consectetur. Vitae ultrices tempor congue tortor vitae ac at semper odio. Pharetra feugiat sem sit vestibulum.

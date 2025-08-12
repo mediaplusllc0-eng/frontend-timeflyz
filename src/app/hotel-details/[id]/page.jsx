@@ -158,7 +158,7 @@ function page() {
     let [activeTab, setActiveTab] = useState("overview")
 
     return (
-        <div className='hotelDetailsMain'>
+        <div className='hotelDetailsMain overflow-x-hidden w-full'>
             <Navbar />
 
             <div className="md:shadow-[0_4px_50px_0_rgba(0,0,0,0.25)] w-[100%] flex-wrap md:flex-nowrap md:w-[1183px] container mx-auto bg-white p-[20px] flex justify-between mt-10 md:mt-[60px] z-50 rounded-[12px]">
@@ -291,8 +291,8 @@ function page() {
                 <Button fullWidth={false} className="w-full md:w-[14.37%] rounded-[12px] h-[60px]" onClick={handleSearch}>Search</Button>
             </div>
 
-            <div className='flex flex-wrap items-start justify-between px-[30px] mt-[80px] gap-[10px]'>
-                <div className='flex w-[100%] items-center justify-between'>
+            <div className='relative flex flex-wrap items-start justify-between px-5 md:px-[30px] mt-[20px] md:mt-[80px] gap-[10px]'>
+                <div className='flex flex-wrap md:flex-nowrap w-[100%] items-center justify-between'>
                     <div>
                         <div className='flex items-center text-[12px] text-[#6B6B6B] font-[400] '>
                             <svg width="16" height="15" viewBox="0 0 16 15" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -314,21 +314,21 @@ function page() {
                             Hotel
                         </div>
                         <h2 className='text-[24px] text-[#4B4D4D] font-[700] mt-[5px] '>Crowne Plaza Dubai Deira, an IHG H</h2>
-                        <p className='text-[16px] text-[#6B6B6B] font-[400] flex items-center gap-[5px] mt-[5px] '>
+                        <p className='text-[16px] text-[#6B6B6B] font-[400] flex flex-wrap md:flex-nowrap items-center gap-[5px] mt-[5px] '>
                             <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M12.0832 7.49999C12.0832 8.65057 11.1504 9.58332 9.99984 9.58332C8.84925 9.58332 7.9165 8.65057 7.9165 7.49999C7.9165 6.3494 8.84925 5.41666 9.99984 5.41666C11.1504 5.41666 12.0832 6.3494 12.0832 7.49999Z" stroke="#4B4D4D" strokeWidth="1.5" />
                                 <path d="M11.0477 14.578C10.7666 14.8487 10.3909 15 10 15C9.609 15 9.23334 14.8487 8.95225 14.578C6.37842 12.084 2.92916 9.29791 4.61126 5.2531C5.52075 3.06609 7.70395 1.66666 10 1.66666C12.296 1.66666 14.4792 3.0661 15.3887 5.2531C17.0687 9.29282 13.6278 12.0926 11.0477 14.578Z" stroke="#4B4D4D" strokeWidth="1.5" />
                                 <path d="M15 16.6667C15 17.5872 12.7614 18.3333 10 18.3333C7.23857 18.3333 5 17.5872 5 16.6667" stroke="#4B4D4D" strokeWidth="1.5" strokeLinecap="round" />
                             </svg>
                             Sheikh Khalifah Bin Zayed St. Opp Burjuman Centre, Dubai, United Arab Emirates
-                            <a href='#' className='text-[#EF4A23] font-bold '>Show Map</a>
+                            <a href='#' className='text-[#EF4A23] font-bold w-full md:w-auto'>Show Map</a>
                         </p>
                     </div>
-                    <div className='flex items-center gap-[10px]'>
-                        <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <div className='absolute top-0 right-5 md:relative flex items-center gap-[10px]'>
+                        <svg className='w-[16px] md:w-[32px] h-[16px] md:h-[32px]' width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M13.8808 26.6236C10.1191 23.8107 2.6665 17.3797 2.6665 11.5926C2.6665 7.76751 5.47352 4.66667 9.33317 4.66667C11.3332 4.66667 13.3332 5.33334 15.9998 8.00001C18.6665 5.33334 20.6665 4.66667 22.6665 4.66667C26.5261 4.66667 29.3332 7.76751 29.3332 11.5926C29.3332 17.3797 21.8806 23.8107 18.1189 26.6236C16.853 27.5701 15.1466 27.5701 13.8808 26.6236Z" stroke="#4B4D4D" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                         </svg>
-                        <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <svg className='w-[16px] md:w-[32px] h-[16px] md:h-[32px]' width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M28 8.66667C28 10.8758 26.2092 12.6667 24 12.6667C21.7908 12.6667 20 10.8758 20 8.66667C20 6.45754 21.7908 4.66667 24 4.66667C26.2092 4.66667 28 6.45754 28 8.66667Z" stroke="#4B4D4D" strokeWidth="1.5" />
                             <path d="M12 16C12 18.2092 10.2091 20 8 20C5.79087 20 4 18.2092 4 16C4 13.7908 5.79087 12 8 12C10.2091 12 12 13.7908 12 16Z" stroke="#4B4D4D" strokeWidth="1.5" />
                             <path d="M28 23.3333C28 25.5425 26.2092 27.3333 24 27.3333C21.7908 27.3333 20 25.5425 20 23.3333C20 21.1241 21.7908 19.3333 24 19.3333C26.2092 19.3333 28 21.1241 28 23.3333Z" stroke="#4B4D4D" strokeWidth="1.5" />
@@ -336,16 +336,16 @@ function page() {
                         </svg>
                     </div>
                 </div>
-                <div className='w-[calc(100%-420px)] mt-[30px]'>
+                <div className='w-full md:w-[calc(100%-420px)] mt-[30px]'>
                     <div className='imageDivMain w-full flex items-center justify-between gap-[10px]'>
-                        <div className='w-[60%] h-full relative'>
+                        <div className='w-full md:w-[60%] h-full relative'>
                             <img onClick={() => {
                                 setOpen(true)
                                 setIndex(0)
                             }} src="/img/hotelDetail1.png" className='h-[100%] cursor-pointer w-[100%] rounded-[12px] overflow-hidden' />
                             <span onClick={() => setOpen(true)} className='cursor-pointer text-[#FFFFFF] text-[14px] font-[400] absolute bottom-[30px] left-[30px] bg-[#4B4D4D] rounded-[6px] h-[26px] w-[121px] flex items-center justify-center '>Show all photo</span>
                         </div>
-                        <div className='w-[40%] h-full gap-[10px] flex flex-col'>
+                        <div className='hidden w-[40%] h-full gap-[10px] md:flex flex-col'>
                             <img onClick={() => {
                                 setOpen(true)
                                 setIndex(1)
@@ -398,92 +398,92 @@ function page() {
 
                     <div className='mt-[30px]' id=''>
                         <h4 className='text-[20px] text-[#4B4D4D] font-[600] mb-[10px] '>Amenities</h4>
-                        <ul className='flex flex-wrap gap-y-[20px]'>
-                            <li className='w-[32%] text-[#4B4D4D] text-[16px] font-[400] flex items-center gap-[10px] '>
+                        <ul className='flex flex-wrap gap-y-[20px] justify-between md:justify-start'>
+                            <li className='w-[49%] md:w-[32%] text-[#4B4D4D] text-[16px] font-[400] flex items-center gap-[10px] '>
                                 <svg width="16" height="14" viewBox="0 0 16 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M1 9L4.5 12.5L15 1.5" stroke="black" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                                 </svg>
                                 24-hour front desk service
                             </li>
-                            <li className='w-[32%] text-[#4B4D4D] text-[16px] font-[400] flex items-center gap-[10px] '>
+                            <li className='w-[49%] md:w-[32%] text-[#4B4D4D] text-[16px] font-[400] flex items-center gap-[10px] '>
                                 <svg width="16" height="14" viewBox="0 0 16 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M1 9L4.5 12.5L15 1.5" stroke="black" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                                 </svg>
                                 Coffee/Tea
                             </li>
-                            <li className='w-[32%] text-[#4B4D4D] text-[16px] font-[400] flex items-center gap-[10px] '>
+                            <li className='w-[49%] md:w-[32%] text-[#4B4D4D] text-[16px] font-[400] flex items-center gap-[10px] '>
                                 <svg width="16" height="14" viewBox="0 0 16 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M1 9L4.5 12.5L15 1.5" stroke="black" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                                 </svg>
                                 Dry cleaning
                             </li>
-                            <li className='w-[32%] text-[#4B4D4D] text-[16px] font-[400] flex items-center gap-[10px] '>
+                            <li className='w-[49%] md:w-[32%] text-[#4B4D4D] text-[16px] font-[400] flex items-center gap-[10px] '>
                                 <svg width="16" height="14" viewBox="0 0 16 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M1 9L4.5 12.5L15 1.5" stroke="black" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                                 </svg>
                                 Free Wireless Internet
                             </li>
-                            <li className='w-[32%] text-[#4B4D4D] text-[16px] font-[400] flex items-center gap-[10px] '>
+                            <li className='w-[49%] md:w-[32%] text-[#4B4D4D] text-[16px] font-[400] flex items-center gap-[10px] '>
                                 <svg width="16" height="14" viewBox="0 0 16 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M1 9L4.5 12.5L15 1.5" stroke="black" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                                 </svg>
                                 Grocery shopping service
                             </li>
-                            <li className='w-[32%] text-[#4B4D4D] text-[16px] font-[400] flex items-center gap-[10px] '>
+                            <li className='w-[49%] md:w-[32%] text-[#4B4D4D] text-[16px] font-[400] flex items-center gap-[10px] '>
                                 <svg width="16" height="14" viewBox="0 0 16 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M1 9L4.5 12.5L15 1.5" stroke="black" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                                 </svg>
                                 Indoor parking
                             </li>
-                            <li className='w-[32%] text-[#4B4D4D] text-[16px] font-[400] flex items-center gap-[10px] '>
+                            <li className='w-[49%] md:w-[32%] text-[#4B4D4D] text-[16px] font-[400] flex items-center gap-[10px] '>
                                 <svg width="16" height="14" viewBox="0 0 16 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M1 9L4.5 12.5L15 1.5" stroke="black" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                                 </svg>
                                 Nightclub/DJ
                             </li>
-                            <li className='w-[32%] text-[#4B4D4D] text-[16px] font-[400] flex items-center gap-[10px] '>
+                            <li className='w-[49%] md:w-[32%] text-[#4B4D4D] text-[16px] font-[400] flex items-center gap-[10px] '>
                                 <svg width="16" height="14" viewBox="0 0 16 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M1 9L4.5 12.5L15 1.5" stroke="black" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                                 </svg>
                                 Refrigerator
                             </li>
-                            <li className='w-[32%] text-[#4B4D4D] text-[16px] font-[400] flex items-center gap-[10px] '>
+                            <li className='w-[49%] md:w-[32%] text-[#4B4D4D] text-[16px] font-[400] flex items-center gap-[10px] '>
                                 <svg width="16" height="14" viewBox="0 0 16 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M1 9L4.5 12.5L15 1.5" stroke="black" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                                 </svg>
                                 Satellite TV
                             </li>
-                            <li className='w-[32%] text-[#4B4D4D] text-[16px] font-[400] flex items-center gap-[10px] '>
+                            <li className='w-[49%] md:w-[32%] text-[#4B4D4D] text-[16px] font-[400] flex items-center gap-[10px] '>
                                 <svg width="16" height="14" viewBox="0 0 16 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M1 9L4.5 12.5L15 1.5" stroke="black" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                                 </svg>
                                 Social Distancing
                             </li>
-                            <li className='w-[32%] text-[#4B4D4D] text-[16px] font-[400] flex items-center gap-[10px] '>
+                            <li className='w-[49%] md:w-[32%] text-[#4B4D4D] text-[16px] font-[400] flex items-center gap-[10px] '>
                                 <svg width="16" height="14" viewBox="0 0 16 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M1 9L4.5 12.5L15 1.5" stroke="black" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                                 </svg>
                                 Swimming Pool
                             </li>
-                            <li className='w-[32%] text-[#4B4D4D] text-[16px] font-[400] flex items-center gap-[10px] '>
+                            <li className='w-[49%] md:w-[32%] text-[#4B4D4D] text-[16px] font-[400] flex items-center gap-[10px] '>
                                 <svg width="16" height="14" viewBox="0 0 16 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M1 9L4.5 12.5L15 1.5" stroke="black" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                                 </svg>
                                 Television
                             </li>
-                            <li className='w-[32%] text-[#4B4D4D] text-[16px] font-[400] flex items-center gap-[10px] '>
+                            <li className='w-[49%] md:w-[32%] text-[#4B4D4D] text-[16px] font-[400] flex items-center gap-[10px] '>
                                 <svg width="16" height="14" viewBox="0 0 16 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M1 9L4.5 12.5L15 1.5" stroke="black" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                                 </svg>
                                 Towels
                             </li>
-                            <li className='w-[32%] text-[#4B4D4D] text-[16px] font-[400] flex items-center gap-[10px] '>
+                            <li className='w-[49%] md:w-[32%] text-[#4B4D4D] text-[16px] font-[400] flex items-center gap-[10px] '>
                                 <svg width="16" height="14" viewBox="0 0 16 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M1 9L4.5 12.5L15 1.5" stroke="black" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                                 </svg>
                                 Fitness Center
                             </li>
-                            <li className='w-[32%] text-[#4B4D4D] text-[16px] font-[400] flex items-center gap-[10px] '>
+                            <li className='w-[49%] md:w-[32%] text-[#4B4D4D] text-[16px] font-[400] flex items-center gap-[10px] '>
                                 <svg width="16" height="14" viewBox="0 0 16 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M1 9L4.5 12.5L15 1.5" stroke="black" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                                 </svg>
@@ -497,12 +497,12 @@ function page() {
                     <div className='mt-[30px]' id='rooms'>
                         <h4 className='text-[20px] text-[#4B4D4D] font-[600] mb-[20px] '>Rooms</h4>
 
-                        <div className='flex shadow-[0_4px_10px_0_#00000026] p-[10px] rounded-[20px] mb-[20px]'>
-                            <div className='w-[159px] h-[159px]'>
-                                <img src='/img/hotelDetail1.png' className='h-full rounded-[12px] overflow-hidden' />
+                        <div className='flex flex-wrap md:flex-nowrap shadow-[0_4px_10px_0_#00000026] p-[10px] rounded-[20px] mb-[20px]'>
+                            <div className='w-full md:w-[159px] h-[159px]'>
+                                <img src='/img/hotelDetail1.png' className='w-full md:w-auto h-full rounded-[12px] overflow-hidden' />
                             </div>
-                            <div className='w-[calc(100%-159px)] flex justify-between px-[20px] py-[10px]'>
-                                <div className=''>
+                            <div className='w-full md:w-[calc(100%-159px)] flex flex-wrap md:flex-nowrap justify-between md:px-[20px] py-[10px]'>
+                                <div className='w-full md:w-auto'>
                                     <h3 className='text-[20px] text-[#4B4D4D] font-[700] mb-[5px]'>Deluxe King Room</h3>
                                     <p className='text-[14px] text-[#6B6B6B] font-[400] flex gap-[5px] items-center mb-[5px]'>
                                         <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -568,22 +568,22 @@ function page() {
                                         </div>
                                     </span>
                                 </div>
-                                <div className='h-full flex flex-col justify-between'>
-                                    <div className='text-right'>
+                                <div className='mt-[10px] md:mt-0 w-full md:w-auto md:h-full flex flex-wrap md:flex-nowrap flex-col justify-between'>
+                                    <div className='md:text-right'>
                                         <h3 className='text-[20px] text-[#4B4D4D] font-[700] mb-0'>AED 45</h3>
                                         <span className='text-[12px] text-[#6B6B6B] font-[400] line-clamp-1'>for per hours</span>
                                     </div>
-                                    <Button theme="outline" seletedBut={true} fullWidth={false} className="w-[118px] rounded-[12px] h-[41px] text-[14px] text-[#EF4A23] font-[700] border-1-[#EF4A23] bg-[#FFF]">Select</Button>
+                                    <Button theme="outline" seletedBut={true} fullWidth={false} className="mt-[10px] md:mt-0 w-full md:w-[118px] rounded-[12px] h-[41px] text-[14px] text-[#EF4A23] font-[700] border-1-[#EF4A23] bg-[#FFF]">Select</Button>
                                 </div>
                             </div>
                         </div>
 
-                        <div className='flex shadow-[0_4px_10px_0_#00000026] p-[10px] rounded-[20px] mb-[20px]'>
-                            <div className='w-[159px] h-[159px]'>
-                                <img src='/img/hotelDetail1.png' className='h-full rounded-[12px] overflow-hidden' />
+                        <div className='flex flex-wrap md:flex-nowrap shadow-[0_4px_10px_0_#00000026] p-[10px] rounded-[20px] mb-[20px]'>
+                            <div className='w-full md:w-[159px] h-[159px]'>
+                                <img src='/img/hotelDetail1.png' className='w-full md:w-auto h-full rounded-[12px] overflow-hidden' />
                             </div>
-                            <div className='w-[calc(100%-159px)] flex justify-between px-[20px] py-[10px]'>
-                                <div className=''>
+                            <div className='w-full md:w-[calc(100%-159px)] flex flex-wrap md:flex-nowrap justify-between md:px-[20px] py-[10px]'>
+                                <div className='w-full md:w-auto'>
                                     <h3 className='text-[20px] text-[#4B4D4D] font-[700] mb-[5px]'>Deluxe King Room</h3>
                                     <p className='text-[14px] text-[#6B6B6B] font-[400] flex gap-[5px] items-center mb-[5px]'>
                                         <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -649,12 +649,12 @@ function page() {
                                         </div>
                                     </span>
                                 </div>
-                                <div className='h-full flex flex-col justify-between'>
-                                    <div className='text-right'>
+                                <div className='mt-[10px] md:mt-0 w-full md:w-auto md:h-full flex flex-wrap md:flex-nowrap flex-col justify-between'>
+                                    <div className='md:text-right'>
                                         <h3 className='text-[20px] text-[#4B4D4D] font-[700] mb-0'>AED 45</h3>
                                         <span className='text-[12px] text-[#6B6B6B] font-[400] line-clamp-1'>for per hours</span>
                                     </div>
-                                    <Button theme="primary" seletedBut={true} fullWidth={false} className="w-[118px] rounded-[12px] h-[41px] text-[14px] font-[700]" onClick={handleSearch}>Selected</Button>
+                                    <Button theme="primary" seletedBut={true} fullWidth={false} className="mt-[10px] md:mt-0 w-full md:w-[118px] rounded-[12px] h-[41px] text-[14px] font-[700]" onClick={handleSearch}>Selected</Button>
                                 </div>
                             </div>
                         </div>
@@ -663,9 +663,9 @@ function page() {
                     <div className='h-[1px] w-full bg-[#CECECE] my-[30px]' />
 
                     <div className='mt-[30px]' id='reviews'>
-                        <div className='flex items-center justify-between'>
-                            <h4 className='text-[20px] text-[#4B4D4D] font-[600]'>Reviews </h4>
-                            <div className='text-[#6B6B6B] text-[16px] font-[400] flex items-center'>
+                        <div className='flex flex-wrap md:flex-nowrap items-center justify-between'>
+                            <h4 className='w-full md:w-auto text-[20px] text-[#4B4D4D] font-[600]'>Reviews </h4>
+                            <div className='w-full md:w-auto text-[#6B6B6B] text-[16px] font-[400] flex items-center'>
                                 <span className='mr-[10px] h-[22px] w-[40px] flex items-center justify-center bg-[#29AF52] text-[#fff] text-[16px] font-[600] rounded-[12px] '>8.7</span>
                                 <b>Excellent</b> (19232 ratings)
                             </div>
@@ -775,18 +775,18 @@ function page() {
                             </p>
                         </div>
 
-                        <div className='flex items-center justify-between mt-[40px]'>
+                        <div className='flex gap-y-4 md:gap-0 flex-wrap md:flex-nowrap items-center justify-between mt-[40px]'>
                             <Button onClick={() => setShowReviewOpen(true)} theme="outline" fullWidth={false} className="w-full md:w-[14.37%] rounded-[12px] h-[41px]">Show all Reviews</Button>
                             <Button onClick={() => setSubmitReviewOpen(true)} fullWidth={false} className="w-full md:w-[14.37%] rounded-[12px] h-[41px]">Submit a review</Button>
                         </div>
                     </div>
 
-                    <div id='nearBy' className="w-full md:w-full h-[581px] md:h-[581px] rounded-[20px] overflow-hidden mt-[30px]">
+                    <div id='nearBy' className="w-full md:w-full h-[300px] md:h-[581px] md:h-[581px] rounded-[20px] overflow-hidden mt-[30px]">
                         <MapWithInfoWindow selectedCity={"sydney"} hotelsData={{ data: [data?.data[0]] }} selectedHotelProps={data?.data[0]} />
                     </div>
 
                 </div>
-                <div className='w-[390px] h-auto bg-[#F4F4F4] rounded-[12px] sticky top-[90px] mt-[30px] p-[30px]'>
+                <div className='w-full md:w-[390px] h-auto bg-[#F4F4F4] rounded-[12px] sticky top-[90px] mt-[30px] p-[15px] md:p-[30px]'>
                     <div className='flex items-center justify-between'>
                         <div className='flex flex-col'>
                             <h5 className='flex items-center gap-1 text-[#4B4D4D] text-[16px] font-[700] mb-[5px]'>
@@ -845,7 +845,7 @@ function page() {
                             <span>VAT</span>
                             <span>AED 15</span>
                         </p>
-                         <p className='text-[#4B4D4D] text-[16px] font-[400] flex justify-between items-center'>
+                        <p className='text-[#4B4D4D] text-[16px] font-[400] flex justify-between items-center'>
                             <span>Service Charge</span>
                             <span>AED 05</span>
                         </p>
@@ -868,7 +868,7 @@ function page() {
 
                     <div className='h-[1px] bg-[#CECECE] my-[10px]' />
 
-                    <Button fullWidth={false} className="w-full md:w-full rounded-[12px] h-[60px] mt-[10px]" onClick={()=> router.push("/hotel-details/test/booking")}>Reserve Now</Button>
+                    <Button fullWidth={false} className="w-full md:w-full rounded-[12px] h-[60px] mt-[10px]" onClick={() => router.push("/hotel-details/test/booking")}>Reserve Now</Button>
 
                     <p className='text-[#6B6B6B] text-[12px] font-[400] mt-[10px] text-center'>
                         Lorem ipsum dolor sit amet consectetur. Vitae ultrices tempor congue tortor vitae ac at semper odio. Pharetra feugiat sem sit vestibulum.
@@ -942,7 +942,7 @@ function page() {
             {open && (
                 <div className="rounded-[6px] flex items-center justify-center gap-2 fixed top-4 left-[30px] z-[10000] text-[#4B4D4D] text-[14px] bg-[#FFFFFF] w-[85px] h-[30px]">
                     <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <g clipPath="url(#clip0_195_1411)">
+                        <g clip-path="url(#clip0_195_1411)">
                             <path d="M5 14.9788C5.10725 16.0691 5.34963 16.803 5.89742 17.3507C6.87997 18.3333 8.46133 18.3333 11.6241 18.3333C14.7868 18.3333 16.3682 18.3333 17.3507 17.3507C18.3333 16.3682 18.3333 14.7868 18.3333 11.6241C18.3333 8.46133 18.3333 6.87997 17.3507 5.89742C16.803 5.34963 16.0691 5.10725 14.9788 5" stroke="#4B4D4D" strokeWidth="1.5" />
                             <path d="M1.6665 8.33333C1.6665 5.19063 1.6665 3.61929 2.64281 2.64297C3.61913 1.66667 5.19047 1.66667 8.33317 1.66667C11.4758 1.66667 13.0473 1.66667 14.0235 2.64297C14.9998 3.61929 14.9998 5.19063 14.9998 8.33333C14.9998 11.476 14.9998 13.0474 14.0235 14.0237C13.0473 15 11.4758 15 8.33317 15C5.19047 15 3.61913 15 2.64281 14.0237C1.6665 13.0474 1.6665 11.476 1.6665 8.33333Z" stroke="#4B4D4D" strokeWidth="1.5" />
                             <path d="M1.6665 9.26542C2.18235 9.19983 2.70387 9.1675 3.22626 9.16858C5.43621 9.12775 7.59204 9.73025 9.30909 10.8687C10.9015 11.9245 12.0204 13.3775 12.4998 15" stroke="#4B4D4D" strokeWidth="1.5" strokeLinejoin="round" />
