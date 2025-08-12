@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import React from 'react'
 
 function UseCases() {
@@ -32,10 +33,22 @@ function UseCases() {
                 <h5 className='text-[16px] text-[#4B4D4D] font-[400]'>Hire amazing manor hotels</h5>
                 <h2 className='text-[28px] md:text-[55px] text-[#4B4D4D] font-[700] mt-[16px]'>
                     <span className='flex items-center gap-4 mb-5 md:mb-0'>
-                        for <img src='/img/forBusiness.png' /> <span className='underline'>business</span>
+                        for
+                        <img src='/img/forBusiness.png' />
+                        <span className='underline'>
+                            <Link href="#">
+                                business
+                            </Link>
+                        </span>
                     </span>
                     <span className='flex items-center gap-4'>
-                        and <img src='/img/forHolidays.png' /><span className='underline'>holidays</span>
+                        and
+                        <img src='/img/forHolidays.png' />
+                        <span className='underline'>
+                            <Link href="#">
+                                holidays
+                            </Link>
+                        </span>
                     </span>
                 </h2>
             </div>

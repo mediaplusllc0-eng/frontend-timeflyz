@@ -195,7 +195,7 @@ export default function Hotels() {
       {/* View More Button */}
       <div className="flex justify-center mt-12">
         <Link
-          href={`/slots?city=${selectedCountry}&checkInDate=${selectedDate.toISOString().split("T")[0]
+          href={`/hotel-listings?city=${selectedCountry}&checkInDate=${selectedDate.toISOString().split("T")[0]
             }`}
         >
           <Button fullWidth={false} className="text-md capitalize w-[191px] h-[60px] rounded-[12px]">

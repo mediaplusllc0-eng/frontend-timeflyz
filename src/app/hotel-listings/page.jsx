@@ -13,9 +13,13 @@ import MapWithInfoWindow from "./Map";
 import CTA from '@/components/page-components/home/CTA';
 import HotelChains from '../../components/page-components/home/HotelChains';
 import FooterNew from '../../components/layout/FooterNew';
+import { useRouter } from 'next/navigation';
 
 
 function page() {
+
+    const router = useRouter();
+
     const [selectedDate, setSelectedDate] = useState(
         new Date()
     );
@@ -56,38 +60,42 @@ function page() {
     ])
 
     const handleSearch = () => {
-        if (!query.trim() || !selectedDate) return;
+        // if (!query.trim() || !selectedDate) return;
 
-        const now = new Date();
-        const checkInDateTime = new Date(
-            selectedDate.setHours(now.getHours(), now.getMinutes(), 0, 0)
-        );
+        // const now = new Date();
+        // const checkInDateTime = new Date(
+        //     selectedDate.setHours(now.getHours(), now.getMinutes(), 0, 0)
+        // );
 
-        const durationInHours = parseInt(duration); // default: 3
-        const checkOutDateTime = new Date(
-            checkInDateTime.getTime() + durationInHours * 60 * 60 * 1000
-        );
+        // const durationInHours = parseInt(duration); // default: 3
+        // const checkOutDateTime = new Date(
+        //     checkInDateTime.getTime() + durationInHours * 60 * 60 * 1000
+        // );
 
-        const checkInDate = checkInDateTime.toISOString().split("T")[0];
-        const checkInTime = checkInDateTime.toLocaleTimeString("en-US", {
-            hour: "2-digit",
-            minute: "2-digit",
-            second: "2-digit",
-            hour12: true,
-        });
+        // const checkInDate = checkInDateTime.toISOString().split("T")[0];
+        // const checkInTime = checkInDateTime.toLocaleTimeString("en-US", {
+        //     hour: "2-digit",
+        //     minute: "2-digit",
+        //     second: "2-digit",
+        //     hour12: true,
+        // });
 
-        const checkOutDate = checkOutDateTime.toISOString().split("T")[0];
-        const checkOutTime = checkOutDateTime.toLocaleTimeString("en-US", {
-            hour: "2-digit",
-            minute: "2-digit",
-            second: "2-digit",
-            hour12: true,
-        });
+        // const checkOutDate = checkOutDateTime.toISOString().split("T")[0];
+        // const checkOutTime = checkOutDateTime.toLocaleTimeString("en-US", {
+        //     hour: "2-digit",
+        //     minute: "2-digit",
+        //     second: "2-digit",
+        //     hour12: true,
+        // });
+
+        // router.push(
+        //     `/slots?city=${encodeURIComponent(
+        //         query.trim()
+        //     )}&checkInDate=${checkInDate}&checkInTime=${checkInTime}&checkOutDate=${checkOutDate}&checkOutTime=${checkOutTime}&duration=${duration}`
+        // );
 
         router.push(
-            `/slots?city=${encodeURIComponent(
-                query.trim()
-            )}&checkInDate=${checkInDate}&checkInTime=${checkInTime}&checkOutDate=${checkOutDate}&checkOutTime=${checkOutTime}&duration=${duration}`
+            `/hotel-details/test`
         );
     };
 
@@ -757,7 +765,7 @@ function page() {
                     <div className='w-full md:w-auto'>
                         <div className='w-full flex flex-col'>
                             <label className="text-[16px] text-[#4B4D4D] font-[500] ">Location</label>
-                          <span className='justify-between mt-[6px] text-[#848484] text-[16px] font-[400] flex items-center border-1 border-[#CECECE] py-[8px] px-[15px] rounded-[30px] h-[35px] w-full md:w-[178px]'>
+                            <span className='justify-between mt-[6px] text-[#848484] text-[16px] font-[400] flex items-center border-1 border-[#CECECE] py-[8px] px-[15px] rounded-[30px] h-[35px] w-full md:w-[178px]'>
                                 Select
                                 <svg width="12" height="8" viewBox="0 0 12 8" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M11.0001 1.00001L6.00005 6.00001L0.999976 1" stroke="#848484" strokeWidth="1.5" strokeLinecap="round" />

@@ -186,7 +186,7 @@ export default function Navbar({
             name: "Help center",
             path: "/help-center",
             icon: <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <g clip-path="url(#clip0_86_241)">
+                <g clipPath="url(#clip0_86_241)">
                     <path d="M10 18.3333C14.6024 18.3333 18.3333 14.6023 18.3333 9.99996C18.3333 5.39759 14.6024 1.66663 10 1.66663C5.39763 1.66663 1.66667 5.39759 1.66667 9.99996C1.66667 14.6023 5.39763 18.3333 10 18.3333Z" stroke="#4B4D4D" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                     <path d="M7.91667 7.91671C7.91667 6.76612 8.84942 5.83337 10 5.83337C11.1506 5.83337 12.0833 6.76612 12.0833 7.91671C12.0833 8.63079 11.7241 9.26096 11.1764 9.63637C10.6069 10.0266 10 10.5597 10 11.25" stroke="#4B4D4D" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                     <path d="M10.0001 14.1666H10.0075" stroke="#4B4D4D" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
@@ -221,7 +221,7 @@ export default function Navbar({
                         >
                             {showDropdown ?
                                 <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M24 8L8.00108 23.9989M23.9989 24L8 8.00113" stroke="#4B4D4D" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                    <path d="M24 8L8.00108 23.9989M23.9989 24L8 8.00113" stroke="#4B4D4D" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                                 </svg>
                                 :
                                 <svg

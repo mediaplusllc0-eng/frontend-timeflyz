@@ -34,7 +34,7 @@ const StyledDatePicker: React.FC<StyledDatePickerProps> = ({
         dateFormat="dd/MM/yyyy h:mm aa" // Note the updated format
         minDate={new Date()}
         showTimeSelect // Enable time selection
-        timeIntervals={15} // Optional: sets time steps to every 15 minutes
+        timeIntervals={30} // Optional: sets time steps to every 15 minutes
         timeCaption="Time"
         popperPlacement="bottom-start"
         calendarClassName="!p-4 !rounded-xl !shadow-xl !border !border-gray-200 z-[50]"

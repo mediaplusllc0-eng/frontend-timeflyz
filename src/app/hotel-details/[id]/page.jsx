@@ -15,8 +15,10 @@ import Lightbox from 'yet-another-react-lightbox';
 import Thumbnails from "yet-another-react-lightbox/plugins/thumbnails";
 import "yet-another-react-lightbox/styles.css";
 import "yet-another-react-lightbox/plugins/thumbnails.css";
+import { useRouter } from 'next/navigation';
 
 function page() {
+    let router = useRouter()
     const dispatch = useAppDispatch();
 
     const [selectedDate, setSelectedDate] = useState(
@@ -866,7 +868,7 @@ function page() {
 
                     <div className='h-[1px] bg-[#CECECE] my-[10px]' />
 
-                    <Button fullWidth={false} className="w-full md:w-full rounded-[12px] h-[60px] mt-[10px]">Reserve Now</Button>
+                    <Button fullWidth={false} className="w-full md:w-full rounded-[12px] h-[60px] mt-[10px]" onClick={()=> router.push("/hotel-details/test/booking")}>Reserve Now</Button>
 
                     <p className='text-[#6B6B6B] text-[12px] font-[400] mt-[10px] text-center'>
                         Lorem ipsum dolor sit amet consectetur. Vitae ultrices tempor congue tortor vitae ac at semper odio. Pharetra feugiat sem sit vestibulum.
@@ -940,11 +942,11 @@ function page() {
             {open && (
                 <div className="rounded-[6px] flex items-center justify-center gap-2 fixed top-4 left-[30px] z-[10000] text-[#4B4D4D] text-[14px] bg-[#FFFFFF] w-[85px] h-[30px]">
                     <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <g clip-path="url(#clip0_195_1411)">
-                            <path d="M5 14.9788C5.10725 16.0691 5.34963 16.803 5.89742 17.3507C6.87997 18.3333 8.46133 18.3333 11.6241 18.3333C14.7868 18.3333 16.3682 18.3333 17.3507 17.3507C18.3333 16.3682 18.3333 14.7868 18.3333 11.6241C18.3333 8.46133 18.3333 6.87997 17.3507 5.89742C16.803 5.34963 16.0691 5.10725 14.9788 5" stroke="#4B4D4D" stroke-width="1.5" />
-                            <path d="M1.6665 8.33333C1.6665 5.19063 1.6665 3.61929 2.64281 2.64297C3.61913 1.66667 5.19047 1.66667 8.33317 1.66667C11.4758 1.66667 13.0473 1.66667 14.0235 2.64297C14.9998 3.61929 14.9998 5.19063 14.9998 8.33333C14.9998 11.476 14.9998 13.0474 14.0235 14.0237C13.0473 15 11.4758 15 8.33317 15C5.19047 15 3.61913 15 2.64281 14.0237C1.6665 13.0474 1.6665 11.476 1.6665 8.33333Z" stroke="#4B4D4D" stroke-width="1.5" />
-                            <path d="M1.6665 9.26542C2.18235 9.19983 2.70387 9.1675 3.22626 9.16858C5.43621 9.12775 7.59204 9.73025 9.30909 10.8687C10.9015 11.9245 12.0204 13.3775 12.4998 15" stroke="#4B4D4D" stroke-width="1.5" stroke-linejoin="round" />
-                            <path d="M10.833 5.83333H10.8405" stroke="#4B4D4D" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                        <g clipPath="url(#clip0_195_1411)">
+                            <path d="M5 14.9788C5.10725 16.0691 5.34963 16.803 5.89742 17.3507C6.87997 18.3333 8.46133 18.3333 11.6241 18.3333C14.7868 18.3333 16.3682 18.3333 17.3507 17.3507C18.3333 16.3682 18.3333 14.7868 18.3333 11.6241C18.3333 8.46133 18.3333 6.87997 17.3507 5.89742C16.803 5.34963 16.0691 5.10725 14.9788 5" stroke="#4B4D4D" strokeWidth="1.5" />
+                            <path d="M1.6665 8.33333C1.6665 5.19063 1.6665 3.61929 2.64281 2.64297C3.61913 1.66667 5.19047 1.66667 8.33317 1.66667C11.4758 1.66667 13.0473 1.66667 14.0235 2.64297C14.9998 3.61929 14.9998 5.19063 14.9998 8.33333C14.9998 11.476 14.9998 13.0474 14.0235 14.0237C13.0473 15 11.4758 15 8.33317 15C5.19047 15 3.61913 15 2.64281 14.0237C1.6665 13.0474 1.6665 11.476 1.6665 8.33333Z" stroke="#4B4D4D" strokeWidth="1.5" />
+                            <path d="M1.6665 9.26542C2.18235 9.19983 2.70387 9.1675 3.22626 9.16858C5.43621 9.12775 7.59204 9.73025 9.30909 10.8687C10.9015 11.9245 12.0204 13.3775 12.4998 15" stroke="#4B4D4D" strokeWidth="1.5" strokeLinejoin="round" />
+                            <path d="M10.833 5.83333H10.8405" stroke="#4B4D4D" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                         </g>
                         <defs>
                             <clipPath id="clip0_195_1411">

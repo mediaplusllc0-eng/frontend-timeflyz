@@ -314,6 +314,16 @@ a {
   background-color: #EF4A23;
 }
 
+.hotelDetailTabs span{
+  background-color: #F4F4F4;
+  color: #4B4D4D;
+}
+
+.hotelDetailTabs .active span{
+  background-color: #ef4a23;
+  color: #fff;
+}
+
 .yarl__container,
 .yarl__thumbnails_container {
   background: #000000CC !important;
