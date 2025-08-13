@@ -19,7 +19,7 @@ const MapAutoFocus = ({ center }) => {
   return null;
 };
 
-const createPriceIcon = (price, isSelected = false) =>
+const createPriceIcon = (price, isSelected = false, currency) =>
   L.divIcon({
     className: "custom-marker",
     html: `
@@ -34,8 +34,9 @@ const createPriceIcon = (price, isSelected = false) =>
         box-shadow: 0 1px 4px rgba(0,0,0,0.3);
         white-space: nowrap;
         animation: ${isSelected ? 'bounce 0.6s ease' : 'none'};
+        text-align: center
       ">
-        AED ${price}
+        ${currency} ${price}
         <div style="
           position: absolute;
           left: 50%;
@@ -49,7 +50,7 @@ const createPriceIcon = (price, isSelected = false) =>
         "></div>
       </div>
     `,
-    iconSize: [80, 40],
+    iconSize: [100, 40],
     iconAnchor: [40, 40],
   });
 
@@ -58,27 +59,16 @@ const MapWithInfoWindow = ({ selectedCity, hotelsData, selectedHotelProps }) => 
   const [selectedHotel, setSelectedHotel] = useState(null);
 
   const cityHotels = useMemo(() => {
-    return hotelsData?.data
-      ?.map((hotel) => ({
-        ...hotel,
-        lat: hotel?.location?.coordinates?.[1],
-        lng: hotel?.location?.coordinates?.[0],
-      }))
-      .filter(
-        (hotel) =>
-          hotel.city?.toLowerCase().includes(selectedCity.toLowerCase()) &&
-          hotel.lat !== undefined &&
-          hotel.lng !== undefined
-      );
+    return hotelsData?.data?.itineraries
   }, [hotelsData, selectedCity]);
 
   const [center, setCenter] = useState(cityHotels?.length
-    ? [cityHotels[0].lat, cityHotels[0].lng]
+    ? [cityHotels[0].latitude ? cityHotels[0].latitude : 0 , cityHotels[0].longitude ? cityHotels[0].longitude : 0]
     : [40.7128, -74.006]);
 
   useEffect(() => {
     if (selectedHotelProps) {
-      setCenter([selectedHotelProps?.location?.coordinates[1], selectedHotelProps?.location?.coordinates[0]])
+      setCenter([selectedHotelProps?.latitude ? selectedHotelProps?.latitude : 0, selectedHotelProps?.longitude ? selectedHotelProps?.longitude : 0])
     }
   }, [selectedHotelProps])
 
@@ -100,24 +90,30 @@ const MapWithInfoWindow = ({ selectedCity, hotelsData, selectedHotelProps }) => 
       <MapAutoFocus center={center} />
 
       {cityHotels?.map((hotel) => {
-        const isSelected = selectedHotelProps?.id === hotel.id;
+        const isSelected = selectedHotelProps?.twxHotelId === hotel.twxHotelId;
         return (
           <Marker
-            key={hotel.id}
-            position={[hotel.lat, hotel.lng]}
-            icon={createPriceIcon(hotel.price, isSelected)}
+            key={hotel.twxHotelId}
+            position={[hotel.latitude ? hotel.latitude : 0, hotel.longitude ? hotel.longitude : 0]}
+            icon={createPriceIcon(
+              hotel?.perNightArray[0].price,
+              isSelected,
+              hotel?.perNightArray[0].currency
+            )}
+            zIndexOffset={isSelected ? 1000 : 0} // 👈 this makes selected marker float on top
             eventHandlers={{
               click: () => {
                 setSelectedHotel(hotel);
               },
             }}
           >
-            {selectedHotel?.id === hotel.id && (
+            {selectedHotel?.twxHotelId === hotel.twxHotelId && (
               <Popup>
                 <HotelInfoCard hotel={selectedHotel} />
               </Popup>
             )}
           </Marker>
+
         );
       })}
     </MapContainer>

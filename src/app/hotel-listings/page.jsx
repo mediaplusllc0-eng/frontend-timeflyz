@@ -88,15 +88,18 @@ function page() {
         //     hour12: true,
         // });
 
+        console.log(queryParams)
+        setQueryParams(queryParams2)
+
         // router.push(
-        //     `/slots?city=${encodeURIComponent(
+        //     `/hotel-listings?city=${encodeURIComponent(
         //         query.trim()
-        //     )}&checkInDate=${checkInDate}&checkInTime=${checkInTime}&checkOutDate=${checkOutDate}&checkOutTime=${checkOutTime}&duration=${duration}`
+        //     )}&checkInDate=${queryParams.cityName}&checkInTime=${queryParams.checkIn}&checkOutDate=${queryParams.checkOut}`
         // );
 
-        router.push(
-            `/hotel-details/test`
-        );
+        // router.push(
+        //     `/hotel-details/test`
+        // );
     };
 
     const scrollRef = useRef(null);
@@ -116,7 +119,45 @@ function page() {
         "WiFi"
     ];
 
-    let queryParams = { city: 'sydney', checkInDate: '2025-08-05' }
+    // let queryParams = { city: 'sydney', checkInDate: '2025-08-05' }
+
+    let [queryParams2, setQueryParams2] = useState({
+        "cityName": "dubai",
+        "countryName": "United Arab Emirates",
+        "checkIn": new Date().toISOString().split("T")[0],
+        "checkOut": new Date().toISOString().split("T")[0],
+        "currency": "AED",
+        "occupancy": [
+            {
+                "room_no": 1,
+                "adult": 2,
+                "child": 1,
+                "child_age": [5]
+            }
+        ],
+        "maxResult": 20,
+        "resultsPerPage": 20,
+        "nationality": "AE"
+    })
+
+    let [queryParams, setQueryParams] = useState({
+        "cityName": "dubai",
+        "countryName": "United Arab Emirates",
+        "checkIn": new Date().toISOString().split("T")[0],
+        "checkOut": new Date().toISOString().split("T")[0],
+        "currency": "AED",
+        "occupancy": [
+            {
+                "room_no": 1,
+                "adult": 2,
+                "child": 1,
+                "child_age": [5]
+            }
+        ],
+        "maxResult": 20,
+        "resultsPerPage": 20,
+        "nationality": "AE"
+    })
 
     const {
         data: hotelsData,
@@ -125,16 +166,18 @@ function page() {
         refetch: refetchHotels,
     } = useSearchHotelsQuery(queryParams);
 
+    console.log(hotelsData)
+
     let [selectedHotel, setSelectedHotel] = useState(false)
 
     useEffect(() => {
-        if (hotelsData?.data) {
-            setSelectedHotel(hotelsData?.data[0])
+        if (hotelsData?.data?.itineraries) {
+            setSelectedHotel(hotelsData?.data?.itineraries[0])
         }
     }, [hotelsData])
 
     const selectHotel = (hotel) => {
-        if (selectedHotel?.id !== hotel.id) {
+        if (selectedHotel?.twxHotelId !== hotel.twxHotelId) {
             setSelectedHotel(hotel);
         }
     };
@@ -393,8 +436,8 @@ function page() {
     let [imageIndex, setImageIndex] = useState([])
 
     useEffect(() => {
-        if (hotelsData?.data) {
-            let arr = hotelsData?.data?.map((a) => {
+        if (hotelsData?.data?.itineraries) {
+            let arr = hotelsData?.data?.itineraries?.map((a) => {
                 return {
                     imageIndex: 0,
                     imagesLength: a.images?.length
@@ -405,6 +448,58 @@ function page() {
             console.log(arr)
         }
     }, [hotelsData])
+
+    const HotelRating = ({ rating = 0 }) => {
+        const totalStars = 5;
+
+        // Round to nearest half for half-star logic (optional)
+        const roundedRating = Math.round(rating * 2) / 2;
+
+        return (
+            <div className='flex items-center gap-1 text-[#6B6B6B] text-[12px] font-[400] mt-[7px]'>
+                {[...Array(totalStars)].map((_, index) => {
+                    const currentStar = index + 1;
+
+                    return (
+                        <svg
+                            key={index}
+                            width="16"
+                            height="15"
+                            viewBox="0 0 16 15"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                        >
+                            <path
+                                d="M8 0L9.79611 5.52786H15.6085L10.9062 8.94427L12.7023 14.4721L8 11.0557L3.29772 14.4721L5.09383 8.94427L0.391548 5.52786H6.20389L8 0Z"
+                                fill={
+                                    currentStar <= roundedRating
+                                        ? "#4B4D4D"          // full star
+                                        : currentStar - 0.5 === roundedRating
+                                            ? "url(#half)"       // half star fill
+                                            : "#D1D5DB"          // empty star
+                                }
+                            />
+                            {/* Half star gradient */}
+                            {currentStar - 0.5 === roundedRating && (
+                                <defs>
+                                    <linearGradient id="half">
+                                        <stop offset="50%" stopColor="#4B4D4D" />
+                                        <stop offset="50%" stopColor="#D1D5DB" />
+                                    </linearGradient>
+                                </defs>
+                            )}
+                        </svg>
+                    );
+                })}
+                <span>Hotel</span>
+            </div>
+        );
+    };
+
+    function kilometersToMiles(km) {
+        const miles = km * 0.621371;
+        return miles.toFixed(2);
+    }
 
     return (
         <div className='HotelListingMain'>
@@ -445,9 +540,9 @@ function page() {
                                             setRegionList(arr)
                                         }}
                                         className="accent-[#EF4A23]"
-                                        checked={item.checked} type="checkbox" id={`checkbox${index}`} />
+                                        checked={item?.checked} type="checkbox" id={`checkbox${index}`} />
                                     <label htmlFor={`checkbox${index}`}>
-                                        {item.name}
+                                        {item?.name}
                                     </label>
                                 </li>
                             ))}
@@ -455,30 +550,39 @@ function page() {
                     )}
                 </div>
 
-                <div className="mb-5 md:mb-0 inputDiv flex flex-col rounded-[12px] bg-[#E4E4E4] py-[12px] px-[16px] w-full md:w-[14.37%] h-[60px]">
+                <div className="mb-5 md:mb-0 inputDiv flex flex-col rounded-[12px] bg-[#E4E4E4] py-[12px] px-[12px] w-full md:w-[14.37%] h-[60px]">
                     <label className="m-0 text-[16px] text-[#4B4D4D] font-[500] mt-[-2px]">Check in</label>
                     <StyledDatePicker
                         className="border-0 outline-0 mt-[-5px]"
-                        selectedDate={selectedDate}
+                        selectedDate={queryParams2?.checkIn}
                         icon={
                             <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gray-900 text-white flex items-center justify-center rounded-full">
                                 <CalendarDays size={20} />
                             </div>
                         }
-                        setSelectedDate={(date) => setSelectedDate(date)}
+                        setSelectedDate={(date) => {
+                            let query = { ...queryParams2 }
+                            query.checkIn = date.toISOString().split("T")[0]
+                            setQueryParams2(query)
+                        }}
                     />
                 </div>
 
-                <div className="mb-5 md:mb-0 inputDiv flex flex-col rounded-[12px] bg-[#E4E4E4] py-[12px] px-[16px] w-full md:w-[14.37%] h-[60px]">
+                <div className="mb-5 md:mb-0 inputDiv flex flex-col rounded-[12px] bg-[#E4E4E4] py-[12px] px-[12px] w-full md:w-[14.37%] h-[60px]">
                     <label className="m-0 text-[16px] text-[#4B4D4D] font-[500] mt-[-2px]">Check out</label>
                     <StyledDatePicker
-                        selectedDate={selectedDate}
+                        className="border-0 outline-0 mt-[-5px]"
+                        selectedDate={queryParams2?.checkOut}
                         icon={
                             <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gray-900 text-white flex items-center justify-center rounded-full">
                                 <CalendarDays size={20} />
                             </div>
                         }
-                        setSelectedDate={(date) => setSelectedDate(date)}
+                        setSelectedDate={(date) => {
+                            let query = { ...queryParams2 }
+                            query.checkOut = date.toISOString().split("T")[0]
+                            setQueryParams2(query)
+                        }}
                     />
                 </div>
 
@@ -509,7 +613,7 @@ function page() {
                                     }}
                                     className="flex items-center justify-between gap-2 px-3 py-3 hover:bg-gray-100 cursor-pointer text-sm md:text-sm text-gray-700"
                                 >
-                                    {item.name}
+                                    {item?.name}
                                     <div className="w-full flex items-center justify-between w-max gap-2">
                                         <div
                                             onClick={() => {
@@ -521,7 +625,7 @@ function page() {
                                             }}
                                             className="cursor-pointer w-[30px] h-[30px] rounded-[30px] border-[1px] border-[lightgrey] flex items-center justify-center text-[16px] text-[gray]"
                                         >-</div>
-                                        <span className="w-[30px] h-[30px] rounded-[5px] border-[1px] border-[lightgrey] flex items-center justify-center text-[16px] text-[gray]" >{item.value ? item.value : 0}</span>
+                                        <span className="w-[30px] h-[30px] rounded-[5px] border-[1px] border-[lightgrey] flex items-center justify-center text-[16px] text-[gray]" >{item?.value ? item?.value : 0}</span>
                                         <div
                                             onClick={() => {
                                                 let arr = [...whoList]
@@ -569,7 +673,7 @@ function page() {
                                                 name="featureFilter"
                                                 id={`radio${index}`}
                                                 className="accent-[#EF4A23]"
-                                                checked={item.checked}
+                                                checked={item?.checked}
                                                 onChange={() => {
                                                     const updatedList = featureFilterList.map((feature, i) => ({
                                                         ...feature,
@@ -578,7 +682,7 @@ function page() {
                                                     setFeatureFilterList(updatedList);
                                                 }}
                                             />
-                                            <label htmlFor={`radio${index}`}>{item.name}</label>
+                                            <label htmlFor={`radio${index}`}>{item?.name}</label>
                                         </li>
                                     ))}
                                     <li className='text-right px-[20px] pb-0 pt-[10px] mt-[10px] border-t-1 border-[#80808035]'>
@@ -815,10 +919,10 @@ function page() {
 
             <div className='listingDiv bg-[#F4F4F4] px-5 md:px-[30px] flex justify-between flex-wrap md:flex-nowrap py-[15px]'>
                 <div className='mb-5 md:mb-0 Lists w-full md:w-[50%] pr-[20px]'>
-                    <h5 className='mt-[20px] text-[#4B4D4D] text-[12px] font-[400] '>We found <b>{hotelsData?.data?.length ?? 0} hotels</b></h5>
+                    <h5 className='mt-[20px] text-[#4B4D4D] text-[12px] font-[400] '>We found <b>{hotelsData?.data?.itineraries?.length ?? 0} hotels</b></h5>
 
                     <div className='Listings mt-[10px] flex flex-col gap-[10px]'>
-                        {hotelsData?.data?.map((item, index) => {
+                        {hotelsData?.data?.itineraries?.map((item, index) => {
                             return (
                                 <div
                                     onMouseEnter={() => selectHotel(item)}
@@ -827,13 +931,13 @@ function page() {
                                 >
                                     <div className="relative w-full md:w-[159px] h-full rounded-[12px] overflow-hidden">
                                         <img
-                                            src={item.images[imageIndex[index]?.imageIndex]}
+                                            src={item?.thumbNailUrl ? item?.thumbNailUrl : "data:image/png;base64,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"}
                                             alt="hotel"
                                             className="w-full h-full object-cover rounded-[12px] opacity-0 transition-opacity duration-500 ease-in-out"
                                             onLoad={(e) => {
                                                 e.currentTarget.style.opacity = 1;
                                             }}
-                                            key={item.images[imageIndex[index]?.imageIndex]} // forces re-render on image change
+                                            key={item?.thumbNailUrl} // forces re-render on image change
                                         />
 
                                         <div className="flex justify-between items-center absolute top-0 left-0 p-[8px] w-full">
@@ -845,13 +949,13 @@ function page() {
                                             </svg>
                                         </div>
 
-                                        <div className="absolute bottom-[8px] right-[8px]">
+                                        {/* <div className="absolute bottom-[8px] right-[8px]">
                                             <span className="bg-[#4B4D4D] w-[35px] h-[20px] flex items-center justify-center rounded-[12px] text-[12px] text-[#FFFFFF] font-[400]">
                                                 {imageIndex[index]?.imageIndex + 1}/{imageIndex[index]?.imagesLength}
                                             </span>
-                                        </div>
+                                        </div> */}
 
-                                        <div className="w-full px-[8px] absolute bottom-[50%] transform-[translate(0,50%)] flex justify-between items-center z-10">
+                                        {/* <div className="w-full px-[8px] absolute bottom-[50%] transform-[translate(0,50%)] flex justify-between items-center z-10">
                                             <button
                                                 onClick={() => {
                                                     const arr = [...imageIndex];
@@ -876,24 +980,15 @@ function page() {
                                             >
                                                 {">"}
                                             </button>
-                                        </div>
+                                        </div> */}
                                     </div>
 
                                     <div className='flex flex-wrap md:flex-nowrap w-full md:w-[calc(100%-159px)] justify-between'>
                                         <div className='w-full md:w-[59%]'>
                                             <h2 className='text-[#4B4D4D] text-[16px] font-[700] mt-[5px] '>
-                                                {item.name?.length > 25 ? `${item.name?.slice(0, 25)}...` : item.name}
+                                                {item?.hotelName?.length > 25 ? `${item?.hotelName?.slice(0, 25)}...` : item?.hotelName}
                                             </h2>
-                                            <div className='flex items-center gap-2 text-[#6B6B6B] text-[12px] font-[400] mt-[7px] '>
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="96" height="16" viewBox="0 0 96 16" fill="none">
-                                                    <path d="M8 0L9.79611 5.52786H15.6085L10.9062 8.94427L12.7023 14.4721L8 11.0557L3.29772 14.4721L5.09383 8.94427L0.391548 5.52786H6.20389L8 0Z" fill="#4B4D4D" />
-                                                    <path d="M48 0L49.7961 5.52786H55.6085L50.9062 8.94427L52.7023 14.4721L48 11.0557L43.2977 14.4721L45.0938 8.94427L40.3915 5.52786H46.2039L48 0Z" fill="#4B4D4D" />
-                                                    <path d="M28 0L29.7961 5.52786H35.6085L30.9062 8.94427L32.7023 14.4721L28 11.0557L23.2977 14.4721L25.0938 8.94427L20.3915 5.52786H26.2039L28 0Z" fill="#4B4D4D" />
-                                                    <path d="M68 0L69.7961 5.52786H75.6085L70.9062 8.94427L72.7023 14.4721L68 11.0557L63.2977 14.4721L65.0938 8.94427L60.3915 5.52786H66.2039L68 0Z" fill="#4B4D4D" />
-                                                    <path d="M88 0L89.7961 5.52786H95.6085L90.9062 8.94427L92.7023 14.4721L88 11.0557L83.2977 14.4721L85.0938 8.94427L80.3915 5.52786H86.2039L88 0Z" fill="#4B4D4D" />
-                                                </svg>
-                                                Hotel
-                                            </div>
+                                            <HotelRating rating={item?.hotelRating} />
 
                                             <div className='flex items-start gap-2 mt-[6px]'>
                                                 <svg className='mt-[5px]' width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -902,7 +997,7 @@ function page() {
                                                 </svg>
 
                                                 <span className='w-[calc(100%-16px)] text-[#6B6B6B] text-[12px] font-[400] '>
-                                                    Rooftop Pool and Whirlpool Bath, Memorable Events and Banquets
+                                                    {item?.facilities?.slice(0, 6)?.map((a, i) => i < 5 ? `${a}, ` : `${a}.`).join()?.length > 80 ? `${item?.facilities?.slice(0, 6)?.map((a, i) => i < 5 ? `${a}, ` : `${a}.`).join().slice(0, 80)}...` : item?.facilities?.slice(0, 6)?.map((a, i) => i < 5 ? `${a}, ` : `${a}.`)}
                                                 </span>
                                             </div>
 
@@ -914,227 +1009,42 @@ function page() {
                                                 </svg>
 
                                                 <span className='w-[calc(100%-16px)] text-[#6B6B6B] text-[12px] font-[400] '>
-                                                    4.8 miles to City center
+                                                    {kilometersToMiles(item?.distanceValue)} miles to City center
                                                 </span>
                                             </div>
 
                                             <div className='flex items-start gap-2 mt-[10px]'>
-                                                <span className='w-[29px] h-[17px] flex items-center justify-center rounded-[12px] bg-[#29AF52] text-[12px] text-[#ffffff] font-[600] '>8.7</span>
+                                                <span className='w-[29px] h-[17px] flex items-center justify-center rounded-[12px] bg-[#29AF52] text-[12px] text-[#ffffff] font-[600] '>{item?.hotelRating}</span>
 
-                                                <span className='w-[calc(100%-16px)] text-[#6B6B6B] text-[12px] font-[400] '>
+                                                {/* <span className='w-[calc(100%-16px)] text-[#6B6B6B] text-[12px] font-[400] '>
                                                     <b>Excellent</b> (19232 ratings)
+                                                </span> */}
+                                                <span className='w-[calc(100%-16px)] text-[#6B6B6B] text-[12px] font-[400] '>
+                                                    <b>Ratings</b>
                                                 </span>
                                             </div>
                                         </div>
                                         <div className='mt md:mt-0-5 w-full md:w-[41%] h-full flex md:flex-col justify-between pr-[8px] py-[5px]'>
                                             <div className='text-left md:text-right'>
-                                                <h3 className='text-[#4B4D4D] text-[16px] font-[700] '>AED {item.price}</h3>
-                                                <span className='text-[#6B6B6B] text-[12px] font-[400] '>for 3 hours</span>
+                                                <h3 className='text-[#4B4D4D] text-[16px] font-[700] '>{item?.perNightArray[0]?.currency} {item?.perNightArray[0]?.price}</h3>
+                                                <span className='text-[#6B6B6B] text-[12px] font-[400] '>Per night</span>
                                             </div>
                                             <div className='w-auto text-right'>
-                                                <Button fullWidth={false} className="w-auto rounded-[12px] h-[40px] text-[14px]" onClick={handleSearch}>Check Availability</Button>
+                                                <Button fullWidth={false} className="w-auto rounded-[12px] h-[40px] text-[14px]" onClick={() => {
+                                                    router.push(
+                                                        `/hotel-details/test`
+                                                    );
+                                                }}>Check Availability</Button>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             )
                         })}
-                        {/* {hotelsData?.data?.map((item, index) => (
-                            <div onMouseEnter={() => selectHotel(item)} key={index} className='bg-[#FFFFFF] w-full h-[175px] rounded-[20px] p-[8px] flex gap-[16px] '>
-                                <div className='w-[159px] h-full bg-cover rounded-[12px]' style={{ backgroundImage: `url(${item.images[0]})` }}>
-
-                                </div>
-                                <div className='flex w-[calc(100%-159px)] justify-between'>
-                                    <div className='w-[59%]'>
-                                        <h2 className='text-[#4B4D4D] text-[16px] font-[700] mt-[5px] '>
-                                            {item.name?.length > 25 ? `${item.name?.slice(0, 25)}...` : item.name}
-                                        </h2>
-                                        <div className='flex items-center gap-2 text-[#6B6B6B] text-[12px] font-[400] mt-[7px] '>
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="96" height="16" viewBox="0 0 96 16" fill="none">
-                                                <path d="M8 0L9.79611 5.52786H15.6085L10.9062 8.94427L12.7023 14.4721L8 11.0557L3.29772 14.4721L5.09383 8.94427L0.391548 5.52786H6.20389L8 0Z" fill="#4B4D4D" />
-                                                <path d="M48 0L49.7961 5.52786H55.6085L50.9062 8.94427L52.7023 14.4721L48 11.0557L43.2977 14.4721L45.0938 8.94427L40.3915 5.52786H46.2039L48 0Z" fill="#4B4D4D" />
-                                                <path d="M28 0L29.7961 5.52786H35.6085L30.9062 8.94427L32.7023 14.4721L28 11.0557L23.2977 14.4721L25.0938 8.94427L20.3915 5.52786H26.2039L28 0Z" fill="#4B4D4D" />
-                                                <path d="M68 0L69.7961 5.52786H75.6085L70.9062 8.94427L72.7023 14.4721L68 11.0557L63.2977 14.4721L65.0938 8.94427L60.3915 5.52786H66.2039L68 0Z" fill="#4B4D4D" />
-                                                <path d="M88 0L89.7961 5.52786H95.6085L90.9062 8.94427L92.7023 14.4721L88 11.0557L83.2977 14.4721L85.0938 8.94427L80.3915 5.52786H86.2039L88 0Z" fill="#4B4D4D" />
-                                            </svg>
-                                            Hotel
-                                        </div>
-
-                                        <div className='flex items-start gap-2 mt-[6px]'>
-                                            <svg className='mt-[5px]' width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                <path d="M6.66667 4.66666L6.32277 5.59602C5.87183 6.81466 5.64635 7.42399 5.20185 7.86852C4.75735 8.31299 4.14803 8.53846 2.92937 8.98946L2 9.33332L2.92937 9.67719C4.14803 10.1282 4.75735 10.3537 5.20185 10.7981C5.64635 11.2427 5.87183 11.852 6.32277 13.0706L6.66667 14L7.01053 13.0706C7.46153 11.852 7.687 11.2427 8.13147 10.7981C8.576 10.3537 9.18533 10.1282 10.4039 9.67719L11.3333 9.33332L10.4039 8.98946C9.18533 8.53846 8.576 8.31299 8.13147 7.86852C7.687 7.42399 7.46153 6.81466 7.01053 5.59602L6.66667 4.66666Z" stroke="#4B4D4D" strokeWidth="1.5" strokeLinejoin="round" />
-                                                <path d="M12 2L11.8526 2.3983C11.6593 2.92058 11.5627 3.18173 11.3722 3.37222C11.1817 3.56272 10.9206 3.65935 10.3983 3.85261L10 4L10.3983 4.14739C10.9206 4.34065 11.1817 4.43728 11.3722 4.62778C11.5627 4.81827 11.6593 5.07942 11.8526 5.6017L12 6L12.1474 5.6017C12.3407 5.07942 12.4373 4.81827 12.6278 4.62777C12.8183 4.43728 13.0794 4.34065 13.6017 4.14739L14 4L13.6017 3.85261C13.0794 3.65935 12.8183 3.56272 12.6278 3.37222C12.4373 3.18173 12.3407 2.92058 12.1474 2.3983L12 2Z" stroke="#4B4D4D" strokeWidth="1.5" strokeLinejoin="round" />
-                                            </svg>
-
-                                            <span className='w-[calc(100%-16px)] text-[#6B6B6B] text-[12px] font-[400] '>
-                                                Rooftop Pool and Whirlpool Bath, Memorable Events and Banquets
-                                            </span>
-                                        </div>
-
-                                        <div className='flex items-start gap-2 mt-[10px]'>
-                                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                <path d="M9.66659 5.99998C9.66659 6.92045 8.92039 7.66665 7.99992 7.66665C7.07945 7.66665 6.33325 6.92045 6.33325 5.99998C6.33325 5.07951 7.07945 4.33331 7.99992 4.33331C8.92039 4.33331 9.66659 5.07951 9.66659 5.99998Z" stroke="#4B4D4D" strokeWidth="1.5" />
-                                                <path d="M8.83818 11.6624C8.61332 11.8789 8.31279 12 8.00005 12C7.68725 12 7.38672 11.8789 7.16185 11.6624C5.10279 9.66718 2.34338 7.43831 3.68906 4.20247C4.41665 2.45286 6.16321 1.33331 8.00005 1.33331C9.83685 1.33331 11.5834 2.45287 12.311 4.20247C13.655 7.43425 10.9023 9.67405 8.83818 11.6624Z" stroke="#4B4D4D" strokeWidth="1.5" />
-                                                <path d="M12 13.3333C12 14.0697 10.2091 14.6666 8 14.6666C5.79086 14.6666 4 14.0697 4 13.3333" stroke="#4B4D4D" strokeWidth="1.5" strokeLinecap="round" />
-                                            </svg>
-
-                                            <span className='w-[calc(100%-16px)] text-[#6B6B6B] text-[12px] font-[400] '>
-                                                4.8 miles to City center
-                                            </span>
-                                        </div>
-
-                                        <div className='flex items-start gap-2 mt-[10px]'>
-                                            <span className='w-[29px] h-[17px] flex items-center justify-center rounded-[12px] bg-[#29AF52] text-[12px] text-[#ffffff] font-[600] '>8.7</span>
-
-                                            <span className='w-[calc(100%-16px)] text-[#6B6B6B] text-[12px] font-[400] '>
-                                                <b>Excellent</b> (19232 ratings)
-                                            </span>
-                                        </div>
-                                    </div>
-                                    <div className='w-[41%] h-full flex flex-col justify-between pr-[8px] py-[5px]'>
-                                        <div className='text-right'>
-                                            <h3 className='text-[#4B4D4D] text-[16px] font-[700] '>AED {item.price}</h3>
-                                            <span className='text-[#6B6B6B] text-[12px] font-[400] '>for 3 hours</span>
-                                        </div>
-                                        <div className='w-auto text-right'>
-                                            <Button fullWidth={false} className="w-auto rounded-[12px] h-[40px] text-[14px]" onClick={handleSearch}>Check Availability</Button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        ))}
-                        {hotelsData?.data?.map((item, index) => (
-                            <div onMouseEnter={() => selectHotel(item)} key={index} className='bg-[#FFFFFF] w-full h-[175px] rounded-[20px] p-[8px] flex gap-[16px] '>
-                                <div className='w-[159px] h-full bg-cover rounded-[12px]' style={{ backgroundImage: `url(${item.images[0]})` }}>
-
-                                </div>
-                                <div className='flex w-[calc(100%-159px)] justify-between'>
-                                    <div className='w-[59%]'>
-                                        <h2 className='text-[#4B4D4D] text-[16px] font-[700] mt-[5px] '>
-                                            {item.name?.length > 25 ? `${item.name?.slice(0, 25)}...` : item.name}
-                                        </h2>
-                                        <div className='flex items-center gap-2 text-[#6B6B6B] text-[12px] font-[400] mt-[7px] '>
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="96" height="16" viewBox="0 0 96 16" fill="none">
-                                                <path d="M8 0L9.79611 5.52786H15.6085L10.9062 8.94427L12.7023 14.4721L8 11.0557L3.29772 14.4721L5.09383 8.94427L0.391548 5.52786H6.20389L8 0Z" fill="#4B4D4D" />
-                                                <path d="M48 0L49.7961 5.52786H55.6085L50.9062 8.94427L52.7023 14.4721L48 11.0557L43.2977 14.4721L45.0938 8.94427L40.3915 5.52786H46.2039L48 0Z" fill="#4B4D4D" />
-                                                <path d="M28 0L29.7961 5.52786H35.6085L30.9062 8.94427L32.7023 14.4721L28 11.0557L23.2977 14.4721L25.0938 8.94427L20.3915 5.52786H26.2039L28 0Z" fill="#4B4D4D" />
-                                                <path d="M68 0L69.7961 5.52786H75.6085L70.9062 8.94427L72.7023 14.4721L68 11.0557L63.2977 14.4721L65.0938 8.94427L60.3915 5.52786H66.2039L68 0Z" fill="#4B4D4D" />
-                                                <path d="M88 0L89.7961 5.52786H95.6085L90.9062 8.94427L92.7023 14.4721L88 11.0557L83.2977 14.4721L85.0938 8.94427L80.3915 5.52786H86.2039L88 0Z" fill="#4B4D4D" />
-                                            </svg>
-                                            Hotel
-                                        </div>
-
-                                        <div className='flex items-start gap-2 mt-[6px]'>
-                                            <svg className='mt-[5px]' width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                <path d="M6.66667 4.66666L6.32277 5.59602C5.87183 6.81466 5.64635 7.42399 5.20185 7.86852C4.75735 8.31299 4.14803 8.53846 2.92937 8.98946L2 9.33332L2.92937 9.67719C4.14803 10.1282 4.75735 10.3537 5.20185 10.7981C5.64635 11.2427 5.87183 11.852 6.32277 13.0706L6.66667 14L7.01053 13.0706C7.46153 11.852 7.687 11.2427 8.13147 10.7981C8.576 10.3537 9.18533 10.1282 10.4039 9.67719L11.3333 9.33332L10.4039 8.98946C9.18533 8.53846 8.576 8.31299 8.13147 7.86852C7.687 7.42399 7.46153 6.81466 7.01053 5.59602L6.66667 4.66666Z" stroke="#4B4D4D" strokeWidth="1.5" strokeLinejoin="round" />
-                                                <path d="M12 2L11.8526 2.3983C11.6593 2.92058 11.5627 3.18173 11.3722 3.37222C11.1817 3.56272 10.9206 3.65935 10.3983 3.85261L10 4L10.3983 4.14739C10.9206 4.34065 11.1817 4.43728 11.3722 4.62778C11.5627 4.81827 11.6593 5.07942 11.8526 5.6017L12 6L12.1474 5.6017C12.3407 5.07942 12.4373 4.81827 12.6278 4.62777C12.8183 4.43728 13.0794 4.34065 13.6017 4.14739L14 4L13.6017 3.85261C13.0794 3.65935 12.8183 3.56272 12.6278 3.37222C12.4373 3.18173 12.3407 2.92058 12.1474 2.3983L12 2Z" stroke="#4B4D4D" strokeWidth="1.5" strokeLinejoin="round" />
-                                            </svg>
-
-                                            <span className='w-[calc(100%-16px)] text-[#6B6B6B] text-[12px] font-[400] '>
-                                                Rooftop Pool and Whirlpool Bath, Memorable Events and Banquets
-                                            </span>
-                                        </div>
-
-                                        <div className='flex items-start gap-2 mt-[10px]'>
-                                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                <path d="M9.66659 5.99998C9.66659 6.92045 8.92039 7.66665 7.99992 7.66665C7.07945 7.66665 6.33325 6.92045 6.33325 5.99998C6.33325 5.07951 7.07945 4.33331 7.99992 4.33331C8.92039 4.33331 9.66659 5.07951 9.66659 5.99998Z" stroke="#4B4D4D" strokeWidth="1.5" />
-                                                <path d="M8.83818 11.6624C8.61332 11.8789 8.31279 12 8.00005 12C7.68725 12 7.38672 11.8789 7.16185 11.6624C5.10279 9.66718 2.34338 7.43831 3.68906 4.20247C4.41665 2.45286 6.16321 1.33331 8.00005 1.33331C9.83685 1.33331 11.5834 2.45287 12.311 4.20247C13.655 7.43425 10.9023 9.67405 8.83818 11.6624Z" stroke="#4B4D4D" strokeWidth="1.5" />
-                                                <path d="M12 13.3333C12 14.0697 10.2091 14.6666 8 14.6666C5.79086 14.6666 4 14.0697 4 13.3333" stroke="#4B4D4D" strokeWidth="1.5" strokeLinecap="round" />
-                                            </svg>
-
-                                            <span className='w-[calc(100%-16px)] text-[#6B6B6B] text-[12px] font-[400] '>
-                                                4.8 miles to City center
-                                            </span>
-                                        </div>
-
-                                        <div className='flex items-start gap-2 mt-[10px]'>
-                                            <span className='w-[29px] h-[17px] flex items-center justify-center rounded-[12px] bg-[#29AF52] text-[12px] text-[#ffffff] font-[600] '>8.7</span>
-
-                                            <span className='w-[calc(100%-16px)] text-[#6B6B6B] text-[12px] font-[400] '>
-                                                <b>Excellent</b> (19232 ratings)
-                                            </span>
-                                        </div>
-                                    </div>
-                                    <div className='w-[41%] h-full flex flex-col justify-between pr-[8px] py-[5px]'>
-                                        <div className='text-right'>
-                                            <h3 className='text-[#4B4D4D] text-[16px] font-[700] '>AED {item.price}</h3>
-                                            <span className='text-[#6B6B6B] text-[12px] font-[400] '>for 3 hours</span>
-                                        </div>
-                                        <div className='w-auto text-right'>
-                                            <Button fullWidth={false} className="w-auto rounded-[12px] h-[40px] text-[14px]" onClick={handleSearch}>Check Availability</Button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        ))}
-                        {hotelsData?.data?.map((item, index) => (
-                            <div onMouseEnter={() => selectHotel(item)} key={index} className='bg-[#FFFFFF] w-full h-[175px] rounded-[20px] p-[8px] flex gap-[16px] '>
-                                <div className='w-[159px] h-full bg-cover rounded-[12px]' style={{ backgroundImage: `url(${item.images[0]})` }}>
-
-                                </div>
-                                <div className='flex w-[calc(100%-159px)] justify-between'>
-                                    <div className='w-[59%]'>
-                                        <h2 className='text-[#4B4D4D] text-[16px] font-[700] mt-[5px] '>
-                                            {item.name?.length > 25 ? `${item.name?.slice(0, 25)}...` : item.name}
-                                        </h2>
-                                        <div className='flex items-center gap-2 text-[#6B6B6B] text-[12px] font-[400] mt-[7px] '>
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="96" height="16" viewBox="0 0 96 16" fill="none">
-                                                <path d="M8 0L9.79611 5.52786H15.6085L10.9062 8.94427L12.7023 14.4721L8 11.0557L3.29772 14.4721L5.09383 8.94427L0.391548 5.52786H6.20389L8 0Z" fill="#4B4D4D" />
-                                                <path d="M48 0L49.7961 5.52786H55.6085L50.9062 8.94427L52.7023 14.4721L48 11.0557L43.2977 14.4721L45.0938 8.94427L40.3915 5.52786H46.2039L48 0Z" fill="#4B4D4D" />
-                                                <path d="M28 0L29.7961 5.52786H35.6085L30.9062 8.94427L32.7023 14.4721L28 11.0557L23.2977 14.4721L25.0938 8.94427L20.3915 5.52786H26.2039L28 0Z" fill="#4B4D4D" />
-                                                <path d="M68 0L69.7961 5.52786H75.6085L70.9062 8.94427L72.7023 14.4721L68 11.0557L63.2977 14.4721L65.0938 8.94427L60.3915 5.52786H66.2039L68 0Z" fill="#4B4D4D" />
-                                                <path d="M88 0L89.7961 5.52786H95.6085L90.9062 8.94427L92.7023 14.4721L88 11.0557L83.2977 14.4721L85.0938 8.94427L80.3915 5.52786H86.2039L88 0Z" fill="#4B4D4D" />
-                                            </svg>
-                                            Hotel
-                                        </div>
-
-                                        <div className='flex items-start gap-2 mt-[6px]'>
-                                            <svg className='mt-[5px]' width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                <path d="M6.66667 4.66666L6.32277 5.59602C5.87183 6.81466 5.64635 7.42399 5.20185 7.86852C4.75735 8.31299 4.14803 8.53846 2.92937 8.98946L2 9.33332L2.92937 9.67719C4.14803 10.1282 4.75735 10.3537 5.20185 10.7981C5.64635 11.2427 5.87183 11.852 6.32277 13.0706L6.66667 14L7.01053 13.0706C7.46153 11.852 7.687 11.2427 8.13147 10.7981C8.576 10.3537 9.18533 10.1282 10.4039 9.67719L11.3333 9.33332L10.4039 8.98946C9.18533 8.53846 8.576 8.31299 8.13147 7.86852C7.687 7.42399 7.46153 6.81466 7.01053 5.59602L6.66667 4.66666Z" stroke="#4B4D4D" strokeWidth="1.5" strokeLinejoin="round" />
-                                                <path d="M12 2L11.8526 2.3983C11.6593 2.92058 11.5627 3.18173 11.3722 3.37222C11.1817 3.56272 10.9206 3.65935 10.3983 3.85261L10 4L10.3983 4.14739C10.9206 4.34065 11.1817 4.43728 11.3722 4.62778C11.5627 4.81827 11.6593 5.07942 11.8526 5.6017L12 6L12.1474 5.6017C12.3407 5.07942 12.4373 4.81827 12.6278 4.62777C12.8183 4.43728 13.0794 4.34065 13.6017 4.14739L14 4L13.6017 3.85261C13.0794 3.65935 12.8183 3.56272 12.6278 3.37222C12.4373 3.18173 12.3407 2.92058 12.1474 2.3983L12 2Z" stroke="#4B4D4D" strokeWidth="1.5" strokeLinejoin="round" />
-                                            </svg>
-
-                                            <span className='w-[calc(100%-16px)] text-[#6B6B6B] text-[12px] font-[400] '>
-                                                Rooftop Pool and Whirlpool Bath, Memorable Events and Banquets
-                                            </span>
-                                        </div>
-
-                                        <div className='flex items-start gap-2 mt-[10px]'>
-                                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                <path d="M9.66659 5.99998C9.66659 6.92045 8.92039 7.66665 7.99992 7.66665C7.07945 7.66665 6.33325 6.92045 6.33325 5.99998C6.33325 5.07951 7.07945 4.33331 7.99992 4.33331C8.92039 4.33331 9.66659 5.07951 9.66659 5.99998Z" stroke="#4B4D4D" strokeWidth="1.5" />
-                                                <path d="M8.83818 11.6624C8.61332 11.8789 8.31279 12 8.00005 12C7.68725 12 7.38672 11.8789 7.16185 11.6624C5.10279 9.66718 2.34338 7.43831 3.68906 4.20247C4.41665 2.45286 6.16321 1.33331 8.00005 1.33331C9.83685 1.33331 11.5834 2.45287 12.311 4.20247C13.655 7.43425 10.9023 9.67405 8.83818 11.6624Z" stroke="#4B4D4D" strokeWidth="1.5" />
-                                                <path d="M12 13.3333C12 14.0697 10.2091 14.6666 8 14.6666C5.79086 14.6666 4 14.0697 4 13.3333" stroke="#4B4D4D" strokeWidth="1.5" strokeLinecap="round" />
-                                            </svg>
-
-                                            <span className='w-[calc(100%-16px)] text-[#6B6B6B] text-[12px] font-[400] '>
-                                                4.8 miles to City center
-                                            </span>
-                                        </div>
-
-                                        <div className='flex items-start gap-2 mt-[10px]'>
-                                            <span className='w-[29px] h-[17px] flex items-center justify-center rounded-[12px] bg-[#29AF52] text-[12px] text-[#ffffff] font-[600] '>8.7</span>
-
-                                            <span className='w-[calc(100%-16px)] text-[#6B6B6B] text-[12px] font-[400] '>
-                                                <b>Excellent</b> (19232 ratings)
-                                            </span>
-                                        </div>
-                                    </div>
-                                    <div className='w-[41%] h-full flex flex-col justify-between pr-[8px] py-[5px]'>
-                                        <div className='text-right'>
-                                            <h3 className='text-[#4B4D4D] text-[16px] font-[700] '>AED {item.price}</h3>
-                                            <span className='text-[#6B6B6B] text-[12px] font-[400] '>for 3 hours</span>
-                                        </div>
-                                        <div className='w-auto text-right'>
-                                            <Button fullWidth={false} className="w-auto rounded-[12px] h-[40px] text-[14px]" onClick={handleSearch}>Check Availability</Button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        ))} */}
                     </div>
                 </div>
                 <div className="w-full md:w-[50%] h-[300px] md:h-[calc(100vh-110px)] rounded-[20px] overflow-hidden sticky top-[95px]">
-                    <MapWithInfoWindow selectedCity={"sydney"} hotelsData={hotelsData} selectedHotelProps={selectedHotel} />
+                    <MapWithInfoWindow selectedCity={queryParams.cityName} hotelsData={hotelsData} selectedHotelProps={selectedHotel} />
                 </div>
             </div>
 

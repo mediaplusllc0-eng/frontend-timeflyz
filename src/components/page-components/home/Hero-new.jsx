@@ -183,7 +183,7 @@ export default function Hero() {
                         )}
                     </div>
 
-                    <div className="mb-5 md:mb-0 inputDiv flex flex-col rounded-[12px] bg-[#E4E4E4] py-[12px] px-[16px] w-full md:w-[14.37%] h-[60px]">
+                    <div className="mb-5 md:mb-0 inputDiv flex flex-col rounded-[12px] bg-[#E4E4E4] py-[12px] px-[12px] w-full md:w-[14.37%] h-[60px]">
                         <label className="m-0 text-[16px] text-[#4B4D4D] font-[500] mt-[-2px]">Check in</label>
                         <StyledDatePicker
                             className="border-0 outline-0 mt-[-5px]"
@@ -197,7 +197,7 @@ export default function Hero() {
                         />
                     </div>
 
-                    <div className="mb-5 md:mb-0 inputDiv flex flex-col rounded-[12px] bg-[#E4E4E4] py-[12px] px-[16px] w-full md:w-[14.37%] h-[60px]">
+                    <div className="mb-5 md:mb-0 inputDiv flex flex-col rounded-[12px] bg-[#E4E4E4] py-[12px] px-[12px] w-full md:w-[14.37%] h-[60px]">
                         <label className="m-0 text-[16px] text-[#4B4D4D] font-[500] mt-[-2px]">Check out</label>
                         <StyledDatePicker
                             selectedDate={selectedDate}

@@ -24,7 +24,7 @@ const StyledDatePicker: React.FC<StyledDatePickerProps> = ({
   return (
     <div className="relative w-full border-0 outline-0 mt-[-5px] z-50">
       <DatePicker
-        selected={selectedDate}
+        selected={new Date(selectedDate)}
         onChange={(date) => setSelectedDate(date)}
         onClickOutside={() => setOpen(false)}
         onSelect={() => setOpen(false)}
@@ -43,8 +43,8 @@ const StyledDatePicker: React.FC<StyledDatePickerProps> = ({
             className={`w-full flex items-center gap-4 rounded-md text-gray-400 text-sm justify-start cursor-pointer ${fromReview ? "datee" : ""}`}
             onClick={() => setOpen(!open)}
           >
-            {selectedDate
-              ? selectedDate.toLocaleString("en-GB", {
+            {new Date(selectedDate)
+              ? new Date(selectedDate).toLocaleString("en-GB", {
                 day: "2-digit",
                 month: "2-digit",
                 year: "2-digit",
