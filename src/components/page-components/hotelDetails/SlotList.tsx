@@ -136,7 +136,7 @@ const SlotList = ({ hotelSlots }: any) => {
         {/* Date Picker */}
         <div className="flex flex-col items-start gap-2">
           <h1 className="text-base sm:text-lg font-semibold">Select Date:</h1>
-          <StyledDatePicker
+          {/* <StyledDatePicker
             selectedDate={selectedDate}
             setSelectedDate={(date) => {
               setSelectedDate(date);
@@ -145,7 +145,7 @@ const SlotList = ({ hotelSlots }: any) => {
               }
             }}
             buttonClass="border border-gray-300 px-3 py-1 rounded-md"
-          />
+          /> */}
         </div>
 
         {/* Time Picker */}
