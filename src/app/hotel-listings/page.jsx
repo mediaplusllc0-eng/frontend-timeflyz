@@ -425,7 +425,7 @@ function page() {
         "countryName": selectedRegion.countryName,
         "checkIn": new Date().toISOString().split("T")[0],
         "checkOut": new Date().toISOString().split("T")[0],
-        "currency": "PKR",
+        "currency": "AED",
         "occupancy": [
             {
                 "room_no": 1,
@@ -444,7 +444,7 @@ function page() {
         "countryName": selectedRegion.countryName,
         "checkIn": new Date().toISOString().split("T")[0],
         "checkOut": new Date().toISOString().split("T")[0],
-        "currency": "PKR",
+        "currency": "AED",
         "occupancy": [
             {
                 "room_no": 1,
