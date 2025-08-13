@@ -2,7 +2,7 @@
 "use client";
 
 import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
-import { useState, useMemo, useEffect } from "react";
+import { useState, useMemo, useEffect, useRef } from "react";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import HotelInfoCard from "@/components/page-components/model/HotelInfoCard";
@@ -63,11 +63,13 @@ const MapWithInfoWindow = ({ selectedCity, hotelsData, selectedHotelProps }) => 
   }, [hotelsData, selectedCity]);
 
   const [center, setCenter] = useState(cityHotels?.length
-    ? [cityHotels[0].latitude ? cityHotels[0].latitude : 0 , cityHotels[0].longitude ? cityHotels[0].longitude : 0]
+    ? [cityHotels[0].latitude ? cityHotels[0].latitude : 0, cityHotels[0].longitude ? cityHotels[0].longitude : 0]
     : [40.7128, -74.006]);
 
   useEffect(() => {
     if (selectedHotelProps) {
+      setSelectedHotel(selectedHotelProps)
+       setHoveredHotelId(null);
       setCenter([selectedHotelProps?.latitude ? selectedHotelProps?.latitude : 0, selectedHotelProps?.longitude ? selectedHotelProps?.longitude : 0])
     }
   }, [selectedHotelProps])
@@ -75,6 +77,9 @@ const MapWithInfoWindow = ({ selectedCity, hotelsData, selectedHotelProps }) => 
   useEffect(() => {
     console.log(center)
   }, [center])
+
+  const popupRefs = useRef({});
+  const [hoveredHotelId, setHoveredHotelId] = useState(null);
 
   return (
     <MapContainer
@@ -90,28 +95,44 @@ const MapWithInfoWindow = ({ selectedCity, hotelsData, selectedHotelProps }) => 
       <MapAutoFocus center={center} />
 
       {cityHotels?.map((hotel) => {
-        const isSelected = selectedHotelProps?.twxHotelId === hotel.twxHotelId;
+        const isSelected = selectedHotel?.twxHotelId === hotel.twxHotelId;
+        const isHovered = hoveredHotelId === hotel.twxHotelId;
+        const shouldHighlight = isSelected || isHovered;
         return (
           <Marker
             key={hotel.twxHotelId}
             position={[hotel.latitude ? hotel.latitude : 0, hotel.longitude ? hotel.longitude : 0]}
             icon={createPriceIcon(
-              hotel?.perNightArray[0].price,
-              isSelected,
-              hotel?.perNightArray[0].currency
+              hotel?.perNightArray[0]?.price,
+              shouldHighlight,
+              hotel?.perNightArray[0]?.currency
             )}
             zIndexOffset={isSelected ? 1000 : 0} // 👈 this makes selected marker float on top
             eventHandlers={{
               click: () => {
                 setSelectedHotel(hotel);
+                const ref = popupRefs.current[hotel.twxHotelId];
+                if (ref) {
+                  ref.openOn(ref._map);
+                }
               },
+              mouseover: () => {
+                setSelectedHotel(hotel);
+                setHoveredHotelId(hotel.twxHotelId)
+              }
+              ,
+              mouseout: () => {
+                if (hoveredHotelId !== selectedHotel?.twxHotelId) {
+                  setHoveredHotelId(null);
+                }
+              }
             }}
           >
-            {selectedHotel?.twxHotelId === hotel.twxHotelId && (
-              <Popup>
-                <HotelInfoCard hotel={selectedHotel} />
-              </Popup>
-            )}
+            <Popup ref={(ref) => {
+              if (ref) popupRefs.current[hotel.twxHotelId] = ref;
+            }}>
+              <HotelInfoCard hotel={hotel} />
+            </Popup>
           </Marker>
 
         );

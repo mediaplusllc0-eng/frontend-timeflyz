@@ -15,11 +15,48 @@ import Lightbox from 'yet-another-react-lightbox';
 import Thumbnails from "yet-another-react-lightbox/plugins/thumbnails";
 import "yet-another-react-lightbox/styles.css";
 import "yet-another-react-lightbox/plugins/thumbnails.css";
-import { useRouter } from 'next/navigation';
+import { useParams, useRouter, useSearchParams } from 'next/navigation';
+
+import {
+    useGetHotelReviewsQuery,
+    useGetHotelRoomsQuery,
+    useGetHotelsDetailsQuery,
+    useGetHotelSlotsQuery,
+} from "../../hoteldetail/[hotelid]/services/hotelDetailsApi";
 
 function page() {
     let router = useRouter()
     const dispatch = useAppDispatch();
+
+    const { id } = useParams();
+    const searchParams = useSearchParams();
+
+    let apiStatus = JSON.parse(localStorage.getItem("api_status"))
+    const productId = searchParams.get('productId');
+    const tokenId = searchParams.get('tokenId');
+
+    const {
+        data: hotel,
+        error,
+        isLoading,
+    } = useGetHotelsDetailsQuery({
+        hotelId: id,
+        sessionId: apiStatus?.sessionId,
+        productId: productId,
+        tokenId: tokenId
+    });
+
+    const {
+        data: rooms,
+        isLoading: roomsLoading,
+    } = useGetHotelRoomsQuery({
+        hotelId: id,
+        sessionId: apiStatus?.sessionId,
+        productId: productId,
+        tokenId: tokenId
+    });
+
+    console.log(rooms)
 
     const [selectedDate, setSelectedDate] = useState(
         new Date()
@@ -112,7 +149,7 @@ function page() {
         }
     ])
 
-    const { data, isLoading, isFetching } = useGetAllHotelsQuery({
+    const { data, isFetching } = useGetAllHotelsQuery({
         city: "sydney",
         checkInDate: selectedDate.toISOString().split("T")[0],
         limit: 4,
@@ -142,9 +179,9 @@ function page() {
     let [open, setOpen] = useState(false)
     const [index, setIndex] = useState(0);
 
-    const slides = ["/img/hotelDetail1.png", "/img/hotelDetail2.png", "/img/hotelDetail3.png"].map((img, i) => ({
-        src: img,
-        alt: `carousel_image_${i}`,
+    const slides = hotel?.data?.hotelImages?.map((img, i) => ({
+        src: img.url,
+        alt: img.caption,
         type: "image",
     }));
 
@@ -157,8 +194,57 @@ function page() {
 
     let [activeTab, setActiveTab] = useState("overview")
 
+    const HotelRating = ({ rating = 0 }) => {
+        const totalStars = 5;
+
+        // Round to nearest half for half-star logic (optional)
+        const roundedRating = Math.round(rating * 2) / 2;
+
+        return (
+            <div className='flex items-center gap-1 text-[#6B6B6B] text-[12px] font-[400] mt-[7px]'>
+                {[...Array(totalStars)].map((_, index) => {
+                    const currentStar = index + 1;
+
+                    return (
+                        <svg
+                            key={index}
+                            width="16"
+                            height="15"
+                            viewBox="0 0 16 15"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                        >
+                            <path
+                                d="M8 0L9.79611 5.52786H15.6085L10.9062 8.94427L12.7023 14.4721L8 11.0557L3.29772 14.4721L5.09383 8.94427L0.391548 5.52786H6.20389L8 0Z"
+                                fill={
+                                    currentStar <= roundedRating
+                                        ? "#4B4D4D"          // full star
+                                        : currentStar - 0.5 === roundedRating
+                                            ? "url(#half)"       // half star fill
+                                            : "#D1D5DB"          // empty star
+                                }
+                            />
+                            {/* Half star gradient */}
+                            {currentStar - 0.5 === roundedRating && (
+                                <defs>
+                                    <linearGradient id="half">
+                                        <stop offset="50%" stopColor="#4B4D4D" />
+                                        <stop offset="50%" stopColor="#D1D5DB" />
+                                    </linearGradient>
+                                </defs>
+                            )}
+                        </svg>
+                    );
+                })}
+                <span>Hotel</span>
+            </div>
+        );
+    };
+
+    console.log(hotel)
+
     return (
-        <div className='hotelDetailsMain overflow-x-hidden w-full'>
+        <div className='hotelDetailsMain w-full'>
             <Navbar />
 
             <div className="md:shadow-[0_4px_50px_0_rgba(0,0,0,0.25)] w-[100%] flex-wrap md:flex-nowrap md:w-[1183px] container mx-auto bg-white p-[20px] flex justify-between mt-10 md:mt-[60px] z-50 rounded-[12px]">
@@ -294,33 +380,15 @@ function page() {
             <div className='relative flex flex-wrap items-start justify-between px-5 md:px-[30px] mt-[20px] md:mt-[80px] gap-[10px]'>
                 <div className='flex flex-wrap md:flex-nowrap w-[100%] items-center justify-between'>
                     <div>
-                        <div className='flex items-center text-[12px] text-[#6B6B6B] font-[400] '>
-                            <svg width="16" height="15" viewBox="0 0 16 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M8 0L9.79611 5.52786H15.6085L10.9062 8.94427L12.7023 14.4721L8 11.0557L3.29772 14.4721L5.09383 8.94427L0.391548 5.52786H6.20389L8 0Z" fill="#4B4D4D" />
-                            </svg>
-                            <svg width="16" height="15" viewBox="0 0 16 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M8 0L9.79611 5.52786H15.6085L10.9062 8.94427L12.7023 14.4721L8 11.0557L3.29772 14.4721L5.09383 8.94427L0.391548 5.52786H6.20389L8 0Z" fill="#4B4D4D" />
-                            </svg>
-                            <svg width="16" height="15" viewBox="0 0 16 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M8 0L9.79611 5.52786H15.6085L10.9062 8.94427L12.7023 14.4721L8 11.0557L3.29772 14.4721L5.09383 8.94427L0.391548 5.52786H6.20389L8 0Z" fill="#4B4D4D" />
-                            </svg>
-                            <svg width="16" height="15" viewBox="0 0 16 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M8 0L9.79611 5.52786H15.6085L10.9062 8.94427L12.7023 14.4721L8 11.0557L3.29772 14.4721L5.09383 8.94427L0.391548 5.52786H6.20389L8 0Z" fill="#4B4D4D" />
-                            </svg>
-                            <svg width="16" height="15" viewBox="0 0 16 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M8 0L9.79611 5.52786H15.6085L10.9062 8.94427L12.7023 14.4721L8 11.0557L3.29772 14.4721L5.09383 8.94427L0.391548 5.52786H6.20389L8 0Z" fill="#4B4D4D" />
-                            </svg>
-                            &nbsp;
-                            Hotel
-                        </div>
-                        <h2 className='text-[24px] text-[#4B4D4D] font-[700] mt-[5px] '>Crowne Plaza Dubai Deira, an IHG H</h2>
+                        <HotelRating rating={hotel?.data?.hotelRating} />
+                        <h2 className='text-[24px] text-[#4B4D4D] font-[700] mt-[5px]'>{hotel?.data?.name}</h2>
                         <p className='text-[16px] text-[#6B6B6B] font-[400] flex flex-wrap md:flex-nowrap items-center gap-[5px] mt-[5px] '>
                             <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M12.0832 7.49999C12.0832 8.65057 11.1504 9.58332 9.99984 9.58332C8.84925 9.58332 7.9165 8.65057 7.9165 7.49999C7.9165 6.3494 8.84925 5.41666 9.99984 5.41666C11.1504 5.41666 12.0832 6.3494 12.0832 7.49999Z" stroke="#4B4D4D" strokeWidth="1.5" />
                                 <path d="M11.0477 14.578C10.7666 14.8487 10.3909 15 10 15C9.609 15 9.23334 14.8487 8.95225 14.578C6.37842 12.084 2.92916 9.29791 4.61126 5.2531C5.52075 3.06609 7.70395 1.66666 10 1.66666C12.296 1.66666 14.4792 3.0661 15.3887 5.2531C17.0687 9.29282 13.6278 12.0926 11.0477 14.578Z" stroke="#4B4D4D" strokeWidth="1.5" />
                                 <path d="M15 16.6667C15 17.5872 12.7614 18.3333 10 18.3333C7.23857 18.3333 5 17.5872 5 16.6667" stroke="#4B4D4D" strokeWidth="1.5" strokeLinecap="round" />
                             </svg>
-                            Sheikh Khalifah Bin Zayed St. Opp Burjuman Centre, Dubai, United Arab Emirates
+                            {hotel?.data?.address}, {hotel?.data?.city}, {hotel?.data?.country}
                             <a href='#' className='text-[#EF4A23] font-bold w-full md:w-auto'>Show Map</a>
                         </p>
                     </div>
@@ -337,23 +405,38 @@ function page() {
                     </div>
                 </div>
                 <div className='w-full md:w-[calc(100%-420px)] mt-[30px]'>
-                    <div className='imageDivMain w-full flex items-center justify-between gap-[10px]'>
+                    <div className='h-[500px] imageDivMain w-full flex items-center justify-between gap-[10px]'>
                         <div className='w-full md:w-[60%] h-full relative'>
-                            <img onClick={() => {
-                                setOpen(true)
-                                setIndex(0)
-                            }} src="/img/hotelDetail1.png" className='h-[100%] cursor-pointer w-[100%] rounded-[12px] overflow-hidden' />
+                            <img
+                                onClick={() => {
+                                    setOpen(true)
+                                    setIndex(0)
+                                }}
+                                src={hotel?.data?.hotelImages[0]?.url}
+                                alt={hotel?.data?.hotelImages[0]?.caption}
+                                className='h-[100%] cursor-pointer w-[100%] rounded-[12px] overflow-hidden object-cover'
+                            />
                             <span onClick={() => setOpen(true)} className='cursor-pointer text-[#FFFFFF] text-[14px] font-[400] absolute bottom-[30px] left-[30px] bg-[#4B4D4D] rounded-[6px] h-[26px] w-[121px] flex items-center justify-center '>Show all photo</span>
                         </div>
                         <div className='hidden w-[40%] h-full gap-[10px] md:flex flex-col'>
-                            <img onClick={() => {
-                                setOpen(true)
-                                setIndex(1)
-                            }} src="/img/hotelDetail2.png" className='cursor-pointer w-[100%] rounded-[12px] overflow-hidden' />
-                            <img onClick={() => {
-                                setOpen(true)
-                                setIndex(2)
-                            }} src="/img/hotelDetail3.png" className='cursor-pointer w-[100%] rounded-[12px] overflow-hidden' />
+                            <img
+                                onClick={() => {
+                                    setOpen(true)
+                                    setIndex(1)
+                                }}
+                                src={hotel?.data?.hotelImages[1]?.url}
+                                alt={hotel?.data?.hotelImages[1]?.caption}
+                                className='h-[50%] cursor-pointer w-[100%] rounded-[12px] overflow-hidden object-cover'
+                            />
+                            <img
+                                onClick={() => {
+                                    setOpen(true)
+                                    setIndex(2)
+                                }}
+                                src={hotel?.data?.hotelImages[2]?.url}
+                                alt={hotel?.data?.hotelImages[2]?.caption}
+                                className='h-[50%] cursor-pointer w-[100%] rounded-[12px] overflow-hidden object-cover'
+                            />
                         </div>
                     </div>
                     <div className='w-full flex items-center hotelDetailTabs'>
@@ -382,16 +465,9 @@ function page() {
                     <div className='mt-[30px]' id='overview'>
                         <h4 className='text-[20px] text-[#4B4D4D] font-[600] mb-[10px] '>Description</h4>
                         <p className='text-[16px] text-[#6B6B6B] font-[400] '>
-                            Crowne Plaza Dubai Deira Formerly Roda Links Al Nasr features a restaurant, fitness center, a bar and shared lounge in Dubai An indoor swimming pool and a car rental service are available for guests. The property provides a 24-hour front desk, room service and currency exchange for guests.
+                            {hotel?.data?.description?.content}
                         </p>
                         <br />
-                        <p className='text-[16px] text-[#6B6B6B] font-[400] '>
-                            At the hotel all rooms come with air conditioning, a seating area, a flat-screen TV with satellite channels, a safety deposit box and a private bathroom with a bath or shower, slippers and a hairdryer. All guest rooms will provide guests with a desk and an electric tea pot.
-                        </p>
-                        <br />
-                        <p className='text-[16px] text-[#6B6B6B] font-[400] '>
-                            Gulf Inn Hotel Al Nasr Formerly offers a continental or à la carte breakfast.
-                        </p>
                     </div>
 
                     <div className='h-[1px] w-full bg-[#CECECE] my-[30px]' />
@@ -399,96 +475,14 @@ function page() {
                     <div className='mt-[30px]' id=''>
                         <h4 className='text-[20px] text-[#4B4D4D] font-[600] mb-[10px] '>Amenities</h4>
                         <ul className='flex flex-wrap gap-y-[20px] justify-between md:justify-start'>
-                            <li className='w-[49%] md:w-[32%] text-[#4B4D4D] text-[16px] font-[400] flex items-center gap-[10px] '>
-                                <svg width="16" height="14" viewBox="0 0 16 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M1 9L4.5 12.5L15 1.5" stroke="black" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                                </svg>
-                                24-hour front desk service
-                            </li>
-                            <li className='w-[49%] md:w-[32%] text-[#4B4D4D] text-[16px] font-[400] flex items-center gap-[10px] '>
-                                <svg width="16" height="14" viewBox="0 0 16 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M1 9L4.5 12.5L15 1.5" stroke="black" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                                </svg>
-                                Coffee/Tea
-                            </li>
-                            <li className='w-[49%] md:w-[32%] text-[#4B4D4D] text-[16px] font-[400] flex items-center gap-[10px] '>
-                                <svg width="16" height="14" viewBox="0 0 16 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M1 9L4.5 12.5L15 1.5" stroke="black" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                                </svg>
-                                Dry cleaning
-                            </li>
-                            <li className='w-[49%] md:w-[32%] text-[#4B4D4D] text-[16px] font-[400] flex items-center gap-[10px] '>
-                                <svg width="16" height="14" viewBox="0 0 16 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M1 9L4.5 12.5L15 1.5" stroke="black" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                                </svg>
-                                Free Wireless Internet
-                            </li>
-                            <li className='w-[49%] md:w-[32%] text-[#4B4D4D] text-[16px] font-[400] flex items-center gap-[10px] '>
-                                <svg width="16" height="14" viewBox="0 0 16 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M1 9L4.5 12.5L15 1.5" stroke="black" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                                </svg>
-                                Grocery shopping service
-                            </li>
-                            <li className='w-[49%] md:w-[32%] text-[#4B4D4D] text-[16px] font-[400] flex items-center gap-[10px] '>
-                                <svg width="16" height="14" viewBox="0 0 16 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M1 9L4.5 12.5L15 1.5" stroke="black" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                                </svg>
-                                Indoor parking
-                            </li>
-                            <li className='w-[49%] md:w-[32%] text-[#4B4D4D] text-[16px] font-[400] flex items-center gap-[10px] '>
-                                <svg width="16" height="14" viewBox="0 0 16 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M1 9L4.5 12.5L15 1.5" stroke="black" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                                </svg>
-                                Nightclub/DJ
-                            </li>
-                            <li className='w-[49%] md:w-[32%] text-[#4B4D4D] text-[16px] font-[400] flex items-center gap-[10px] '>
-                                <svg width="16" height="14" viewBox="0 0 16 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M1 9L4.5 12.5L15 1.5" stroke="black" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                                </svg>
-                                Refrigerator
-                            </li>
-                            <li className='w-[49%] md:w-[32%] text-[#4B4D4D] text-[16px] font-[400] flex items-center gap-[10px] '>
-                                <svg width="16" height="14" viewBox="0 0 16 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M1 9L4.5 12.5L15 1.5" stroke="black" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                                </svg>
-                                Satellite TV
-                            </li>
-                            <li className='w-[49%] md:w-[32%] text-[#4B4D4D] text-[16px] font-[400] flex items-center gap-[10px] '>
-                                <svg width="16" height="14" viewBox="0 0 16 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M1 9L4.5 12.5L15 1.5" stroke="black" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                                </svg>
-                                Social Distancing
-                            </li>
-                            <li className='w-[49%] md:w-[32%] text-[#4B4D4D] text-[16px] font-[400] flex items-center gap-[10px] '>
-                                <svg width="16" height="14" viewBox="0 0 16 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M1 9L4.5 12.5L15 1.5" stroke="black" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                                </svg>
-                                Swimming Pool
-                            </li>
-                            <li className='w-[49%] md:w-[32%] text-[#4B4D4D] text-[16px] font-[400] flex items-center gap-[10px] '>
-                                <svg width="16" height="14" viewBox="0 0 16 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M1 9L4.5 12.5L15 1.5" stroke="black" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                                </svg>
-                                Television
-                            </li>
-                            <li className='w-[49%] md:w-[32%] text-[#4B4D4D] text-[16px] font-[400] flex items-center gap-[10px] '>
-                                <svg width="16" height="14" viewBox="0 0 16 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M1 9L4.5 12.5L15 1.5" stroke="black" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                                </svg>
-                                Towels
-                            </li>
-                            <li className='w-[49%] md:w-[32%] text-[#4B4D4D] text-[16px] font-[400] flex items-center gap-[10px] '>
-                                <svg width="16" height="14" viewBox="0 0 16 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M1 9L4.5 12.5L15 1.5" stroke="black" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                                </svg>
-                                Fitness Center
-                            </li>
-                            <li className='w-[49%] md:w-[32%] text-[#4B4D4D] text-[16px] font-[400] flex items-center gap-[10px] '>
-                                <svg width="16" height="14" viewBox="0 0 16 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M1 9L4.5 12.5L15 1.5" stroke="black" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                                </svg>
-                                Elevators
-                            </li>
+                            {hotel?.data?.facilities?.map((a, i) => (
+                                <li key={i} className='w-[49%] md:w-[32%] text-[#4B4D4D] text-[16px] font-[400] flex items-center gap-[10px] '>
+                                    <svg width="16" height="14" viewBox="0 0 16 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M1 9L4.5 12.5L15 1.5" stroke="black" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                                    </svg>
+                                    {a}
+                                </li>
+                            ))}
                         </ul>
                     </div>
 
@@ -496,168 +490,89 @@ function page() {
 
                     <div className='mt-[30px]' id='rooms'>
                         <h4 className='text-[20px] text-[#4B4D4D] font-[600] mb-[20px] '>Rooms</h4>
-
-                        <div className='flex flex-wrap md:flex-nowrap shadow-[0_4px_10px_0_#00000026] p-[10px] rounded-[20px] mb-[20px]'>
-                            <div className='w-full md:w-[159px] h-[159px]'>
-                                <img src='/img/hotelDetail1.png' className='w-full md:w-auto h-full rounded-[12px] overflow-hidden' />
-                            </div>
-                            <div className='w-full md:w-[calc(100%-159px)] flex flex-wrap md:flex-nowrap justify-between md:px-[20px] py-[10px]'>
-                                <div className='w-full md:w-auto'>
-                                    <h3 className='text-[20px] text-[#4B4D4D] font-[700] mb-[5px]'>Deluxe King Room</h3>
-                                    <p className='text-[14px] text-[#6B6B6B] font-[400] flex gap-[5px] items-center mb-[5px]'>
-                                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M11.0002 13.3334V11.9803C11.0002 11.1521 10.6273 10.34 9.8737 9.99644C8.9545 9.57744 7.8521 9.33337 6.66683 9.33337C5.48158 9.33337 4.37916 9.57744 3.45995 9.99644C2.70634 10.34 2.3335 11.1521 2.3335 11.9803V13.3334" stroke="#6B6B6B" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                                            <path d="M13.6667 13.334V11.9809C13.6667 11.1527 13.2938 10.3406 12.5402 9.99709C12.3665 9.91789 12.1861 9.84489 12 9.77869" stroke="#6B6B6B" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                                            <path d="M6.66683 7.33329C7.95549 7.33329 9.00016 6.28862 9.00016 4.99996C9.00016 3.71129 7.95549 2.66663 6.66683 2.66663C5.37816 2.66663 4.3335 3.71129 4.3335 4.99996C4.3335 6.28862 5.37816 7.33329 6.66683 7.33329Z" stroke="#6B6B6B" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                                            <path d="M10 2.76306C10.9638 3.04991 11.6667 3.94276 11.6667 4.99977C11.6667 6.05678 10.9638 6.94964 10 7.23651" stroke="#6B6B6B" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                                        </svg>
-                                        2 Guests
-                                    </p>
-                                    <p className='text-[14px] text-[#6B6B6B] font-[400] flex gap-[5px] items-center mb-[5px]'>
-                                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M14.6668 11.6666H1.3335" stroke="#6B6B6B" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                                            <path d="M14.6668 14V10.6667C14.6668 9.4096 14.6668 8.78107 14.2763 8.39053C13.8858 8 13.2572 8 12.0002 8H4.00016C2.74308 8 2.11454 8 1.72402 8.39053C1.3335 8.78107 1.3335 9.4096 1.3335 10.6667V14" stroke="#6B6B6B" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                                            <path d="M7.33333 8V6.80893C7.33333 6.55515 7.2952 6.47027 7.0998 6.37025C6.693 6.16195 6.1991 6 5.66667 6C5.13423 6 4.64037 6.16195 4.2335 6.37025C4.03814 6.47027 4 6.55515 4 6.80893V8" stroke="#6B6B6B" strokeWidth="1.5" strokeLinecap="round" />
-                                            <path d="M11.9998 8V6.80893C11.9998 6.55515 11.9617 6.47027 11.7663 6.37025C11.3595 6.16195 10.8656 6 10.3332 6C9.8007 6 9.30684 6.16195 8.90004 6.37025C8.70464 6.47027 8.6665 6.55515 8.6665 6.80893V8" stroke="#6B6B6B" strokeWidth="1.5" strokeLinecap="round" />
-                                            <path d="M14 8V4.90705C14 4.44595 14 4.21541 13.8719 3.99769C13.7438 3.77997 13.5613 3.66727 13.1963 3.44189C11.7246 2.53319 9.93287 2 8 2C6.06711 2 4.27543 2.53319 2.80372 3.44189C2.43869 3.66727 2.25618 3.77997 2.12809 3.99769C2 4.21541 2 4.44595 2 4.90705V8" stroke="#6B6B6B" strokeWidth="1.5" strokeLinecap="round" />
-                                        </svg>
-                                        Extra king size
-                                    </p>
-                                    <p className='text-[14px] text-[#6B6B6B] font-[400] flex gap-[5px] items-center mb-[5px]'>
-                                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M7.2302 1.65192C7.60587 1.43955 7.79373 1.33337 8 1.33337C8.20627 1.33337 8.39413 1.43955 8.7698 1.65192L13.2302 4.17326C13.6059 4.38563 13.7937 4.49181 13.8969 4.66671C14 4.8416 14 5.05397 14 5.4787V10.5214C14 10.9461 14 11.1585 13.8969 11.3334C13.7937 11.5082 13.6059 11.6144 13.2302 11.8268L8.7698 14.3482C8.39413 14.5605 8.20627 14.6667 8 14.6667C7.79373 14.6667 7.60587 14.5605 7.2302 14.3482L2.7698 11.8268C2.39411 11.6144 2.20627 11.5082 2.10313 11.3334C2 11.1585 2 10.9461 2 10.5214V5.4787C2 5.05397 2 4.8416 2.10313 4.66671C2.20627 4.49181 2.39411 4.38563 2.7698 4.17326L7.2302 1.65192Z" stroke="#6B6B6B" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                                            <path d="M10.3332 2.84705L8.75584 3.70045C8.3867 3.90017 8.20217 4.00003 7.99984 4.00003C7.7975 4.00003 7.61297 3.90017 7.24384 3.70045L5.6665 2.84705" stroke="#6B6B6B" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                                            <path d="M8.00016 7.74356V14.6666M8.00016 7.74356L13.6668 4.66663M8.00016 7.74356L2.3335 4.66663" stroke="#6B6B6B" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                                            <path d="M2 8L3.92962 9.039C4.28823 9.23213 4.46753 9.32867 4.5671 9.50213C4.66667 9.67567 4.66667 9.89153 4.66667 10.3233V12.6667" stroke="#6B6B6B" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                                            <path d="M14.0002 8L12.0706 9.039C11.712 9.23213 11.5326 9.32867 11.433 9.50213C11.3335 9.67567 11.3335 9.89153 11.3335 10.3233V12.6667" stroke="#6B6B6B" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                                        </svg>
-                                        32 m2
-                                    </p>
-
-                                    <span className='text-[14px] text-[#6B6B6B] font-[400] flex gap-[5px] items-center mt-[10px]'>
-                                        Select room
-
-                                        <div
-                                            tabIndex={0}
-                                            onClick={() => setShowDropdownRooms(true)}
-                                            onBlur={() => setTimeout(() => setShowDropdownRooms(false), 150)}
-                                            className="ml-2 md:mb-0 relative cursor-pointer inputDiv flex-col rounded-[6px] bg-[#E4E4E4] w-[66px] md:w-[66px] h-[30px] flex items-center justify-center">
-                                            <span
-                                                className="inline-flex items-center w-max text-[14px] text-[#4B4D4D] font-[400] mt-[-5px] cursor-pointer">
-                                                1
-                                                <svg className='ml-4 mt-[2px]' width="12" height="8" viewBox="0 0 12 8" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                    <path d="M11.0001 1.00001L6.00005 6.00001L0.999976 1" stroke="#848484" strokeWidth="1.5" strokeLinecap="round" />
-                                                </svg>
-                                            </span>
-                                            {showDropdownRooms && roomList.length > 0 && (
-                                                <ul className="pb-3 absolute left-0 top-[30px] w-[100px] mt-1 bg-white border border-gray-200 rounded-[12px] shadow-[0_4px_25px_0_rgba(0,0,0,0.25)] z-10 max-h-auto overflow-y-auto">
-                                                    {roomList.map((item, index) => (
-                                                        <li
-                                                            key={index}
-                                                            onMouseDown={() => {
-                                                                // setQuery(location);
-                                                                // setShowDropdown(false);
-                                                            }}
-                                                            className="flex items-center justify-center gap-2 px-3 sm:px-4 py-2 hover:bg-gray-100 cursor-pointer text-sm md:text-sm text-gray-700"
-                                                        >
-                                                            {item.name}
-                                                        </li>
-                                                    ))}
-                                                </ul>
-                                            )}
-                                        </div>
-                                    </span>
+                        {rooms?.data?.roomRates?.perBookingRates?.map((a, i) => (
+                            <div key={i} className='flex flex-wrap md:flex-nowrap shadow-[0_4px_10px_0_#00000026] p-[10px] rounded-[20px] mb-[20px]'>
+                                <div className='w-full md:w-[159px] h-[159px]'>
+                                    <img src='/img/hotelDetail1.png' className='w-full md:w-auto h-full rounded-[12px] overflow-hidden' />
                                 </div>
-                                <div className='mt-[10px] md:mt-0 w-full md:w-auto md:h-full flex flex-wrap md:flex-nowrap flex-col justify-between'>
-                                    <div className='md:text-right'>
-                                        <h3 className='text-[20px] text-[#4B4D4D] font-[700] mb-0'>AED 45</h3>
-                                        <span className='text-[12px] text-[#6B6B6B] font-[400] line-clamp-1'>for per hours</span>
+                                <div className='w-full md:w-[calc(100%-159px)] flex flex-wrap md:flex-nowrap justify-between md:px-[20px] py-[10px]'>
+                                    <div className='w-full md:w-auto'>
+                                        <h3 className='text-[20px] text-[#4B4D4D] font-[700] mb-[5px]'>Deluxe King Room</h3>
+                                        <p className='text-[14px] text-[#6B6B6B] font-[400] flex gap-[5px] items-center mb-[5px]'>
+                                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M11.0002 13.3334V11.9803C11.0002 11.1521 10.6273 10.34 9.8737 9.99644C8.9545 9.57744 7.8521 9.33337 6.66683 9.33337C5.48158 9.33337 4.37916 9.57744 3.45995 9.99644C2.70634 10.34 2.3335 11.1521 2.3335 11.9803V13.3334" stroke="#6B6B6B" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                                                <path d="M13.6667 13.334V11.9809C13.6667 11.1527 13.2938 10.3406 12.5402 9.99709C12.3665 9.91789 12.1861 9.84489 12 9.77869" stroke="#6B6B6B" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                                                <path d="M6.66683 7.33329C7.95549 7.33329 9.00016 6.28862 9.00016 4.99996C9.00016 3.71129 7.95549 2.66663 6.66683 2.66663C5.37816 2.66663 4.3335 3.71129 4.3335 4.99996C4.3335 6.28862 5.37816 7.33329 6.66683 7.33329Z" stroke="#6B6B6B" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                                                <path d="M10 2.76306C10.9638 3.04991 11.6667 3.94276 11.6667 4.99977C11.6667 6.05678 10.9638 6.94964 10 7.23651" stroke="#6B6B6B" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                                            </svg>
+                                            2 Guests
+                                        </p>
+                                        <p className='text-[14px] text-[#6B6B6B] font-[400] flex gap-[5px] items-center mb-[5px]'>
+                                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M14.6668 11.6666H1.3335" stroke="#6B6B6B" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                                                <path d="M14.6668 14V10.6667C14.6668 9.4096 14.6668 8.78107 14.2763 8.39053C13.8858 8 13.2572 8 12.0002 8H4.00016C2.74308 8 2.11454 8 1.72402 8.39053C1.3335 8.78107 1.3335 9.4096 1.3335 10.6667V14" stroke="#6B6B6B" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                                                <path d="M7.33333 8V6.80893C7.33333 6.55515 7.2952 6.47027 7.0998 6.37025C6.693 6.16195 6.1991 6 5.66667 6C5.13423 6 4.64037 6.16195 4.2335 6.37025C4.03814 6.47027 4 6.55515 4 6.80893V8" stroke="#6B6B6B" strokeWidth="1.5" strokeLinecap="round" />
+                                                <path d="M11.9998 8V6.80893C11.9998 6.55515 11.9617 6.47027 11.7663 6.37025C11.3595 6.16195 10.8656 6 10.3332 6C9.8007 6 9.30684 6.16195 8.90004 6.37025C8.70464 6.47027 8.6665 6.55515 8.6665 6.80893V8" stroke="#6B6B6B" strokeWidth="1.5" strokeLinecap="round" />
+                                                <path d="M14 8V4.90705C14 4.44595 14 4.21541 13.8719 3.99769C13.7438 3.77997 13.5613 3.66727 13.1963 3.44189C11.7246 2.53319 9.93287 2 8 2C6.06711 2 4.27543 2.53319 2.80372 3.44189C2.43869 3.66727 2.25618 3.77997 2.12809 3.99769C2 4.21541 2 4.44595 2 4.90705V8" stroke="#6B6B6B" strokeWidth="1.5" strokeLinecap="round" />
+                                            </svg>
+                                            Extra king size
+                                        </p>
+                                        <p className='text-[14px] text-[#6B6B6B] font-[400] flex gap-[5px] items-center mb-[5px]'>
+                                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M7.2302 1.65192C7.60587 1.43955 7.79373 1.33337 8 1.33337C8.20627 1.33337 8.39413 1.43955 8.7698 1.65192L13.2302 4.17326C13.6059 4.38563 13.7937 4.49181 13.8969 4.66671C14 4.8416 14 5.05397 14 5.4787V10.5214C14 10.9461 14 11.1585 13.8969 11.3334C13.7937 11.5082 13.6059 11.6144 13.2302 11.8268L8.7698 14.3482C8.39413 14.5605 8.20627 14.6667 8 14.6667C7.79373 14.6667 7.60587 14.5605 7.2302 14.3482L2.7698 11.8268C2.39411 11.6144 2.20627 11.5082 2.10313 11.3334C2 11.1585 2 10.9461 2 10.5214V5.4787C2 5.05397 2 4.8416 2.10313 4.66671C2.20627 4.49181 2.39411 4.38563 2.7698 4.17326L7.2302 1.65192Z" stroke="#6B6B6B" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                                                <path d="M10.3332 2.84705L8.75584 3.70045C8.3867 3.90017 8.20217 4.00003 7.99984 4.00003C7.7975 4.00003 7.61297 3.90017 7.24384 3.70045L5.6665 2.84705" stroke="#6B6B6B" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                                                <path d="M8.00016 7.74356V14.6666M8.00016 7.74356L13.6668 4.66663M8.00016 7.74356L2.3335 4.66663" stroke="#6B6B6B" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                                                <path d="M2 8L3.92962 9.039C4.28823 9.23213 4.46753 9.32867 4.5671 9.50213C4.66667 9.67567 4.66667 9.89153 4.66667 10.3233V12.6667" stroke="#6B6B6B" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                                                <path d="M14.0002 8L12.0706 9.039C11.712 9.23213 11.5326 9.32867 11.433 9.50213C11.3335 9.67567 11.3335 9.89153 11.3335 10.3233V12.6667" stroke="#6B6B6B" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                                            </svg>
+                                            32 m2
+                                        </p>
+
+                                        <span className='text-[14px] text-[#6B6B6B] font-[400] flex gap-[5px] items-center mt-[10px]'>
+                                            Select room
+
+                                            <div
+                                                tabIndex={0}
+                                                onClick={() => setShowDropdownRooms(true)}
+                                                onBlur={() => setTimeout(() => setShowDropdownRooms(false), 150)}
+                                                className="ml-2 md:mb-0 relative cursor-pointer inputDiv flex-col rounded-[6px] bg-[#E4E4E4] w-[66px] md:w-[66px] h-[30px] flex items-center justify-center">
+                                                <span
+                                                    className="inline-flex items-center w-max text-[14px] text-[#4B4D4D] font-[400] mt-[-5px] cursor-pointer">
+                                                    1
+                                                    <svg className='ml-4 mt-[2px]' width="12" height="8" viewBox="0 0 12 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                        <path d="M11.0001 1.00001L6.00005 6.00001L0.999976 1" stroke="#848484" strokeWidth="1.5" strokeLinecap="round" />
+                                                    </svg>
+                                                </span>
+                                                {showDropdownRooms && roomList.length > 0 && (
+                                                    <ul className="pb-3 absolute left-0 top-[30px] w-[100px] mt-1 bg-white border border-gray-200 rounded-[12px] shadow-[0_4px_25px_0_rgba(0,0,0,0.25)] z-10 max-h-auto overflow-y-auto">
+                                                        {roomList.map((item, index) => (
+                                                            <li
+                                                                key={index}
+                                                                onMouseDown={() => {
+                                                                    // setQuery(location);
+                                                                    // setShowDropdown(false);
+                                                                }}
+                                                                className="flex items-center justify-center gap-2 px-3 sm:px-4 py-2 hover:bg-gray-100 cursor-pointer text-sm md:text-sm text-gray-700"
+                                                            >
+                                                                {item.name}
+                                                            </li>
+                                                        ))}
+                                                    </ul>
+                                                )}
+                                            </div>
+                                        </span>
                                     </div>
-                                    <Button theme="outline" seletedBut={true} fullWidth={false} className="mt-[10px] md:mt-0 w-full md:w-[118px] rounded-[12px] h-[41px] text-[14px] text-[#EF4A23] font-[700] border-1-[#EF4A23] bg-[#FFF]">Select</Button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className='flex flex-wrap md:flex-nowrap shadow-[0_4px_10px_0_#00000026] p-[10px] rounded-[20px] mb-[20px]'>
-                            <div className='w-full md:w-[159px] h-[159px]'>
-                                <img src='/img/hotelDetail1.png' className='w-full md:w-auto h-full rounded-[12px] overflow-hidden' />
-                            </div>
-                            <div className='w-full md:w-[calc(100%-159px)] flex flex-wrap md:flex-nowrap justify-between md:px-[20px] py-[10px]'>
-                                <div className='w-full md:w-auto'>
-                                    <h3 className='text-[20px] text-[#4B4D4D] font-[700] mb-[5px]'>Deluxe King Room</h3>
-                                    <p className='text-[14px] text-[#6B6B6B] font-[400] flex gap-[5px] items-center mb-[5px]'>
-                                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M11.0002 13.3334V11.9803C11.0002 11.1521 10.6273 10.34 9.8737 9.99644C8.9545 9.57744 7.8521 9.33337 6.66683 9.33337C5.48158 9.33337 4.37916 9.57744 3.45995 9.99644C2.70634 10.34 2.3335 11.1521 2.3335 11.9803V13.3334" stroke="#6B6B6B" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                                            <path d="M13.6667 13.334V11.9809C13.6667 11.1527 13.2938 10.3406 12.5402 9.99709C12.3665 9.91789 12.1861 9.84489 12 9.77869" stroke="#6B6B6B" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                                            <path d="M6.66683 7.33329C7.95549 7.33329 9.00016 6.28862 9.00016 4.99996C9.00016 3.71129 7.95549 2.66663 6.66683 2.66663C5.37816 2.66663 4.3335 3.71129 4.3335 4.99996C4.3335 6.28862 5.37816 7.33329 6.66683 7.33329Z" stroke="#6B6B6B" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                                            <path d="M10 2.76306C10.9638 3.04991 11.6667 3.94276 11.6667 4.99977C11.6667 6.05678 10.9638 6.94964 10 7.23651" stroke="#6B6B6B" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                                        </svg>
-                                        2 Guests
-                                    </p>
-                                    <p className='text-[14px] text-[#6B6B6B] font-[400] flex gap-[5px] items-center mb-[5px]'>
-                                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M14.6668 11.6666H1.3335" stroke="#6B6B6B" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                                            <path d="M14.6668 14V10.6667C14.6668 9.4096 14.6668 8.78107 14.2763 8.39053C13.8858 8 13.2572 8 12.0002 8H4.00016C2.74308 8 2.11454 8 1.72402 8.39053C1.3335 8.78107 1.3335 9.4096 1.3335 10.6667V14" stroke="#6B6B6B" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                                            <path d="M7.33333 8V6.80893C7.33333 6.55515 7.2952 6.47027 7.0998 6.37025C6.693 6.16195 6.1991 6 5.66667 6C5.13423 6 4.64037 6.16195 4.2335 6.37025C4.03814 6.47027 4 6.55515 4 6.80893V8" stroke="#6B6B6B" strokeWidth="1.5" strokeLinecap="round" />
-                                            <path d="M11.9998 8V6.80893C11.9998 6.55515 11.9617 6.47027 11.7663 6.37025C11.3595 6.16195 10.8656 6 10.3332 6C9.8007 6 9.30684 6.16195 8.90004 6.37025C8.70464 6.47027 8.6665 6.55515 8.6665 6.80893V8" stroke="#6B6B6B" strokeWidth="1.5" strokeLinecap="round" />
-                                            <path d="M14 8V4.90705C14 4.44595 14 4.21541 13.8719 3.99769C13.7438 3.77997 13.5613 3.66727 13.1963 3.44189C11.7246 2.53319 9.93287 2 8 2C6.06711 2 4.27543 2.53319 2.80372 3.44189C2.43869 3.66727 2.25618 3.77997 2.12809 3.99769C2 4.21541 2 4.44595 2 4.90705V8" stroke="#6B6B6B" strokeWidth="1.5" strokeLinecap="round" />
-                                        </svg>
-                                        Extra king size
-                                    </p>
-                                    <p className='text-[14px] text-[#6B6B6B] font-[400] flex gap-[5px] items-center mb-[5px]'>
-                                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M7.2302 1.65192C7.60587 1.43955 7.79373 1.33337 8 1.33337C8.20627 1.33337 8.39413 1.43955 8.7698 1.65192L13.2302 4.17326C13.6059 4.38563 13.7937 4.49181 13.8969 4.66671C14 4.8416 14 5.05397 14 5.4787V10.5214C14 10.9461 14 11.1585 13.8969 11.3334C13.7937 11.5082 13.6059 11.6144 13.2302 11.8268L8.7698 14.3482C8.39413 14.5605 8.20627 14.6667 8 14.6667C7.79373 14.6667 7.60587 14.5605 7.2302 14.3482L2.7698 11.8268C2.39411 11.6144 2.20627 11.5082 2.10313 11.3334C2 11.1585 2 10.9461 2 10.5214V5.4787C2 5.05397 2 4.8416 2.10313 4.66671C2.20627 4.49181 2.39411 4.38563 2.7698 4.17326L7.2302 1.65192Z" stroke="#6B6B6B" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                                            <path d="M10.3332 2.84705L8.75584 3.70045C8.3867 3.90017 8.20217 4.00003 7.99984 4.00003C7.7975 4.00003 7.61297 3.90017 7.24384 3.70045L5.6665 2.84705" stroke="#6B6B6B" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                                            <path d="M8.00016 7.74356V14.6666M8.00016 7.74356L13.6668 4.66663M8.00016 7.74356L2.3335 4.66663" stroke="#6B6B6B" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                                            <path d="M2 8L3.92962 9.039C4.28823 9.23213 4.46753 9.32867 4.5671 9.50213C4.66667 9.67567 4.66667 9.89153 4.66667 10.3233V12.6667" stroke="#6B6B6B" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                                            <path d="M14.0002 8L12.0706 9.039C11.712 9.23213 11.5326 9.32867 11.433 9.50213C11.3335 9.67567 11.3335 9.89153 11.3335 10.3233V12.6667" stroke="#6B6B6B" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                                        </svg>
-                                        32 m2
-                                    </p>
-
-                                    <span className='text-[14px] text-[#6B6B6B] font-[400] flex gap-[5px] items-center mt-[10px]'>
-                                        Select room
-
-                                        <div
-                                            tabIndex={0}
-                                            onClick={() => setShowDropdownRooms(true)}
-                                            onBlur={() => setTimeout(() => setShowDropdownRooms(false), 150)}
-                                            className="ml-2 md:mb-0 relative cursor-pointer inputDiv flex-col rounded-[6px] bg-[#E4E4E4] w-[66px] md:w-[66px] h-[30px] flex items-center justify-center">
-                                            <span
-                                                className="inline-flex items-center w-max text-[14px] text-[#4B4D4D] font-[400] mt-[-5px] cursor-pointer">
-                                                1
-                                                <svg className='ml-4 mt-[2px]' width="12" height="8" viewBox="0 0 12 8" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                    <path d="M11.0001 1.00001L6.00005 6.00001L0.999976 1" stroke="#848484" strokeWidth="1.5" strokeLinecap="round" />
-                                                </svg>
-                                            </span>
-                                            {showDropdownRooms && roomList.length > 0 && (
-                                                <ul className="pb-3 absolute left-0 top-[30px] w-[100px] mt-1 bg-white border border-gray-200 rounded-[12px] shadow-[0_4px_25px_0_rgba(0,0,0,0.25)] z-10 max-h-auto overflow-y-auto">
-                                                    {roomList.map((item, index) => (
-                                                        <li
-                                                            key={index}
-                                                            onMouseDown={() => {
-                                                                // setQuery(location);
-                                                                // setShowDropdown(false);
-                                                            }}
-                                                            className="flex items-center justify-center gap-2 px-3 sm:px-4 py-2 hover:bg-gray-100 cursor-pointer text-sm md:text-sm text-gray-700"
-                                                        >
-                                                            {item.name}
-                                                        </li>
-                                                    ))}
-                                                </ul>
-                                            )}
+                                    <div className='mt-[10px] md:mt-0 w-full md:w-auto md:h-full flex flex-wrap md:flex-nowrap flex-col justify-between'>
+                                        <div className='md:text-right'>
+                                            <h3 className='text-[20px] text-[#4B4D4D] font-[700] mb-0'>AED 45</h3>
+                                            <span className='text-[12px] text-[#6B6B6B] font-[400] line-clamp-1'>for per hours</span>
                                         </div>
-                                    </span>
-                                </div>
-                                <div className='mt-[10px] md:mt-0 w-full md:w-auto md:h-full flex flex-wrap md:flex-nowrap flex-col justify-between'>
-                                    <div className='md:text-right'>
-                                        <h3 className='text-[20px] text-[#4B4D4D] font-[700] mb-0'>AED 45</h3>
-                                        <span className='text-[12px] text-[#6B6B6B] font-[400] line-clamp-1'>for per hours</span>
+                                        <Button theme="outline" seletedBut={true} fullWidth={false} className="mt-[10px] md:mt-0 w-full md:w-[118px] rounded-[12px] h-[41px] text-[14px] text-[#EF4A23] font-[700] border-1-[#EF4A23] bg-[#FFF]">Select</Button>
                                     </div>
-                                    <Button theme="primary" seletedBut={true} fullWidth={false} className="mt-[10px] md:mt-0 w-full md:w-[118px] rounded-[12px] h-[41px] text-[14px] font-[700]" onClick={handleSearch}>Selected</Button>
                                 </div>
                             </div>
-                        </div>
+                        ))}
+
                     </div>
 
                     <div className='h-[1px] w-full bg-[#CECECE] my-[30px]' />
@@ -942,7 +857,7 @@ function page() {
             {open && (
                 <div className="rounded-[6px] flex items-center justify-center gap-2 fixed top-4 left-[30px] z-[10000] text-[#4B4D4D] text-[14px] bg-[#FFFFFF] w-[85px] h-[30px]">
                     <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <g clip-path="url(#clip0_195_1411)">
+                        <g clipPath="url(#clip0_195_1411)">
                             <path d="M5 14.9788C5.10725 16.0691 5.34963 16.803 5.89742 17.3507C6.87997 18.3333 8.46133 18.3333 11.6241 18.3333C14.7868 18.3333 16.3682 18.3333 17.3507 17.3507C18.3333 16.3682 18.3333 14.7868 18.3333 11.6241C18.3333 8.46133 18.3333 6.87997 17.3507 5.89742C16.803 5.34963 16.0691 5.10725 14.9788 5" stroke="#4B4D4D" strokeWidth="1.5" />
                             <path d="M1.6665 8.33333C1.6665 5.19063 1.6665 3.61929 2.64281 2.64297C3.61913 1.66667 5.19047 1.66667 8.33317 1.66667C11.4758 1.66667 13.0473 1.66667 14.0235 2.64297C14.9998 3.61929 14.9998 5.19063 14.9998 8.33333C14.9998 11.476 14.9998 13.0474 14.0235 14.0237C13.0473 15 11.4758 15 8.33317 15C5.19047 15 3.61913 15 2.64281 14.0237C1.6665 13.0474 1.6665 11.476 1.6665 8.33333Z" stroke="#4B4D4D" strokeWidth="1.5" />
                             <path d="M1.6665 9.26542C2.18235 9.19983 2.70387 9.1675 3.22626 9.16858C5.43621 9.12775 7.59204 9.73025 9.30909 10.8687C10.9015 11.9245 12.0204 13.3775 12.4998 15" stroke="#4B4D4D" strokeWidth="1.5" strokeLinejoin="round" />
@@ -955,7 +870,7 @@ function page() {
                         </defs>
                     </svg>
 
-                    {index + 1}/{slides.length}
+                    {slides.length}
                 </div>
             )}
             <Lightbox
@@ -963,7 +878,7 @@ function page() {
                 close={() => setOpen(false)}
                 slides={slides}
                 index={index}
-                carousel={{ finite: false }}
+                carousel={{ finite: true }}
             />
 
             <div className={`fixed inset-0 z-[1000] flex items-center justify-center transition-opacity duration-300 ${submitReviewOpen ? 'opacity-100 visible' : 'opacity-0 invisible'}`}>

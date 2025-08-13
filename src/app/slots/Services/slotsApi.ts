@@ -18,9 +18,20 @@ export const authApi = api.injectEndpoints({
           params: cleanedParams,
         };
       },
+
+      // 👇 This is where we intercept the response
+      transformResponse: (response: any) => {
+        if (response?.data?.status) {
+          localStorage.setItem("api_status", JSON.stringify(response.data.status));
+        }
+
+        // Return only the relevant data for the component
+        return response;
+      },
     }),
   }),
   overrideExisting: false,
 });
+
 
 export const { useSearchHotelsQuery } = authApi;

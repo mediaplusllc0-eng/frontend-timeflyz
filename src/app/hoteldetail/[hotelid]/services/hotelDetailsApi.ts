@@ -3,10 +3,10 @@ import { api } from "@/utils/api2";
 export const hotelDetailsApi = api.injectEndpoints({
   endpoints: (builder) => ({
     getHotelsDetails: builder.query({
-      query: ({ hotelId }) => ({
-        url: `/hotels/${hotelId}`,
+      query: (params) => ({
+        url: `/hotels/${params.hotelId}`,
         method: "GET",
-        // params: { search, limit },
+        params: params,
       }),
     }),
     getHotelReviews: builder.query({
@@ -27,6 +27,13 @@ export const hotelDetailsApi = api.injectEndpoints({
         },
       }),
     }),
+    getHotelRooms: builder.query({
+      query: (params) => ({
+        url: `/hotels/rates/room`,
+        method: "Post",
+        body: params,
+      }),
+    }),
   }),
   overrideExisting: false,
 });
@@ -35,4 +42,5 @@ export const {
   useGetHotelsDetailsQuery,
   useGetHotelReviewsQuery,
   useGetHotelSlotsQuery,
+  useGetHotelRoomsQuery,
 } = hotelDetailsApi;

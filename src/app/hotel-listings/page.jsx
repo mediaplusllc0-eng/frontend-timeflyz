@@ -135,8 +135,8 @@ function page() {
                 "child_age": [5]
             }
         ],
-        "maxResult": 20,
-        "resultsPerPage": 20,
+        "maxResult": 1000,
+        "resultsPerPage": 1000,
         "nationality": "AE"
     })
 
@@ -154,8 +154,8 @@ function page() {
                 "child_age": [5]
             }
         ],
-        "maxResult": 20,
-        "resultsPerPage": 20,
+        "maxResult": 1000,
+        "resultsPerPage": 1000,
         "nationality": "AE"
     })
 
@@ -1032,7 +1032,7 @@ function page() {
                                             <div className='w-auto text-right'>
                                                 <Button fullWidth={false} className="w-auto rounded-[12px] h-[40px] text-[14px]" onClick={() => {
                                                     router.push(
-                                                        `/hotel-details/test`
+                                                        `/hotel-details/${item?.twxHotelId}?productId=${item?.productId}&tokenId=${item?.tokenId}`
                                                     );
                                                 }}>Check Availability</Button>
                                             </div>
