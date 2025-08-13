@@ -12,7 +12,7 @@ const MapAutoFocus = ({ center }) => {
 
   useEffect(() => {
     if (center && center.length === 2) {
-      map.setView(center, 13); // you can change zoom level here
+      map.setView(center, 50); // you can change zoom level here
     }
   }, [center, map]);
 
@@ -84,7 +84,7 @@ const MapWithInfoWindow = ({ selectedCity, hotelsData, selectedHotelProps }) => 
   return (
     <MapContainer
       center={center}
-      zoom={13}
+      zoom={50}
       style={{ height: "100%", width: "100%" }}
     >
       <TileLayer

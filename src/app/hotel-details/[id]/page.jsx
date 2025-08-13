@@ -149,12 +149,12 @@ function page() {
         }
     ])
 
-    const { data, isFetching } = useGetAllHotelsQuery({
-        city: "sydney",
-        checkInDate: selectedDate.toISOString().split("T")[0],
-        limit: 4,
-        page: 1,
-    });
+    // const { data, isFetching } = useGetAllHotelsQuery({
+    //     city: "sydney",
+    //     checkInDate: selectedDate.toISOString().split("T")[0],
+    //     limit: 4,
+    //     page: 1,
+    // });
 
     const SkeletonCard = () => (
         <div className="bg-white rounded-2xl shadow-md animate-pulse overflow-hidden flex flex-col h-full w-full md:w-[24%]">
@@ -174,7 +174,7 @@ function page() {
         (state) => state.hotels
     );
 
-    const hotels = data?.data || [];
+    // const hotels = data?.data || [];
 
     let [open, setOpen] = useState(false)
     const [index, setIndex] = useState(0);
@@ -464,8 +464,7 @@ function page() {
 
                     <div className='mt-[30px]' id='overview'>
                         <h4 className='text-[20px] text-[#4B4D4D] font-[600] mb-[10px] '>Description</h4>
-                        <p className='text-[16px] text-[#6B6B6B] font-[400] '>
-                            {hotel?.data?.description?.content}
+                        <p className='text-[16px] text-[#6B6B6B] font-[400] ' dangerouslySetInnerHTML={{ __html: hotel?.data?.description?.content }} >
                         </p>
                         <br />
                     </div>
@@ -493,30 +492,35 @@ function page() {
                         {rooms?.data?.roomRates?.perBookingRates?.map((a, i) => (
                             <div key={i} className='flex flex-wrap md:flex-nowrap shadow-[0_4px_10px_0_#00000026] p-[10px] rounded-[20px] mb-[20px]'>
                                 <div className='w-full md:w-[159px] h-[159px]'>
-                                    <img src='/img/hotelDetail1.png' className='w-full md:w-auto h-full rounded-[12px] overflow-hidden' />
+                                    <img src={a?.roomImages?.length ? a?.roomImages[0] : "data:image/png;base64,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"} className='w-full md:w-auto h-full rounded-[12px] overflow-hidden' />
                                 </div>
                                 <div className='w-full md:w-[calc(100%-159px)] flex flex-wrap md:flex-nowrap justify-between md:px-[20px] py-[10px]'>
                                     <div className='w-full md:w-auto'>
-                                        <h3 className='text-[20px] text-[#4B4D4D] font-[700] mb-[5px]'>Deluxe King Room</h3>
-                                        <p className='text-[14px] text-[#6B6B6B] font-[400] flex gap-[5px] items-center mb-[5px]'>
-                                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                <path d="M11.0002 13.3334V11.9803C11.0002 11.1521 10.6273 10.34 9.8737 9.99644C8.9545 9.57744 7.8521 9.33337 6.66683 9.33337C5.48158 9.33337 4.37916 9.57744 3.45995 9.99644C2.70634 10.34 2.3335 11.1521 2.3335 11.9803V13.3334" stroke="#6B6B6B" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                                                <path d="M13.6667 13.334V11.9809C13.6667 11.1527 13.2938 10.3406 12.5402 9.99709C12.3665 9.91789 12.1861 9.84489 12 9.77869" stroke="#6B6B6B" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                                                <path d="M6.66683 7.33329C7.95549 7.33329 9.00016 6.28862 9.00016 4.99996C9.00016 3.71129 7.95549 2.66663 6.66683 2.66663C5.37816 2.66663 4.3335 3.71129 4.3335 4.99996C4.3335 6.28862 5.37816 7.33329 6.66683 7.33329Z" stroke="#6B6B6B" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                                                <path d="M10 2.76306C10.9638 3.04991 11.6667 3.94276 11.6667 4.99977C11.6667 6.05678 10.9638 6.94964 10 7.23651" stroke="#6B6B6B" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                                            </svg>
-                                            2 Guests
-                                        </p>
-                                        <p className='text-[14px] text-[#6B6B6B] font-[400] flex gap-[5px] items-center mb-[5px]'>
-                                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                <path d="M14.6668 11.6666H1.3335" stroke="#6B6B6B" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                                                <path d="M14.6668 14V10.6667C14.6668 9.4096 14.6668 8.78107 14.2763 8.39053C13.8858 8 13.2572 8 12.0002 8H4.00016C2.74308 8 2.11454 8 1.72402 8.39053C1.3335 8.78107 1.3335 9.4096 1.3335 10.6667V14" stroke="#6B6B6B" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                                                <path d="M7.33333 8V6.80893C7.33333 6.55515 7.2952 6.47027 7.0998 6.37025C6.693 6.16195 6.1991 6 5.66667 6C5.13423 6 4.64037 6.16195 4.2335 6.37025C4.03814 6.47027 4 6.55515 4 6.80893V8" stroke="#6B6B6B" strokeWidth="1.5" strokeLinecap="round" />
-                                                <path d="M11.9998 8V6.80893C11.9998 6.55515 11.9617 6.47027 11.7663 6.37025C11.3595 6.16195 10.8656 6 10.3332 6C9.8007 6 9.30684 6.16195 8.90004 6.37025C8.70464 6.47027 8.6665 6.55515 8.6665 6.80893V8" stroke="#6B6B6B" strokeWidth="1.5" strokeLinecap="round" />
-                                                <path d="M14 8V4.90705C14 4.44595 14 4.21541 13.8719 3.99769C13.7438 3.77997 13.5613 3.66727 13.1963 3.44189C11.7246 2.53319 9.93287 2 8 2C6.06711 2 4.27543 2.53319 2.80372 3.44189C2.43869 3.66727 2.25618 3.77997 2.12809 3.99769C2 4.21541 2 4.44595 2 4.90705V8" stroke="#6B6B6B" strokeWidth="1.5" strokeLinecap="round" />
-                                            </svg>
-                                            Extra king size
-                                        </p>
+                                        <h3 className='text-[20px] text-[#4B4D4D] font-[700] mb-[5px]'>{a?.roomType}</h3>
+                                        <p className='text-[14px] text-[#6B6B6B] font-[400] flex gap-[5px] items-center mb-[5px]'>{a?.description}</p>
+                                        {a?.maxOccupancyPerRoom != "0" &&
+                                            <p className='text-[14px] text-[#6B6B6B] font-[400] flex gap-[5px] items-center mb-[5px]'>
+                                                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M11.0002 13.3334V11.9803C11.0002 11.1521 10.6273 10.34 9.8737 9.99644C8.9545 9.57744 7.8521 9.33337 6.66683 9.33337C5.48158 9.33337 4.37916 9.57744 3.45995 9.99644C2.70634 10.34 2.3335 11.1521 2.3335 11.9803V13.3334" stroke="#6B6B6B" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                                                    <path d="M13.6667 13.334V11.9809C13.6667 11.1527 13.2938 10.3406 12.5402 9.99709C12.3665 9.91789 12.1861 9.84489 12 9.77869" stroke="#6B6B6B" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                                                    <path d="M6.66683 7.33329C7.95549 7.33329 9.00016 6.28862 9.00016 4.99996C9.00016 3.71129 7.95549 2.66663 6.66683 2.66663C5.37816 2.66663 4.3335 3.71129 4.3335 4.99996C4.3335 6.28862 5.37816 7.33329 6.66683 7.33329Z" stroke="#6B6B6B" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                                                    <path d="M10 2.76306C10.9638 3.04991 11.6667 3.94276 11.6667 4.99977C11.6667 6.05678 10.9638 6.94964 10 7.23651" stroke="#6B6B6B" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                                                </svg>
+                                                {a?.maxOccupancyPerRoom} Guests
+                                            </p>
+                                        }
+                                        {a?.extrabeds != 0 &&
+                                            <p className='text-[14px] text-[#6B6B6B] font-[400] flex gap-[5px] items-center mb-[5px]'>
+                                                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M14.6668 11.6666H1.3335" stroke="#6B6B6B" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                                                    <path d="M14.6668 14V10.6667C14.6668 9.4096 14.6668 8.78107 14.2763 8.39053C13.8858 8 13.2572 8 12.0002 8H4.00016C2.74308 8 2.11454 8 1.72402 8.39053C1.3335 8.78107 1.3335 9.4096 1.3335 10.6667V14" stroke="#6B6B6B" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                                                    <path d="M7.33333 8V6.80893C7.33333 6.55515 7.2952 6.47027 7.0998 6.37025C6.693 6.16195 6.1991 6 5.66667 6C5.13423 6 4.64037 6.16195 4.2335 6.37025C4.03814 6.47027 4 6.55515 4 6.80893V8" stroke="#6B6B6B" strokeWidth="1.5" strokeLinecap="round" />
+                                                    <path d="M11.9998 8V6.80893C11.9998 6.55515 11.9617 6.47027 11.7663 6.37025C11.3595 6.16195 10.8656 6 10.3332 6C9.8007 6 9.30684 6.16195 8.90004 6.37025C8.70464 6.47027 8.6665 6.55515 8.6665 6.80893V8" stroke="#6B6B6B" strokeWidth="1.5" strokeLinecap="round" />
+                                                    <path d="M14 8V4.90705C14 4.44595 14 4.21541 13.8719 3.99769C13.7438 3.77997 13.5613 3.66727 13.1963 3.44189C11.7246 2.53319 9.93287 2 8 2C6.06711 2 4.27543 2.53319 2.80372 3.44189C2.43869 3.66727 2.25618 3.77997 2.12809 3.99769C2 4.21541 2 4.44595 2 4.90705V8" stroke="#6B6B6B" strokeWidth="1.5" strokeLinecap="round" />
+                                                </svg>
+                                                Extra king size
+                                            </p>
+                                        }
                                         <p className='text-[14px] text-[#6B6B6B] font-[400] flex gap-[5px] items-center mb-[5px]'>
                                             <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                 <path d="M7.2302 1.65192C7.60587 1.43955 7.79373 1.33337 8 1.33337C8.20627 1.33337 8.39413 1.43955 8.7698 1.65192L13.2302 4.17326C13.6059 4.38563 13.7937 4.49181 13.8969 4.66671C14 4.8416 14 5.05397 14 5.4787V10.5214C14 10.9461 14 11.1585 13.8969 11.3334C13.7937 11.5082 13.6059 11.6144 13.2302 11.8268L8.7698 14.3482C8.39413 14.5605 8.20627 14.6667 8 14.6667C7.79373 14.6667 7.60587 14.5605 7.2302 14.3482L2.7698 11.8268C2.39411 11.6144 2.20627 11.5082 2.10313 11.3334C2 11.1585 2 10.9461 2 10.5214V5.4787C2 5.05397 2 4.8416 2.10313 4.66671C2.20627 4.49181 2.39411 4.38563 2.7698 4.17326L7.2302 1.65192Z" stroke="#6B6B6B" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
@@ -525,10 +529,10 @@ function page() {
                                                 <path d="M2 8L3.92962 9.039C4.28823 9.23213 4.46753 9.32867 4.5671 9.50213C4.66667 9.67567 4.66667 9.89153 4.66667 10.3233V12.6667" stroke="#6B6B6B" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                                                 <path d="M14.0002 8L12.0706 9.039C11.712 9.23213 11.5326 9.32867 11.433 9.50213C11.3335 9.67567 11.3335 9.89153 11.3335 10.3233V12.6667" stroke="#6B6B6B" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                                             </svg>
-                                            32 m2
+                                            {a?.facilities?.map((b, i) => i < 5 ? `${b}, ` : `${b}.`).join()?.length > 200 ? `${a?.facilities?.map((b, i) => i < 5 ? `${b}, ` : `${b}.`).join().slice(0, 200)}...` : a?.facilities?.map((b, i) => i < 5 ? `${b}, ` : `${b}.`)}
                                         </p>
 
-                                        <span className='text-[14px] text-[#6B6B6B] font-[400] flex gap-[5px] items-center mt-[10px]'>
+                                        {/* <span className='text-[14px] text-[#6B6B6B] font-[400] flex gap-[5px] items-center mt-[10px]'>
                                             Select room
 
                                             <div
@@ -560,7 +564,7 @@ function page() {
                                                     </ul>
                                                 )}
                                             </div>
-                                        </span>
+                                        </span> */}
                                     </div>
                                     <div className='mt-[10px] md:mt-0 w-full md:w-auto md:h-full flex flex-wrap md:flex-nowrap flex-col justify-between'>
                                         <div className='md:text-right'>
@@ -696,9 +700,9 @@ function page() {
                         </div>
                     </div>
 
-                    <div id='nearBy' className="w-full md:w-full h-[300px] md:h-[581px] md:h-[581px] rounded-[20px] overflow-hidden mt-[30px]">
+                    {/* <div id='nearBy' className="w-full md:w-full h-[300px] md:h-[581px] md:h-[581px] rounded-[20px] overflow-hidden mt-[30px]">
                         <MapWithInfoWindow selectedCity={"sydney"} hotelsData={{ data: [data?.data[0]] }} selectedHotelProps={data?.data[0]} />
-                    </div>
+                    </div> */}
 
                 </div>
                 <div className='w-full md:w-[390px] h-auto bg-[#F4F4F4] rounded-[12px] sticky top-[90px] mt-[30px] p-[15px] md:p-[30px]'>
@@ -795,7 +799,7 @@ function page() {
                 <h4 className='text-[20px] text-[#4B4D4D] font-[600] mb-[20px] '>You may also like</h4>
 
                 {/* Hotel Cards or Skeleton */}
-                <div className="container max-w-[100%] flex items-center flex-wrap gap-[18px] mt-[28px]">
+                {/* <div className="container max-w-[100%] flex items-center flex-wrap gap-[18px] mt-[28px]">
                     {isLoading || isFetching ? (
                         Array.from({ length: 4 }).map((_, idx) => <SkeletonCard key={idx} />)
                     ) : hotels.length > 0 ? (
@@ -845,7 +849,7 @@ function page() {
                         </>
                     )}
 
-                </div>
+                </div> */}
             </section>
 
             <CTA />
