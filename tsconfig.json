@@ -22,6 +22,6 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/app/hotel-listings/Map.jsx", "src/components/page-components/model/HotelInfoCard.jsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/app/hotel-listings/Map.jsx", "src/components/page-components/model/HotelInfoCard.jsx", "src/components/ui/StyledDatePicker.jsx"],
   "exclude": ["node_modules"]
 }

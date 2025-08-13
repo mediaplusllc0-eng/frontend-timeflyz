@@ -1,40 +1,32 @@
-import React from "react";
+import React, { useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import "./datepicker-custom.css";
-import { CalendarDays, ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
-interface StyledDatePickerProps {
-  selectedDate: Date | null;
-  setSelectedDate: (date: Date | null) => void;
-  buttonClass?: string;
-  icon?: any;
-  fromReview?: boolean
-}
-
-const StyledDatePicker: React.FC<StyledDatePickerProps> = ({
+const StyledDatePicker = ({
   selectedDate,
   setSelectedDate,
   buttonClass,
   icon,
   fromReview
 }) => {
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
 
   return (
     <div className="relative w-full border-0 outline-0 mt-[-5px] z-50">
       <DatePicker
-        selected={new Date(selectedDate)}
+        selected={selectedDate ? new Date(selectedDate) : null}
         onChange={(date) => setSelectedDate(date)}
         onClickOutside={() => setOpen(false)}
         onSelect={() => setOpen(false)}
         open={open}
         onInputClick={() => setOpen(true)}
         placeholderText="Select date, time"
-        dateFormat="dd/MM/yyyy h:mm aa" // Note the updated format
+        dateFormat="dd/MM/yyyy h:mm aa"
         minDate={new Date()}
-        showTimeSelect // Enable time selection
-        timeIntervals={30} // Optional: sets time steps to every 15 minutes
+        showTimeSelect
+        timeIntervals={30}
         timeCaption="Time"
         popperPlacement="bottom-start"
         calendarClassName="!p-4 !rounded-xl !shadow-xl !border !border-gray-200 z-[50]"
@@ -43,15 +35,15 @@ const StyledDatePicker: React.FC<StyledDatePickerProps> = ({
             className={`w-full flex items-center gap-4 rounded-md text-gray-400 text-sm justify-start cursor-pointer ${fromReview ? "datee" : ""}`}
             onClick={() => setOpen(!open)}
           >
-            {new Date(selectedDate)
+            {selectedDate
               ? new Date(selectedDate).toLocaleString("en-GB", {
-                day: "2-digit",
-                month: "2-digit",
-                year: "2-digit",
-                hour: "2-digit",
-                minute: "2-digit",
-                hour12: true,
-              })
+                  day: "2-digit",
+                  month: "2-digit",
+                  year: "2-digit",
+                  hour: "2-digit",
+                  minute: "2-digit",
+                  hour12: true,
+                })
               : "Select date, time"}
           </button>
         }
@@ -78,7 +70,6 @@ const StyledDatePicker: React.FC<StyledDatePickerProps> = ({
           </div>
         )}
       />
-
     </div>
   );
 };
