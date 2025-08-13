@@ -153,7 +153,7 @@ export default function Hero() {
 
           {/* Date Picker */}
           <div className="flex items-center space-x-2 w-full sm:w-auto">
-            <StyledDatePicker
+            {/* <StyledDatePicker
               selectedDate={selectedDate}
               icon={
                 <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gray-900 text-white flex items-center justify-center rounded-full">
@@ -161,7 +161,7 @@ export default function Hero() {
                 </div>
               }
               setSelectedDate={(date) => setSelectedDate(date)}
-            />
+            /> */}
           </div>
 
           {/* Search Button */}
