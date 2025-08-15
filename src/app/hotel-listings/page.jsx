@@ -13,7 +13,7 @@ import MapWithInfoWindow from "./Map";
 import CTA from '@/components/page-components/home/CTA';
 import HotelChains from '../../components/page-components/home/HotelChains';
 import FooterNew from '../../components/layout/FooterNew';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 
 let cities = [
     {
@@ -189,7 +189,34 @@ function kilometersToMiles(km) {
     return miles.toFixed(2);
 }
 
-const HotelCard = React.memo(({ item, selectHotel, router }) => {
+const SkeletonCard = () => (
+    <div className="bg-white w-full h-auto md:h-[175px] rounded-[20px] md:p-[8px] p-[15px] flex flex-wrap md:flex-nowrap gap-[16px] animate-pulse">
+        <div className="relative w-full md:w-[159px] h-[120px] md:h-full rounded-[12px] overflow-hidden bg-gray-200" />
+
+        <div className="flex flex-wrap md:flex-nowrap w-full md:w-[calc(100%-159px)] justify-between">
+            <div className="w-full md:w-[59%] flex flex-col gap-3">
+                <div className="h-[18px] bg-gray-200 rounded w-3/4" />
+                <div className="h-[14px] bg-gray-200 rounded w-1/3" />
+                <div className="h-[12px] bg-gray-200 rounded w-full" />
+                <div className="h-[12px] bg-gray-200 rounded w-5/6" />
+                <div className="h-[12px] bg-gray-200 rounded w-4/6" />
+            </div>
+
+            <div className="mt-4 md:mt-0 w-full md:w-[41%] h-full flex md:flex-col justify-between pr-[8px] py-[5px]">
+                <div className="text-left md:text-right flex flex-col items-start md:items-end gap-1">
+                    <div className="h-[18px] bg-gray-200 rounded w-[100px]" />
+                    <div className="h-[12px] bg-gray-200 rounded w-[60px]" />
+                </div>
+                <div className="w-auto text-right">
+                    <div className="ml-auto w-[140px] h-[40px] bg-gray-300 rounded-[12px]" />
+                </div>
+            </div>
+        </div>
+    </div>
+
+);
+
+const HotelCard = React.memo(({ item, selectHotel, router, selectedRegion, queryParams2 }) => {
     return (
         <div
             onMouseEnter={() => selectHotel(item)}
@@ -299,7 +326,7 @@ const HotelCard = React.memo(({ item, selectHotel, router }) => {
                     <div className='w-auto text-right'>
                         <Button fullWidth={false} className="w-auto rounded-[12px] h-[40px] text-[14px]" onClick={() => {
                             router.push(
-                                `/hotel-details/${item?.twxHotelId}?productId=${item?.productId}&tokenId=${item?.tokenId}`
+                                `/hotel-details/${item?.twxHotelId}?productId=${item?.productId}&tokenId=${item?.tokenId}&city=${selectedRegion.cityName}&country=${selectedRegion.countryName}&checkIn=${queryParams2.checkIn}&checkedOut=${queryParams2.checkOut}`
                             );
                         }}>Check Availability</Button>
                     </div>
@@ -353,47 +380,13 @@ function page() {
     ])
 
     const handleSearch = () => {
-        // if (!query.trim() || !selectedDate) return;
-
-        // const now = new Date();
-        // const checkInDateTime = new Date(
-        //     selectedDate.setHours(now.getHours(), now.getMinutes(), 0, 0)
-        // );
-
-        // const durationInHours = parseInt(duration); // default: 3
-        // const checkOutDateTime = new Date(
-        //     checkInDateTime.getTime() + durationInHours * 60 * 60 * 1000
-        // );
-
-        // const checkInDate = checkInDateTime.toISOString().split("T")[0];
-        // const checkInTime = checkInDateTime.toLocaleTimeString("en-US", {
-        //     hour: "2-digit",
-        //     minute: "2-digit",
-        //     second: "2-digit",
-        //     hour12: true,
-        // });
-
-        // const checkOutDate = checkOutDateTime.toISOString().split("T")[0];
-        // const checkOutTime = checkOutDateTime.toLocaleTimeString("en-US", {
-        //     hour: "2-digit",
-        //     minute: "2-digit",
-        //     second: "2-digit",
-        //     hour12: true,
-        // });
-
-        // router.push(
-        //     `/hotel-listings?city=${encodeURIComponent(
-        //         query.trim()
-        //     )}&checkInDate=${queryParams.cityName}&checkInTime=${queryParams.checkIn}&checkOutDate=${queryParams.checkOut}`
-        // );
-
-        // router.push(
-        //     `/hotel-details/test`
-        // );
         let queryParams = { ...queryParams2 }
         queryParams.cityName = selectedRegion.cityName
         queryParams.countryName = selectedRegion.countryName
         setQueryParams(queryParams)
+        router.push(
+            `/hotel-listings?city=${selectedRegion.cityName}&country=${selectedRegion.countryName}&checkIn=${queryParams2.checkIn}&checkedOut=${queryParams2.checkOut}`
+        );
     };
 
     const scrollRef = useRef(null);
@@ -440,8 +433,8 @@ function page() {
     })
 
     let [queryParams, setQueryParams] = useState({
-        "cityName": selectedRegion.cityName,
-        "countryName": selectedRegion.countryName,
+        "cityName": "",
+        "countryName": "",
         "checkIn": new Date().toISOString().split("T")[0],
         "checkOut": new Date().toISOString().split("T")[0],
         "currency": "AED",
@@ -460,10 +453,13 @@ function page() {
 
     const {
         data: hotelsData,
-        isLoading,
+        isLoading: isHotelsLoading,
+        isFetching,
         error,
         refetch: refetchHotels,
-    } = useSearchHotelsQuery(queryParams);
+    } = useSearchHotelsQuery(queryParams, {
+        skip: !queryParams.cityName,
+    });
 
     let [selectedHotel, setSelectedHotel] = useState(false)
 
@@ -747,6 +743,31 @@ function page() {
     //     setImageIndex(imageIndexes);
     // }, [hotelsData?.data?.itineraries]);
 
+    let searchParams = useSearchParams()
+    useEffect(() => {
+        let queryParams = { ...queryParams2 }
+
+        const city = searchParams.get('city');
+        const country = searchParams.get('country');
+        const checkIn = searchParams.get('checkIn');
+        const checkedOut = searchParams.get('checkedOut');
+
+        setselectedRegion({
+            cityName: city,
+            countryName: country
+        })
+
+        queryParams.cityName = city
+        queryParams.countryName = country
+        queryParams.checkIn = checkIn
+        queryParams.checkOut = checkedOut
+        setQueryParams(queryParams)
+        setQueryParams2(queryParams)
+    }, [])
+
+    useEffect(() => {
+        console.log(isFetching)
+    }, [isFetching])
 
     return (
         <div className='HotelListingMain'>
@@ -1175,19 +1196,33 @@ function page() {
 
             <div className='listingDiv bg-[#F4F4F4] px-5 md:px-[30px] flex justify-between flex-wrap md:flex-nowrap py-[15px]'>
                 <div className='mb-5 md:mb-0 Lists w-full md:w-[50%] pr-[20px]'>
-                    <h5 className='mt-[20px] text-[#4B4D4D] text-[12px] font-[400] '>We found <b>{hotelsData?.data?.itineraries?.length ?? 0} hotels</b></h5>
+                    {isFetching ?
+                        <h5 className='mt-[20px] text-[#4B4D4D] text-[12px] font-[400] '>Loading...</h5>
+                        :
+                        <h5 className='mt-[20px] text-[#4B4D4D] text-[12px] font-[400] '>We found <b>{hotelsData?.data?.itineraries?.length ?? 0} hotels</b></h5>
+                    }
 
                     <div className='Listings mt-[10px] flex flex-col gap-[10px]'>
-                        {hotelsData?.data?.itineraries?.map((item, index) => {
-                            return (
-                                <HotelCard
-                                    key={item.twxHotelId}
-                                    item={item}
-                                    selectHotel={selectHotel}
-                                    router={router}
-                                />
-                            )
-                        })}
+                        {isFetching ?
+                            <>
+                                <SkeletonCard />
+                                <SkeletonCard />
+                                <SkeletonCard />
+                                <SkeletonCard />
+                            </>
+                            :
+                            hotelsData?.data?.itineraries?.map((item, index) => {
+                                return (
+                                    <HotelCard
+                                        key={item.twxHotelId}
+                                        item={item}
+                                        selectHotel={selectHotel}
+                                        selectedRegion={selectedRegion}
+                                        queryParams2={queryParams2}
+                                        router={router}
+                                    />
+                                )
+                            })}
                     </div>
                 </div>
                 <div className="w-full md:w-[50%] h-[300px] md:h-[calc(100vh-110px)] rounded-[20px] overflow-hidden sticky top-[95px]">

@@ -1,5 +1,5 @@
 "use client"
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Navbar from "@/components/layout/Header-new";
 import StyledDatePicker from "@/components/ui/StyledDatePicker";
 import { CalendarDays, X } from "lucide-react";
@@ -24,6 +24,273 @@ import {
     useGetHotelSlotsQuery,
 } from "../../hoteldetail/[hotelid]/services/hotelDetailsApi";
 
+let cities = [
+    {
+        "id": 2,
+        "city_name": "Dubai",
+        "country_name": "United Arab Emirates",
+        "latitude": "25.270265579224",
+        "longitude": "55.307498931885"
+    },
+    {
+        "id": 1,
+        "city_name": "karachi",
+        "country_name": "pakistan",
+        "latitude": "12.9678",
+        "longitude": "77.5887"
+    },
+    {
+        "id": 1,
+        "city_name": "lahore",
+        "country_name": "pakistan",
+        "latitude": "12.9678",
+        "longitude": "77.5887"
+    },
+    {
+        "id": 1,
+        "city_name": "islamabad",
+        "country_name": "pakistan",
+        "latitude": "12.9678",
+        "longitude": "77.5887"
+    },
+    {
+        "id": 3,
+        "city_name": "Chennai",
+        "country_name": "India",
+        "latitude": "13.040538787842",
+        "longitude": "80.233711242676"
+    },
+    {
+        "id": 4,
+        "city_name": "Delhi",
+        "country_name": "India",
+        "latitude": "28.7040592",
+        "longitude": "77.10249019999999"
+    },
+    {
+        "id": 5,
+        "city_name": "London",
+        "country_name": "United Kingdom",
+        "latitude": "51.500999450684",
+        "longitude": "-0.12634299695492"
+    },
+    {
+        "id": 6,
+        "city_name": "Mumbai",
+        "country_name": "India",
+        "latitude": "18.968976974487",
+        "longitude": "72.818969726562"
+    },
+    {
+        "id": 7,
+        "city_name": "Miami beach",
+        "country_name": "United states of america",
+        "latitude": "25.790300369263",
+        "longitude": "-80.130302429199"
+    },
+    {
+        "id": 8,
+        "city_name": "Singapore",
+        "country_name": "Singapore",
+        "latitude": "1.2930599451065",
+        "longitude": "103.85600280762"
+    },
+    {
+        "id": 9,
+        "city_name": "Barcelona",
+        "country_name": "Spain",
+        "latitude": "41.387100219727",
+        "longitude": "2.1700100898743"
+    },
+    {
+        "id": 10,
+        "city_name": "1. zurich old town–city centre",
+        "country_name": "Switzerland",
+        "latitude": "47.373659931838",
+        "longitude": "8.5427136303716"
+    },
+    {
+        "id": 11,
+        "city_name": "Goa",
+        "country_name": "India",
+        "latitude": "15.2993",
+        "longitude": "74.1240"
+    },
+    {
+        "id": 12,
+        "city_name": "Gran Canaria",
+        "country_name": "Spain",
+        "latitude": "27.9202202",
+        "longitude": "-15.547437299999999"
+    },
+    {
+        "id": 13,
+        "city_name": "Berlin",
+        "country_name": "Germany",
+        "latitude": "52.520431518555",
+        "longitude": "13.409406661987"
+    },
+    {
+        "id": 14,
+        "city_name": "Rome",
+        "country_name": "Italy",
+        "latitude": "41.89587020874",
+        "longitude": "12.482617378235"
+    },
+    {
+        "id": 15,
+        "city_name": "Hamburg",
+        "country_name": "Germany",
+        "latitude": "53.54999923706",
+        "longitude": "10"
+    }
+]
+
+let SkeletonCard1 = () => {
+    return (
+        <div className="flex flex-wrap md:flex-nowrap w-full items-center justify-between animate-pulse">
+            {/* Left Section */}
+            <div>
+                {/* Skeleton for Rating */}
+                <div className="flex gap-1 mb-2">
+                    {Array.from({ length: 5 }).map((_, i) => (
+                        <div key={i} className="w-4 h-4 bg-gray-300 rounded" />
+                    ))}
+                </div>
+
+                {/* Skeleton for Hotel Name */}
+                <div className="h-6 w-64 bg-gray-300 rounded mb-2"></div>
+
+                {/* Skeleton for Address */}
+                <div className="flex flex-wrap md:flex-nowrap items-center gap-2 mt-2">
+                    <div className="w-5 h-5 bg-gray-300 rounded-full" />
+                    <div className="h-4 w-80 bg-gray-300 rounded"></div>
+                    <div className="h-4 w-20 bg-gray-300 rounded"></div>
+                </div>
+            </div>
+
+            {/* Right Section Icons */}
+            <div className="absolute top-0 right-5 md:relative flex items-center gap-4 mt-4 md:mt-0">
+                <div className="w-8 h-8 bg-gray-300 rounded-full" />
+                <div className="w-8 h-8 bg-gray-300 rounded-full" />
+            </div>
+        </div>
+    )
+}
+
+let SkeletonCard2 = () => {
+    return (
+        <div className="h-[500px] w-full flex items-center justify-between gap-[10px] animate-pulse">
+            {/* Main Image Skeleton */}
+            <div className="w-full md:w-[60%] h-full relative">
+                <div className="h-full w-full bg-gray-300 rounded-[12px]" />
+
+                {/* "Show all photo" Button Skeleton */}
+                <div className="absolute bottom-[30px] left-[30px] h-[26px] w-[121px] bg-gray-400 rounded-[6px]" />
+            </div>
+
+            {/* Side Images Skeleton */}
+            <div className="hidden md:flex flex-col gap-[10px] w-[40%] h-full">
+                <div className="h-1/2 w-full bg-gray-300 rounded-[12px]" />
+                <div className="h-1/2 w-full bg-gray-300 rounded-[12px]" />
+            </div>
+        </div>
+    )
+}
+
+let SkeletonCard3 = () => {
+    return (
+        <div className="mt-[30px] animate-pulse" id="overview">
+            <div className="h-[24px] w-[150px] bg-gray-300 rounded mb-[10px]" />
+            <div className="space-y-2">
+                <div className="h-[16px] w-full max-w-[600px] bg-gray-300 rounded" />
+                <div className="h-[16px] w-full max-w-[550px] bg-gray-300 rounded" />
+                <div className="h-[16px] w-full max-w-[580px] bg-gray-300 rounded" />
+                <div className="h-[16px] w-full max-w-[500px] bg-gray-300 rounded" />
+            </div>
+            <br />
+        </div>
+    )
+}
+
+let SkeletonCard4 = () => {
+    return (
+        <div className="mt-[30px] animate-pulse">
+            <div className="h-[24px] w-[150px] bg-gray-300 rounded mb-[10px]" />
+            <ul className="flex flex-wrap gap-y-[20px] justify-between md:justify-start">
+                {Array.from({ length: 6 }).map((_, i) => (
+                    <li
+                        key={i}
+                        className="w-[49%] md:w-[32%] flex items-center gap-[10px]"
+                    >
+                        <div className="h-[16px] w-[50%] bg-gray-300 rounded" />
+                    </li>
+                ))}
+            </ul>
+        </div>
+    )
+}
+
+let SkeletonCard5 = () => {
+    return (
+        <div className='w-full md:w-[390px] h-auto bg-[#F4F4F4] rounded-[12px] sticky top-[90px] mt-[30px] p-[15px] md:p-[30px] animate-pulse'>
+            {/* Check-in and Check-out */}
+            <div className='flex items-center justify-between gap-4'>
+                <div className='flex flex-col gap-2 w-1/2'>
+                    <div className='h-[20px] w-[80px] bg-gray-300 rounded' />
+                    <div className='h-[16px] w-[100px] bg-gray-200 rounded' />
+                </div>
+                <div className='flex flex-col gap-2 w-1/2'>
+                    <div className='h-[20px] w-[80px] bg-gray-300 rounded' />
+                    <div className='h-[16px] w-[100px] bg-gray-200 rounded' />
+                </div>
+            </div>
+
+            <div className='h-[1px] bg-[#CECECE] my-[15px]' />
+
+            {/* Room Info */}
+            <div className='flex flex-col gap-2'>
+                <div className='h-[20px] w-[100px] bg-gray-300 rounded' />
+                <div className='h-[16px] w-[150px] bg-gray-200 rounded' />
+                <div className='h-[16px] w-full bg-gray-200 rounded' />
+            </div>
+
+            <div className='h-[1px] bg-[#CECECE] my-[15px]' />
+
+            {/* Price Breakdown */}
+            <div className='flex flex-col gap-3'>
+                {Array.from({ length: 5 }).map((_, idx) => (
+                    <div key={idx} className='flex justify-between items-center'>
+                        <div className='h-[16px] w-[120px] bg-gray-200 rounded' />
+                        <div className='h-[16px] w-[60px] bg-gray-200 rounded' />
+                    </div>
+                ))}
+                {/* Discount */}
+                <div className='flex justify-between items-center'>
+                    <div className='h-[16px] w-[140px] bg-gray-200 rounded' />
+                    <div className='h-[16px] w-[80px] bg-green-200 rounded' />
+                </div>
+            </div>
+
+            <div className='h-[1px] bg-[#CECECE] my-[15px]' />
+
+            {/* Total Price */}
+            <div className='flex justify-between items-center mt-[10px]'>
+                <div className='h-[24px] w-[120px] bg-gray-300 rounded' />
+                <div className='h-[24px] w-[80px] bg-orange-300 rounded' />
+            </div>
+
+            <div className='h-[1px] bg-[#CECECE] my-[15px]' />
+
+            {/* Reserve Button */}
+            <div className='h-[60px] bg-gray-300 rounded-[12px] mt-[10px]' />
+
+            {/* Footer Note */}
+            <div className='h-[12px] w-[90%] bg-gray-200 rounded mt-[10px] mx-auto' />
+        </div>
+    )
+}
+
 function page() {
     let router = useRouter()
     const dispatch = useAppDispatch();
@@ -39,6 +306,7 @@ function page() {
         data: hotel,
         error,
         isLoading,
+        isFetching,
     } = useGetHotelsDetailsQuery({
         hotelId: id,
         sessionId: apiStatus?.sessionId,
@@ -98,38 +366,8 @@ function page() {
     ])
 
     const handleSearch = () => {
-        if (!query.trim() || !selectedDate) return;
-
-        const now = new Date();
-        const checkInDateTime = new Date(
-            selectedDate.setHours(now.getHours(), now.getMinutes(), 0, 0)
-        );
-
-        const durationInHours = parseInt(duration); // default: 3
-        const checkOutDateTime = new Date(
-            checkInDateTime.getTime() + durationInHours * 60 * 60 * 1000
-        );
-
-        const checkInDate = checkInDateTime.toISOString().split("T")[0];
-        const checkInTime = checkInDateTime.toLocaleTimeString("en-US", {
-            hour: "2-digit",
-            minute: "2-digit",
-            second: "2-digit",
-            hour12: true,
-        });
-
-        const checkOutDate = checkOutDateTime.toISOString().split("T")[0];
-        const checkOutTime = checkOutDateTime.toLocaleTimeString("en-US", {
-            hour: "2-digit",
-            minute: "2-digit",
-            second: "2-digit",
-            hour12: true,
-        });
-
         router.push(
-            `/slots?city=${encodeURIComponent(
-                query.trim()
-            )}&checkInDate=${checkInDate}&checkInTime=${checkInTime}&checkOutDate=${checkOutDate}&checkOutTime=${checkOutTime}&duration=${duration}`
+            `/hotel-listings?city=${selectedRegion.cityName}&country=${selectedRegion.countryName}&checkIn=${queryParams2.checkIn}&checkedOut=${queryParams2.checkOut}`
         );
     };
 
@@ -156,19 +394,6 @@ function page() {
     //     page: 1,
     // });
 
-    const SkeletonCard = () => (
-        <div className="bg-white rounded-2xl shadow-md animate-pulse overflow-hidden flex flex-col h-full w-full md:w-[24%]">
-            <div className="relative h-52 w-full bg-gray-200" />
-            <div className="flex flex-col justify-between p-5 gap-4 flex-1">
-                <div>
-                    <div className="h-5 bg-gray-200 rounded w-3/4 mb-2" />
-                    <div className="h-4 bg-gray-200 rounded w-1/2 mb-4" />
-                    <div className="h-4 bg-gray-200 rounded w-1/2 mb-2" />
-                    <div className="h-4 bg-gray-200 rounded w-1/2" />
-                </div>
-            </div>
-        </div>
-    );
 
     const { selectedCountry, currentPage, itemsPerPage } = useAppSelector(
         (state) => state.hotels
@@ -241,7 +466,49 @@ function page() {
         );
     };
 
-    console.log(hotel)
+    let [selectedRegion, setselectedRegion] = useState({
+        cityName: "Dubai",
+        countryName: "United Arab Emirates",
+    })
+
+    let [queryParams2, setQueryParams2] = useState({
+        "cityName": selectedRegion.cityName,
+        "countryName": selectedRegion.countryName,
+        "checkIn": new Date().toISOString().split("T")[0],
+        "checkOut": new Date().toISOString().split("T")[0],
+        "currency": "AED",
+        "occupancy": [
+            {
+                "room_no": 1,
+                "adult": 2,
+                "child": 1,
+                "child_age": [5]
+            }
+        ],
+        "maxResult": 1000,
+        "resultsPerPage": 1000,
+        "nationality": "AE"
+    })
+
+    useEffect(() => {
+        let queryParams = { ...queryParams2 }
+
+        const city = searchParams.get('city');
+        const country = searchParams.get('country');
+        const checkIn = searchParams.get('checkIn');
+        const checkedOut = searchParams.get('checkedOut');
+
+        setselectedRegion({
+            cityName: city,
+            countryName: country
+        })
+
+        queryParams.cityName = city
+        queryParams.countryName = country
+        queryParams.checkIn = checkIn
+        queryParams.checkOut = checkedOut
+        setQueryParams2(queryParams)
+    }, [])
 
     return (
         <div className='hotelDetailsMain w-full'>
@@ -255,9 +522,9 @@ function page() {
                     className="mb-5 md:mb-0 relative cursor-pointer inputDiv flex flex-col rounded-[12px] bg-[#E4E4E4] py-[12px] px-[16px] w-[100%] md:w-[25.36%] h-[60px]">
                     <label className="cursor-pointer m-0 text-[16px] text-[#4B4D4D] font-[500] mt-[-2px]">Where</label>
                     <span
-                        className="inline-block w-full text-[16px] text-[#848484] font-[400] mt-[-5px] cursor-pointer">Select region(s)</span>
+                        className="inline-block w-full text-[16px] text-[#848484] font-[400] mt-[-5px] cursor-pointer">{selectedRegion.cityName ? selectedRegion.cityName : "Select region(s)"}</span>
                     {showDropdownRegion && regionList.length > 0 && (
-                        <ul className="pb-3 absolute left-0 top-[50px] w-[100%] mt-1 bg-white border border-gray-200 rounded-[12px] shadow-[0_4px_25px_0_rgba(0,0,0,0.25)] z-10 max-h-auto overflow-y-auto">
+                        <ul className="pb-3 max-h-[300px] absolute left-0 top-[50px] w-[100%] mt-1 bg-white border border-gray-200 rounded-[12px] shadow-[0_4px_25px_0_rgba(0,0,0,0.25)] z-10 max-h-auto overflow-y-auto">
                             <li className=" mb-2 flex items-center justify-between px-3 sm:px-4 py-3 border-b-1 border-b-gray-100">
                                 Regions
                                 <svg
@@ -266,25 +533,34 @@ function page() {
                                     <path d="M24 8L8.00108 23.9989M23.9989 24L8 8.00113" stroke="#4B4D4D" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                                 </svg>
                             </li>
-                            {regionList.map((item, index) => (
+                            {cities.map((item, index) => (
                                 <li
                                     key={index}
-                                    onMouseDown={() => {
-                                        // setQuery(location);
-                                        // setShowDropdown(false);
+                                    // onMouseDown={() => {
+                                    //     // setQuery(location);
+                                    //     // setShowDropdown(false);
+                                    // }}
+                                    onClick={() => {
+                                        setTimeout(() => setShowDropdownRegion(false), 150)
+                                        setselectedRegion({
+                                            cityName: item?.city_name,
+                                            countryName: item?.country_name
+                                        })
                                     }}
                                     className="flex items-center gap-2 px-3 sm:px-4 py-2 hover:bg-gray-100 cursor-pointer text-sm md:text-sm text-gray-700"
                                 >
-                                    <input
-                                        onChange={(e) => {
-                                            let arr = [...regionList]
-                                            arr[index].checked = e.target.checked
-                                            setRegionList(arr)
-                                        }}
-                                        className="accent-[#EF4A23]"
-                                        checked={item.checked} type="checkbox" id={`checkbox${index}`} />
+                                    {/* <input
+                                                onChange={(e) => {
+                                                    let arr = [...regionList]
+                                                    arr[index].checked = e.target.checked
+                                                    setRegionList(arr)
+                                                }}
+                                                className="accent-[#EF4A23]"
+                                                checked={item?.checked} type="checkbox" id={`checkbox${index}`} /> */}
                                     <label htmlFor={`checkbox${index}`}>
-                                        {item.name}
+                                        {item?.city_name}
+                                        <br />
+                                        ({item?.country_name})
                                     </label>
                                 </li>
                             ))}
@@ -296,26 +572,35 @@ function page() {
                     <label className="m-0 text-[16px] text-[#4B4D4D] font-[500] mt-[-2px]">Check in</label>
                     <StyledDatePicker
                         className="border-0 outline-0 mt-[-5px]"
-                        selectedDate={selectedDate}
+                        selectedDate={queryParams2?.checkIn}
                         icon={
                             <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gray-900 text-white flex items-center justify-center rounded-full">
                                 <CalendarDays size={20} />
                             </div>
                         }
-                        setSelectedDate={(date) => setSelectedDate(date)}
+                        setSelectedDate={(date) => {
+                            let query = { ...queryParams2 }
+                            query.checkIn = date.toISOString().split("T")[0]
+                            setQueryParams2(query)
+                        }}
                     />
                 </div>
 
                 <div className="mb-5 md:mb-0 inputDiv flex flex-col rounded-[12px] bg-[#E4E4E4] py-[12px] px-[12px] w-full md:w-[14.37%] h-[60px]">
                     <label className="m-0 text-[16px] text-[#4B4D4D] font-[500] mt-[-2px]">Check out</label>
                     <StyledDatePicker
-                        selectedDate={selectedDate}
+                        className="border-0 outline-0 mt-[-5px]"
+                        selectedDate={queryParams2?.checkOut}
                         icon={
                             <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gray-900 text-white flex items-center justify-center rounded-full">
                                 <CalendarDays size={20} />
                             </div>
                         }
-                        setSelectedDate={(date) => setSelectedDate(date)}
+                        setSelectedDate={(date) => {
+                            let query = { ...queryParams2 }
+                            query.checkOut = date.toISOString().split("T")[0]
+                            setQueryParams2(query)
+                        }}
                     />
                 </div>
 
@@ -346,7 +631,7 @@ function page() {
                                     }}
                                     className="flex items-center justify-between gap-2 px-3 py-3 hover:bg-gray-100 cursor-pointer text-sm md:text-sm text-gray-700"
                                 >
-                                    {item.name}
+                                    {item?.name}
                                     <div className="w-full flex items-center justify-between w-max gap-2">
                                         <div
                                             onClick={() => {
@@ -358,7 +643,7 @@ function page() {
                                             }}
                                             className="cursor-pointer w-[30px] h-[30px] rounded-[30px] border-[1px] border-[lightgrey] flex items-center justify-center text-[16px] text-[gray]"
                                         >-</div>
-                                        <span className="w-[30px] h-[30px] rounded-[5px] border-[1px] border-[lightgrey] flex items-center justify-center text-[16px] text-[gray]" >{item.value ? item.value : 0}</span>
+                                        <span className="w-[30px] h-[30px] rounded-[5px] border-[1px] border-[lightgrey] flex items-center justify-center text-[16px] text-[gray]" >{item?.value ? item?.value : 0}</span>
                                         <div
                                             onClick={() => {
                                                 let arr = [...whoList]
@@ -378,67 +663,75 @@ function page() {
             </div>
 
             <div className='relative flex flex-wrap items-start justify-between px-5 md:px-[30px] mt-[20px] md:mt-[80px] gap-[10px]'>
-                <div className='flex flex-wrap md:flex-nowrap w-[100%] items-center justify-between'>
-                    <div>
-                        <HotelRating rating={hotel?.data?.hotelRating} />
-                        <h2 className='text-[24px] text-[#4B4D4D] font-[700] mt-[5px]'>{hotel?.data?.name}</h2>
-                        <p className='text-[16px] text-[#6B6B6B] font-[400] flex flex-wrap md:flex-nowrap items-center gap-[5px] mt-[5px] '>
-                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M12.0832 7.49999C12.0832 8.65057 11.1504 9.58332 9.99984 9.58332C8.84925 9.58332 7.9165 8.65057 7.9165 7.49999C7.9165 6.3494 8.84925 5.41666 9.99984 5.41666C11.1504 5.41666 12.0832 6.3494 12.0832 7.49999Z" stroke="#4B4D4D" strokeWidth="1.5" />
-                                <path d="M11.0477 14.578C10.7666 14.8487 10.3909 15 10 15C9.609 15 9.23334 14.8487 8.95225 14.578C6.37842 12.084 2.92916 9.29791 4.61126 5.2531C5.52075 3.06609 7.70395 1.66666 10 1.66666C12.296 1.66666 14.4792 3.0661 15.3887 5.2531C17.0687 9.29282 13.6278 12.0926 11.0477 14.578Z" stroke="#4B4D4D" strokeWidth="1.5" />
-                                <path d="M15 16.6667C15 17.5872 12.7614 18.3333 10 18.3333C7.23857 18.3333 5 17.5872 5 16.6667" stroke="#4B4D4D" strokeWidth="1.5" strokeLinecap="round" />
+                {isFetching ?
+                    <SkeletonCard1 />
+                    :
+                    <div className='flex flex-wrap md:flex-nowrap w-[100%] items-center justify-between'>
+                        <div>
+                            <HotelRating rating={hotel?.data?.hotelRating} />
+                            <h2 className='text-[24px] text-[#4B4D4D] font-[700] mt-[5px]'>{hotel?.data?.name}</h2>
+                            <p className='text-[16px] text-[#6B6B6B] font-[400] flex flex-wrap md:flex-nowrap items-center gap-[5px] mt-[5px] '>
+                                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M12.0832 7.49999C12.0832 8.65057 11.1504 9.58332 9.99984 9.58332C8.84925 9.58332 7.9165 8.65057 7.9165 7.49999C7.9165 6.3494 8.84925 5.41666 9.99984 5.41666C11.1504 5.41666 12.0832 6.3494 12.0832 7.49999Z" stroke="#4B4D4D" strokeWidth="1.5" />
+                                    <path d="M11.0477 14.578C10.7666 14.8487 10.3909 15 10 15C9.609 15 9.23334 14.8487 8.95225 14.578C6.37842 12.084 2.92916 9.29791 4.61126 5.2531C5.52075 3.06609 7.70395 1.66666 10 1.66666C12.296 1.66666 14.4792 3.0661 15.3887 5.2531C17.0687 9.29282 13.6278 12.0926 11.0477 14.578Z" stroke="#4B4D4D" strokeWidth="1.5" />
+                                    <path d="M15 16.6667C15 17.5872 12.7614 18.3333 10 18.3333C7.23857 18.3333 5 17.5872 5 16.6667" stroke="#4B4D4D" strokeWidth="1.5" strokeLinecap="round" />
+                                </svg>
+                                {hotel?.data?.address}, {hotel?.data?.city}, {hotel?.data?.country}
+                                <a href='#' className='text-[#EF4A23] font-bold w-full md:w-auto'>Show Map</a>
+                            </p>
+                        </div>
+                        <div className='absolute top-0 right-5 md:relative flex items-center gap-[10px]'>
+                            <svg className='w-[16px] md:w-[32px] h-[16px] md:h-[32px]' width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M13.8808 26.6236C10.1191 23.8107 2.6665 17.3797 2.6665 11.5926C2.6665 7.76751 5.47352 4.66667 9.33317 4.66667C11.3332 4.66667 13.3332 5.33334 15.9998 8.00001C18.6665 5.33334 20.6665 4.66667 22.6665 4.66667C26.5261 4.66667 29.3332 7.76751 29.3332 11.5926C29.3332 17.3797 21.8806 23.8107 18.1189 26.6236C16.853 27.5701 15.1466 27.5701 13.8808 26.6236Z" stroke="#4B4D4D" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                             </svg>
-                            {hotel?.data?.address}, {hotel?.data?.city}, {hotel?.data?.country}
-                            <a href='#' className='text-[#EF4A23] font-bold w-full md:w-auto'>Show Map</a>
-                        </p>
+                            <svg className='w-[16px] md:w-[32px] h-[16px] md:h-[32px]' width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M28 8.66667C28 10.8758 26.2092 12.6667 24 12.6667C21.7908 12.6667 20 10.8758 20 8.66667C20 6.45754 21.7908 4.66667 24 4.66667C26.2092 4.66667 28 6.45754 28 8.66667Z" stroke="#4B4D4D" strokeWidth="1.5" />
+                                <path d="M12 16C12 18.2092 10.2091 20 8 20C5.79087 20 4 18.2092 4 16C4 13.7908 5.79087 12 8 12C10.2091 12 12 13.7908 12 16Z" stroke="#4B4D4D" strokeWidth="1.5" />
+                                <path d="M28 23.3333C28 25.5425 26.2092 27.3333 24 27.3333C21.7908 27.3333 20 25.5425 20 23.3333C20 21.1241 21.7908 19.3333 24 19.3333C26.2092 19.3333 28 21.1241 28 23.3333Z" stroke="#4B4D4D" strokeWidth="1.5" />
+                                <path d="M11.6382 14.3327L20.3048 10.3333M11.6382 17.6667L20.3048 21.666" stroke="#4B4D4D" strokeWidth="1.5" />
+                            </svg>
+                        </div>
                     </div>
-                    <div className='absolute top-0 right-5 md:relative flex items-center gap-[10px]'>
-                        <svg className='w-[16px] md:w-[32px] h-[16px] md:h-[32px]' width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M13.8808 26.6236C10.1191 23.8107 2.6665 17.3797 2.6665 11.5926C2.6665 7.76751 5.47352 4.66667 9.33317 4.66667C11.3332 4.66667 13.3332 5.33334 15.9998 8.00001C18.6665 5.33334 20.6665 4.66667 22.6665 4.66667C26.5261 4.66667 29.3332 7.76751 29.3332 11.5926C29.3332 17.3797 21.8806 23.8107 18.1189 26.6236C16.853 27.5701 15.1466 27.5701 13.8808 26.6236Z" stroke="#4B4D4D" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                        </svg>
-                        <svg className='w-[16px] md:w-[32px] h-[16px] md:h-[32px]' width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M28 8.66667C28 10.8758 26.2092 12.6667 24 12.6667C21.7908 12.6667 20 10.8758 20 8.66667C20 6.45754 21.7908 4.66667 24 4.66667C26.2092 4.66667 28 6.45754 28 8.66667Z" stroke="#4B4D4D" strokeWidth="1.5" />
-                            <path d="M12 16C12 18.2092 10.2091 20 8 20C5.79087 20 4 18.2092 4 16C4 13.7908 5.79087 12 8 12C10.2091 12 12 13.7908 12 16Z" stroke="#4B4D4D" strokeWidth="1.5" />
-                            <path d="M28 23.3333C28 25.5425 26.2092 27.3333 24 27.3333C21.7908 27.3333 20 25.5425 20 23.3333C20 21.1241 21.7908 19.3333 24 19.3333C26.2092 19.3333 28 21.1241 28 23.3333Z" stroke="#4B4D4D" strokeWidth="1.5" />
-                            <path d="M11.6382 14.3327L20.3048 10.3333M11.6382 17.6667L20.3048 21.666" stroke="#4B4D4D" strokeWidth="1.5" />
-                        </svg>
-                    </div>
-                </div>
+                }
                 <div className='w-full md:w-[calc(100%-420px)] mt-[30px]'>
-                    <div className='h-[500px] imageDivMain w-full flex items-center justify-between gap-[10px]'>
-                        <div className='w-full md:w-[60%] h-full relative'>
-                            <img
-                                onClick={() => {
-                                    setOpen(true)
-                                    setIndex(0)
-                                }}
-                                src={hotel?.data?.hotelImages[0]?.url}
-                                alt={hotel?.data?.hotelImages[0]?.caption}
-                                className='h-[100%] cursor-pointer w-[100%] rounded-[12px] overflow-hidden object-cover'
-                            />
-                            <span onClick={() => setOpen(true)} className='cursor-pointer text-[#FFFFFF] text-[14px] font-[400] absolute bottom-[30px] left-[30px] bg-[#4B4D4D] rounded-[6px] h-[26px] w-[121px] flex items-center justify-center '>Show all photo</span>
+                    {isFetching ?
+                        <SkeletonCard2 />
+                        :
+                        <div className='h-[500px] imageDivMain w-full flex items-center justify-between gap-[10px]'>
+                            <div className='w-full md:w-[60%] h-full relative'>
+                                <img
+                                    onClick={() => {
+                                        setOpen(true)
+                                        setIndex(0)
+                                    }}
+                                    src={hotel?.data?.hotelImages[0]?.url}
+                                    alt={hotel?.data?.hotelImages[0]?.caption}
+                                    className='h-[100%] cursor-pointer w-[100%] rounded-[12px] overflow-hidden object-cover'
+                                />
+                                <span onClick={() => setOpen(true)} className='cursor-pointer text-[#FFFFFF] text-[14px] font-[400] absolute bottom-[30px] left-[30px] bg-[#4B4D4D] rounded-[6px] h-[26px] w-[121px] flex items-center justify-center '>Show all photo</span>
+                            </div>
+                            <div className='hidden w-[40%] h-full gap-[10px] md:flex flex-col'>
+                                <img
+                                    onClick={() => {
+                                        setOpen(true)
+                                        setIndex(1)
+                                    }}
+                                    src={hotel?.data?.hotelImages[1]?.url}
+                                    alt={hotel?.data?.hotelImages[1]?.caption}
+                                    className='h-[50%] cursor-pointer w-[100%] rounded-[12px] overflow-hidden object-cover'
+                                />
+                                <img
+                                    onClick={() => {
+                                        setOpen(true)
+                                        setIndex(2)
+                                    }}
+                                    src={hotel?.data?.hotelImages[2]?.url}
+                                    alt={hotel?.data?.hotelImages[2]?.caption}
+                                    className='h-[50%] cursor-pointer w-[100%] rounded-[12px] overflow-hidden object-cover'
+                                />
+                            </div>
                         </div>
-                        <div className='hidden w-[40%] h-full gap-[10px] md:flex flex-col'>
-                            <img
-                                onClick={() => {
-                                    setOpen(true)
-                                    setIndex(1)
-                                }}
-                                src={hotel?.data?.hotelImages[1]?.url}
-                                alt={hotel?.data?.hotelImages[1]?.caption}
-                                className='h-[50%] cursor-pointer w-[100%] rounded-[12px] overflow-hidden object-cover'
-                            />
-                            <img
-                                onClick={() => {
-                                    setOpen(true)
-                                    setIndex(2)
-                                }}
-                                src={hotel?.data?.hotelImages[2]?.url}
-                                alt={hotel?.data?.hotelImages[2]?.caption}
-                                className='h-[50%] cursor-pointer w-[100%] rounded-[12px] overflow-hidden object-cover'
-                            />
-                        </div>
-                    </div>
+                    }
                     <div className='w-full flex items-center hotelDetailTabs'>
                         <a
                             href='#overview'
@@ -462,28 +755,36 @@ function page() {
                         </a>
                     </div>
 
-                    <div className='mt-[30px]' id='overview'>
-                        <h4 className='text-[20px] text-[#4B4D4D] font-[600] mb-[10px] '>Description</h4>
-                        <p className='text-[16px] text-[#6B6B6B] font-[400] ' dangerouslySetInnerHTML={{ __html: hotel?.data?.description?.content }} >
-                        </p>
-                        <br />
-                    </div>
+                    {isFetching ?
+                        <SkeletonCard3 />
+                        :
+                        <div className='mt-[30px]' id='overview'>
+                            <h4 className='text-[20px] text-[#4B4D4D] font-[600] mb-[10px] '>Description</h4>
+                            <p className='text-[16px] text-[#6B6B6B] font-[400] ' dangerouslySetInnerHTML={{ __html: hotel?.data?.description?.content }} >
+                            </p>
+                            <br />
+                        </div>
+                    }
 
                     <div className='h-[1px] w-full bg-[#CECECE] my-[30px]' />
 
-                    <div className='mt-[30px]' id=''>
-                        <h4 className='text-[20px] text-[#4B4D4D] font-[600] mb-[10px] '>Amenities</h4>
-                        <ul className='flex flex-wrap gap-y-[20px] justify-between md:justify-start'>
-                            {hotel?.data?.facilities?.map((a, i) => (
-                                <li key={i} className='w-[49%] md:w-[32%] text-[#4B4D4D] text-[16px] font-[400] flex items-center gap-[10px] '>
-                                    <svg width="16" height="14" viewBox="0 0 16 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M1 9L4.5 12.5L15 1.5" stroke="black" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                                    </svg>
-                                    {a}
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
+                    {isFetching ?
+                        <SkeletonCard4 />
+                        :
+                        <div className='mt-[30px]' id=''>
+                            <h4 className='text-[20px] text-[#4B4D4D] font-[600] mb-[10px] '>Amenities</h4>
+                            <ul className='flex flex-wrap gap-y-[20px] justify-between md:justify-start'>
+                                {hotel?.data?.facilities?.map((a, i) => (
+                                    <li key={i} className='w-[49%] md:w-[32%] text-[#4B4D4D] text-[16px] font-[400] flex items-center gap-[10px] '>
+                                        <svg width="16" height="14" viewBox="0 0 16 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M1 9L4.5 12.5L15 1.5" stroke="black" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                                        </svg>
+                                        {a}
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+                    }
 
                     <div className='h-[1px] w-full bg-[#CECECE] my-[30px]' />
 
@@ -705,94 +1006,99 @@ function page() {
                     </div> */}
 
                 </div>
-                <div className='w-full md:w-[390px] h-auto bg-[#F4F4F4] rounded-[12px] sticky top-[90px] mt-[30px] p-[15px] md:p-[30px]'>
-                    <div className='flex items-center justify-between'>
+
+                {isFetching ?
+                    <SkeletonCard5 />
+                    :
+                    <div className='w-full md:w-[390px] h-auto bg-[#F4F4F4] rounded-[12px] sticky top-[90px] mt-[30px] p-[15px] md:p-[30px]'>
+                        <div className='flex items-center justify-between'>
+                            <div className='flex flex-col'>
+                                <h5 className='flex items-center gap-1 text-[#4B4D4D] text-[16px] font-[700] mb-[5px]'>
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M16 2V6M8 2V6" stroke="#4B4D4D" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                                        <path d="M21 16V12C21 8.22876 21 6.34315 19.8284 5.17157C18.6569 4 16.7712 4 13 4H11C7.22876 4 5.34315 4 4.17157 5.17157C3 6.34315 3 8.22876 3 12V14C3 17.7712 3 19.6569 4.17157 20.8284C5.34315 22 7.22876 22 11 22H12" stroke="#4B4D4D" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                                        <path d="M3 10H21" stroke="#4B4D4D" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                                        <path d="M21 19.5H14.5M16.5 22C15.9943 21.5085 14 20.2002 14 19.5C14 18.7998 15.9943 17.4915 16.5 17" stroke="#4B4D4D" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                                    </svg>
+                                    Check in
+                                </h5>
+                                <p className='text-[#4B4D4D] text-[16px] font-[400]'>05 Aug, 11:00 AM</p>
+                            </div>
+                            <div className='flex flex-col'>
+                                <h5 className='flex items-center gap-1 text-[#4B4D4D] text-[16px] font-[700]'>
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M16 2V6M8 2V6" stroke="#4B4D4D" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                                        <path d="M13 4H11C7.22876 4 5.34315 4 4.17157 5.17157C3 6.34315 3 8.22876 3 12V14C3 17.7712 3 19.6569 4.17157 20.8284C5.34315 22 7.22876 22 11 22H13C16.7712 22 18.6569 22 19.8284 20.8284C21 19.6569 21 17.7712 21 14V12C21 8.22876 21 6.34315 19.8284 5.17157C18.6569 4 16.7712 4 13 4Z" stroke="#4B4D4D" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                                        <path d="M3 10H21" stroke="#4B4D4D" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                                        <path d="M13.5 18.5C14.0057 18.0085 16 16.7002 16 16C16 15.2998 14.0057 13.9915 13.5 13.5M15.5 16H9" stroke="#4B4D4D" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                                    </svg>
+                                    Check out
+                                </h5>
+                                <p className='text-[#4B4D4D] text-[16px] font-[400]'>05 Aug, 03:00 PM</p>
+                            </div>
+                        </div>
+
+                        <div className='h-[1px] bg-[#CECECE] my-[10px]' />
+
                         <div className='flex flex-col'>
                             <h5 className='flex items-center gap-1 text-[#4B4D4D] text-[16px] font-[700] mb-[5px]'>
                                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M16 2V6M8 2V6" stroke="#4B4D4D" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                                    <path d="M21 16V12C21 8.22876 21 6.34315 19.8284 5.17157C18.6569 4 16.7712 4 13 4H11C7.22876 4 5.34315 4 4.17157 5.17157C3 6.34315 3 8.22876 3 12V14C3 17.7712 3 19.6569 4.17157 20.8284C5.34315 22 7.22876 22 11 22H12" stroke="#4B4D4D" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                                    <path d="M3 10H21" stroke="#4B4D4D" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                                    <path d="M21 19.5H14.5M16.5 22C15.9943 21.5085 14 20.2002 14 19.5C14 18.7998 15.9943 17.4915 16.5 17" stroke="#4B4D4D" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                                    <path d="M16.5 20V17.9704C16.5 16.7281 15.9407 15.5099 14.8103 14.9946C13.4315 14.3661 11.7779 14 10 14C8.22212 14 6.5685 14.3661 5.18968 14.9946C4.05927 15.5099 3.5 16.7281 3.5 17.9704V20" stroke="#4B4D4D" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                                    <path d="M20.5 20.001V17.9713C20.5 16.729 19.9407 15.5109 18.8103 14.9956C18.5497 14.8768 18.2792 14.7673 18 14.668" stroke="#4B4D4D" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                                    <path d="M10 11C11.933 11 13.5 9.433 13.5 7.5C13.5 5.567 11.933 4 10 4C8.067 4 6.5 5.567 6.5 7.5C6.5 9.433 8.067 11 10 11Z" stroke="#4B4D4D" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                                    <path d="M15 4.14453C16.4457 4.57481 17.5 5.91408 17.5 7.49959C17.5 9.0851 16.4457 10.4244 15 10.8547" stroke="#4B4D4D" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                                 </svg>
-                                Check in
+                                2 Guests
                             </h5>
-                            <p className='text-[#4B4D4D] text-[16px] font-[400]'>05 Aug, 11:00 AM</p>
+                            <p className='text-[#4B4D4D] text-[16px] font-[400]'>Deluxe king room</p>
+                            <p className='text-[#4B4D4D] text-[16px] font-[400] flex justify-between items-center'><span>Deluxe king room</span><span>4 Hours</span></p>
                         </div>
+
+                        <div className='h-[1px] bg-[#CECECE] my-[10px]' />
+
                         <div className='flex flex-col'>
-                            <h5 className='flex items-center gap-1 text-[#4B4D4D] text-[16px] font-[700]'>
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M16 2V6M8 2V6" stroke="#4B4D4D" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                                    <path d="M13 4H11C7.22876 4 5.34315 4 4.17157 5.17157C3 6.34315 3 8.22876 3 12V14C3 17.7712 3 19.6569 4.17157 20.8284C5.34315 22 7.22876 22 11 22H13C16.7712 22 18.6569 22 19.8284 20.8284C21 19.6569 21 17.7712 21 14V12C21 8.22876 21 6.34315 19.8284 5.17157C18.6569 4 16.7712 4 13 4Z" stroke="#4B4D4D" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                                    <path d="M3 10H21" stroke="#4B4D4D" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                                    <path d="M13.5 18.5C14.0057 18.0085 16 16.7002 16 16C16 15.2998 14.0057 13.9915 13.5 13.5M15.5 16H9" stroke="#4B4D4D" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                                </svg>
-                                Check out
-                            </h5>
-                            <p className='text-[#4B4D4D] text-[16px] font-[400]'>05 Aug, 03:00 PM</p>
+                            <p className='text-[#4B4D4D] text-[16px] font-[400] flex justify-between items-center'>
+                                <span>Room price</span>
+                                <span>AED 150</span>
+                            </p>
+                            <p className='text-[#4B4D4D] text-[16px] font-[400] flex justify-between items-center'>
+                                <span>Tourism fee</span>
+                                <span>AED 10</span>
+                            </p>
+                            <p className='text-[#4B4D4D] text-[16px] font-[400] flex justify-between items-center'>
+                                <span>VAT</span>
+                                <span>AED 15</span>
+                            </p>
+                            <p className='text-[#4B4D4D] text-[16px] font-[400] flex justify-between items-center'>
+                                <span>Service Charge</span>
+                                <span>AED 05</span>
+                            </p>
+                            <p className='text-[#4B4D4D] text-[16px] font-[400] flex justify-between items-center'>
+                                <span>Municipality fee</span>
+                                <span>AED 02</span>
+                            </p>
+                            <p className='text-[#4B4D4D] text-[16px] font-[400] flex justify-between items-center'>
+                                <span>Discount 30%</span>
+                                <span className='text-[#29AF52] text-[16px] font-[700]' >- AED 52.5</span>
+                            </p>
                         </div>
-                    </div>
 
-                    <div className='h-[1px] bg-[#CECECE] my-[10px]' />
+                        <div className='flex flex-col mt-[20px]'>
+                            <p className='text-[#4B4D4D] text-[24px] font-[700] flex justify-between items-center'>
+                                <span>Total price</span>
+                                <span className='text-[#EF4A23]'><span className='text-[16px] text-[#4B4D4D]'>AED</span> 122.5</span>
+                            </p>
+                        </div>
 
-                    <div className='flex flex-col'>
-                        <h5 className='flex items-center gap-1 text-[#4B4D4D] text-[16px] font-[700] mb-[5px]'>
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M16.5 20V17.9704C16.5 16.7281 15.9407 15.5099 14.8103 14.9946C13.4315 14.3661 11.7779 14 10 14C8.22212 14 6.5685 14.3661 5.18968 14.9946C4.05927 15.5099 3.5 16.7281 3.5 17.9704V20" stroke="#4B4D4D" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                                <path d="M20.5 20.001V17.9713C20.5 16.729 19.9407 15.5109 18.8103 14.9956C18.5497 14.8768 18.2792 14.7673 18 14.668" stroke="#4B4D4D" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                                <path d="M10 11C11.933 11 13.5 9.433 13.5 7.5C13.5 5.567 11.933 4 10 4C8.067 4 6.5 5.567 6.5 7.5C6.5 9.433 8.067 11 10 11Z" stroke="#4B4D4D" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                                <path d="M15 4.14453C16.4457 4.57481 17.5 5.91408 17.5 7.49959C17.5 9.0851 16.4457 10.4244 15 10.8547" stroke="#4B4D4D" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                            </svg>
-                            2 Guests
-                        </h5>
-                        <p className='text-[#4B4D4D] text-[16px] font-[400]'>Deluxe king room</p>
-                        <p className='text-[#4B4D4D] text-[16px] font-[400] flex justify-between items-center'><span>Deluxe king room</span><span>4 Hours</span></p>
-                    </div>
+                        <div className='h-[1px] bg-[#CECECE] my-[10px]' />
 
-                    <div className='h-[1px] bg-[#CECECE] my-[10px]' />
+                        <Button fullWidth={false} className="w-full md:w-full rounded-[12px] h-[60px] mt-[10px]" onClick={() => router.push("/hotel-details/test/booking")}>Reserve Now</Button>
 
-                    <div className='flex flex-col'>
-                        <p className='text-[#4B4D4D] text-[16px] font-[400] flex justify-between items-center'>
-                            <span>Room price</span>
-                            <span>AED 150</span>
-                        </p>
-                        <p className='text-[#4B4D4D] text-[16px] font-[400] flex justify-between items-center'>
-                            <span>Tourism fee</span>
-                            <span>AED 10</span>
-                        </p>
-                        <p className='text-[#4B4D4D] text-[16px] font-[400] flex justify-between items-center'>
-                            <span>VAT</span>
-                            <span>AED 15</span>
-                        </p>
-                        <p className='text-[#4B4D4D] text-[16px] font-[400] flex justify-between items-center'>
-                            <span>Service Charge</span>
-                            <span>AED 05</span>
-                        </p>
-                        <p className='text-[#4B4D4D] text-[16px] font-[400] flex justify-between items-center'>
-                            <span>Municipality fee</span>
-                            <span>AED 02</span>
-                        </p>
-                        <p className='text-[#4B4D4D] text-[16px] font-[400] flex justify-between items-center'>
-                            <span>Discount 30%</span>
-                            <span className='text-[#29AF52] text-[16px] font-[700]' >- AED 52.5</span>
+                        <p className='text-[#6B6B6B] text-[12px] font-[400] mt-[10px] text-center'>
+                            Lorem ipsum dolor sit amet consectetur. Vitae ultrices tempor congue tortor vitae ac at semper odio. Pharetra feugiat sem sit vestibulum.
                         </p>
                     </div>
-
-                    <div className='flex flex-col mt-[20px]'>
-                        <p className='text-[#4B4D4D] text-[24px] font-[700] flex justify-between items-center'>
-                            <span>Total price</span>
-                            <span className='text-[#EF4A23]'><span className='text-[16px] text-[#4B4D4D]'>AED</span> 122.5</span>
-                        </p>
-                    </div>
-
-                    <div className='h-[1px] bg-[#CECECE] my-[10px]' />
-
-                    <Button fullWidth={false} className="w-full md:w-full rounded-[12px] h-[60px] mt-[10px]" onClick={() => router.push("/hotel-details/test/booking")}>Reserve Now</Button>
-
-                    <p className='text-[#6B6B6B] text-[12px] font-[400] mt-[10px] text-center'>
-                        Lorem ipsum dolor sit amet consectetur. Vitae ultrices tempor congue tortor vitae ac at semper odio. Pharetra feugiat sem sit vestibulum.
-                    </p>
-                </div>
+                }
             </div>
 
             <section className="md:px-[30px] px-5 md:pt-0 pt-0 pb-[30px] md:pb-[80px] mt-[30px]">
