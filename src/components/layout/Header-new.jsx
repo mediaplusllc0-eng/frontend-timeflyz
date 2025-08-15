@@ -172,6 +172,10 @@ export default function Navbar({
         refetch: refetchProfile,
     } = useGetProfileQuery({});
 
+    useEffect(()=>{
+        console.log(selectedCurrency)
+    },[selectedCurrency])
+
     return (
         <>
             <nav
@@ -445,7 +449,7 @@ export default function Navbar({
                                                         <button
                                                             className="w-full px-4 py-2 text-left text-sm hover:bg-gray-100 text-black"
                                                             onClick={() => {
-                                                                setSelectedCurrency("₹");
+                                                                setSelectedCurrency("INR");
                                                                 setIsCurrencyDropdownOpen(false);
                                                                 setIsLnDropdownOpen(false);
                                                             }}
@@ -455,7 +459,7 @@ export default function Navbar({
                                                         <button
                                                             className="w-full px-4 py-2 text-left text-sm hover:bg-gray-100 text-black"
                                                             onClick={() => {
-                                                                setSelectedCurrency("$");
+                                                                setSelectedCurrency("USD");
                                                                 setIsCurrencyDropdownOpen(false);
                                                                 setIsLnDropdownOpen(false);
                                                             }}
@@ -465,7 +469,7 @@ export default function Navbar({
                                                         <button
                                                             className="w-full px-4 py-2 text-left text-sm hover:bg-gray-100 text-black"
                                                             onClick={() => {
-                                                                setSelectedCurrency("€");
+                                                                setSelectedCurrency("EURO");
                                                                 setIsCurrencyDropdownOpen(false);
                                                                 setIsLnDropdownOpen(false);
                                                             }}
@@ -485,7 +489,7 @@ export default function Navbar({
                                                         <button
                                                             className="w-full px-4 py-2 text-left text-sm hover:bg-gray-100 text-black"
                                                             onClick={() => {
-                                                                setSelectedCurrency("£");
+                                                                setSelectedCurrency("POUND");
                                                                 setIsCurrencyDropdownOpen(false);
                                                                 setIsLnDropdownOpen(false);
                                                             }}
@@ -505,7 +509,7 @@ export default function Navbar({
                                                         <button
                                                             className="w-full px-4 py-2 text-left text-sm hover:bg-gray-100 text-black"
                                                             onClick={() => {
-                                                                setSelectedCurrency("AU$");
+                                                                setSelectedCurrency("AUD");
                                                                 setIsCurrencyDropdownOpen(false);
                                                                 setIsLnDropdownOpen(false);
                                                             }}

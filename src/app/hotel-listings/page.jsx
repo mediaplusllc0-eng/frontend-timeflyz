@@ -778,7 +778,7 @@ function page() {
                     tabIndex={0}
                     onClick={() => setShowDropdownRegion(true)}
                     onBlur={() => setTimeout(() => setShowDropdownRegion(false), 150)}
-                    className="mb-5 md:mb-0 relative cursor-pointer inputDiv flex flex-col rounded-[12px] bg-[#E4E4E4] py-[12px] px-[16px] w-[100%] md:w-[25.36%] h-[60px]">
+                    className="mb-5 md:mb-0 relative cursor-pointer inputDiv flex flex-col rounded-[12px] bg-[#E4E4E4] py-[12px] px-[16px] w-[100%] md:w-[300px] h-[60px]">
                     <label className="cursor-pointer m-0 text-[16px] text-[#4B4D4D] font-[500] mt-[-2px]">Where</label>
                     <span
                         className="inline-block w-full text-[16px] text-[#848484] font-[400] mt-[-5px] cursor-pointer">{selectedRegion.cityName ? selectedRegion.cityName : "Select region(s)"}</span>
@@ -827,7 +827,7 @@ function page() {
                     )}
                 </div>
 
-                <div className="mb-5 md:mb-0 inputDiv flex flex-col rounded-[12px] bg-[#E4E4E4] py-[12px] px-[12px] w-full md:w-[14.37%] h-[60px]">
+                <div className="mb-5 md:mb-0 inputDiv flex flex-col rounded-[12px] bg-[#E4E4E4] py-[12px] px-[12px] w-full md:w-[170px] h-[60px]">
                     <label className="m-0 text-[16px] text-[#4B4D4D] font-[500] mt-[-2px]">Check in</label>
                     <StyledDatePicker
                         className="border-0 outline-0 mt-[-5px]"
@@ -845,7 +845,7 @@ function page() {
                     />
                 </div>
 
-                <div className="mb-5 md:mb-0 inputDiv flex flex-col rounded-[12px] bg-[#E4E4E4] py-[12px] px-[12px] w-full md:w-[14.37%] h-[60px]">
+                <div className="mb-5 md:mb-0 inputDiv flex flex-col rounded-[12px] bg-[#E4E4E4] py-[12px] px-[12px] w-full md:w-[170px] h-[60px]">
                     <label className="m-0 text-[16px] text-[#4B4D4D] font-[500] mt-[-2px]">Check out</label>
                     <StyledDatePicker
                         className="border-0 outline-0 mt-[-5px]"
@@ -867,7 +867,7 @@ function page() {
                     tabIndex={0}
                     onClick={() => setShowDropdownWho(true)}
                     onBlur={() => setTimeout(() => setShowDropdownWho(false), 150)}
-                    className="mb-5 md:mb-0 relative cursor-pointer inputDiv flex flex-col rounded-[12px] bg-[#E4E4E4] py-[12px] px-[16px] w-[100%] md:w-[25.36%] h-[60px]">
+                    className="mb-5 md:mb-0 relative cursor-pointer inputDiv flex flex-col rounded-[12px] bg-[#E4E4E4] py-[12px] px-[16px] w-[100%] md:w-[300px] h-[60px]">
                     <label className="cursor-pointer m-0 text-[16px] text-[#4B4D4D] font-[500] mt-[-2px]">Who</label>
                     <span
                         className="inline-block w-full text-[16px] text-[#848484] font-[400] mt-[-5px] cursor-pointer">Add guests</span>

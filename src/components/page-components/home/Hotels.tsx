@@ -85,7 +85,7 @@ export default function Hotels() {
   return (
     <section className="md:px-[30px] px-5 md:pt-0 pt-0 pb-[30px] md:pb-[80px]">
       <h5 className="text-center md:text-left text-[16px] text-[#4B4D4D] font-[400]">Hotels and destinations</h5>
-      <h2 className="text-center md:text-left text-[28px] md:text-[55px] font-[700] text-[#4B4D4D] mb-10 tracking-normal">
+      <h2 className="text-center md:text-left text-[28px] md:text-[55px] font-[700] text-[#4B4D4D] mb-[26px] tracking-normal">
         Anytime, Anywhere
       </h2>
 
@@ -95,7 +95,7 @@ export default function Hotels() {
           {countries.map((country) => (
             <button
               key={country}
-              className={`w-[48%] md:w-auto capitalize px-5 py-2 rounded-full text-base font-semibold transition md:my-0 my-2 ${selectedCountry === country
+              className={`w-[48%] md:w-auto capitalize px-5 py-2 rounded-full text-base font-[500] transition md:my-0 my-2 ${selectedCountry === country
                 ? "bg-[#F1F1F1] text-[#EF4A23] border-[1px]"
                 : "bg-[#F1F1F1] text-gray-70 border-[1px] border-[transparent] hover:bg-[#F1F1F1] hover:text-[#EF4A23] hover:border-[1px] hover:border-[#EF4A23]"
                 }`}
