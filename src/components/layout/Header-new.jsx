@@ -29,30 +29,12 @@ const NAV_ITEMS = [
 ];
 
 export default function Navbar({
-    menuColor = "light",
     isFixed = false,
-    forceShowSearch = false,
-    onSearch,
-    onKeyPress,
-    onCitySelect,
-    searchValue = "",
 }) {
-    const router = useRouter();
-    const searchParams = useSearchParams();
 
-    const dispatch = useAppDispatch();
-
-    const [activeDropdown, setActiveDropdown] = useState(null);
-    const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const [scrolled, setScrolled] = useState(false);
-    const [localSearchValue, setLocalSearchValue] = useState("");
-    const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
-    const [isRegisterModalOpen, setIsRegisterModalOpen] = useState(false);
     const [isUserDropdownOpen, setIsUserDropdownOpen] = useState(false);
-    const [isOtpModalOpen, setIsOtpModalOpen] = useState(false);
     const dropdownRef = useRef(null);
-    const [isForgetModalOpen, setIsForgetModalOpen] = useState(false);
-    const [isResetModalOpen, setIsResetModalOpen] = useState(false);
     const [isLnDropdownOpen, setIsLnDropdownOpen] = useState(false);
     const [isLangDropdownOpen, setIsLangDropdownOpen] = useState(false);
     const [isCurrencyDropdownOpen, setIsCurrencyDropdownOpen] = useState(false);
@@ -61,14 +43,7 @@ export default function Navbar({
     const [isSearchOpen, setIsSearchOpen] = useState(false);
     const langDropdownRef = useRef(null);
     const currencyDropdownRef = useRef(null);
-    const [userEmail, setUserEmail] = useState("");
-    const [userPhone, setUserPhone] = useState("");
-    const [otpFor, setOtpFor] = useState("");
-    const [resetPasswordToken, setResetPasswordToken] = useState("");
-    const [emailToVerify, setEmailToVerify] = useState({ email: "", status: "" });
-    const [showRegisterOtpModal, setShowRegisterOtpModal] = useState(false);
 
-    const authCheck = localStorage.getItem("token");
     useEffect(() => {
         const handleScroll = () => {
             setScrolled(window.scrollY > 10);
@@ -99,58 +74,11 @@ export default function Navbar({
         };
     }, []);
 
-    const openLoginModal = () => {
-        setIsLoginModalOpen(true);
-        setIsUserDropdownOpen(false);
-        setMobileMenuOpen(false);
-    };
-
-    const openRegisterModal = () => {
-        setIsRegisterModalOpen(true);
-        setIsUserDropdownOpen(false);
-        setMobileMenuOpen(false);
-    };
-
-    const textColor = menuColor === "light" ? "text-white" : "text-[#292935]";
-    const hoverColor =
-        menuColor === "light" ? "hover:text-gold" : "hover:text-orange-500";
-
-    const handleSearch = (e) => {
-        const value = e.target.value.trim();
-        if (onSearch) onSearch(e);
-        if (onCitySelect) onCitySelect(value === "" ? null : value);
-        setLocalSearchValue(value);
-    };
-
-    const handleKeyPress = (e) => {
-        if (e.key === "Enter") {
-            e.preventDefault();
-
-            const params = new URLSearchParams(searchParams.toString());
-            if (localSearchValue) {
-                params.set("city", localSearchValue);
-            } else {
-                params.delete("city");
-            }
-
-            const newUrl = `/slots?${params.toString()}`;
-            router.push(newUrl);
-        }
-    };
-
-    const handleRedirectionforReserve = () => {
-        if (authCheck) {
-            router.push("/bookings");
-        } else {
-            router.push("/reservation");
-        }
-    };
-
     const [showDropdown, setShowDropdown] = useState(false);
     const [menuList, setMenuList] = useState([
         {
             name: "My reservations",
-            path: "/reservations",
+            path: "/dashboard/reservations",
             icon: <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M2.99153 15.1475C2.86713 15.0618 2.75138 14.9654 2.64298 14.857C1.66667 13.8807 1.66667 12.3093 1.66667 9.16667C1.66667 6.02397 1.66667 4.45262 2.64298 3.47631C3.61929 2.5 5.19063 2.5 8.33333 2.5H11.6667C14.8093 2.5 16.3808 2.5 17.357 3.47631C18.3333 4.45262 18.3333 6.02397 18.3333 9.16667C18.3333 12.3093 18.3333 13.8807 17.357 14.857C17.2486 14.9654 17.1329 15.0618 17.0085 15.1475" stroke="#4B4D4D" strokeWidth="1.5" strokeLinecap="round" />
                 <path d="M7.23858 14.105C6.51809 14.5438 4.62903 15.4397 5.7796 16.5608C6.34164 17.1083 6.96761 17.5 7.75461 17.5H12.2454C13.0324 17.5 13.6583 17.1083 14.2204 16.5608C15.371 15.4397 13.4819 14.5438 12.7614 14.105C11.0719 13.0761 8.92808 13.0761 7.23858 14.105Z" stroke="#4B4D4D" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
@@ -159,7 +87,7 @@ export default function Navbar({
         },
         {
             name: "My favorites",
-            path: "/favorites",
+            path: "/dashboard/favorites",
             icon: <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M8.67558 16.6398C6.32452 14.8817 1.66667 10.8624 1.66667 7.24539C1.66667 4.85471 3.42105 2.91669 5.83333 2.91669C7.08333 2.91669 8.33333 3.33335 10 5.00002C11.6667 3.33335 12.9167 2.91669 14.1667 2.91669C16.5789 2.91669 18.3333 4.85471 18.3333 7.24539C18.3333 10.8624 13.6755 14.8817 11.3244 16.6398C10.5333 17.2314 9.46675 17.2314 8.67558 16.6398Z" stroke="#4B4D4D" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
@@ -200,6 +128,50 @@ export default function Navbar({
         }
     ])
 
+    const [menuList2, setMenuList2] = useState([
+        {
+            name: "How it works",
+            path: "/how-it-works",
+            icon: <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M5.83333 2.5V17.5" stroke="#4B4D4D" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                <path d="M14.1667 2.5V17.5" stroke="#4B4D4D" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                <path d="M17.5 5.83331H2.5" stroke="#4B4D4D" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                <path d="M17.5 14.1667H2.5" stroke="#4B4D4D" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+        },
+        {
+            name: "About us",
+            path: "/about",
+            icon: <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M2.5 9.99137V12.0834C2.5 14.8332 2.5 16.2081 3.35427 17.0625C4.20854 17.9167 5.58347 17.9167 8.33333 17.9167H11.6667C14.4165 17.9167 15.7914 17.9167 16.6457 17.0625C17.5 16.2081 17.5 14.8332 17.5 12.0834V9.99137C17.5 8.59029 17.5 7.88982 17.2034 7.28342C16.9068 6.67702 16.3539 6.24694 15.248 5.3868L13.5813 4.0905C11.8609 2.75242 11.0007 2.08337 10 2.08337C8.99925 2.08337 8.13908 2.75242 6.41868 4.0905L4.75201 5.3868C3.64611 6.24694 3.09316 6.67702 2.79658 7.28342C2.5 7.88982 2.5 8.59029 2.5 9.99137Z" stroke="#4B4D4D" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                <path d="M12.5002 14.1666C11.8339 14.6853 10.9587 15 10.0002 15C9.04158 15 8.16642 14.6853 7.50015 14.1666" stroke="#4B4D4D" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+        },
+        {
+            name: "Help center",
+            path: "/help-center",
+            icon: <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <g clipPath="url(#clip0_86_241)">
+                    <path d="M10 18.3333C14.6024 18.3333 18.3333 14.6023 18.3333 9.99996C18.3333 5.39759 14.6024 1.66663 10 1.66663C5.39763 1.66663 1.66667 5.39759 1.66667 9.99996C1.66667 14.6023 5.39763 18.3333 10 18.3333Z" stroke="#4B4D4D" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                    <path d="M7.91667 7.91671C7.91667 6.76612 8.84942 5.83337 10 5.83337C11.1506 5.83337 12.0833 6.76612 12.0833 7.91671C12.0833 8.63079 11.7241 9.26096 11.1764 9.63637C10.6069 10.0266 10 10.5597 10 11.25" stroke="#4B4D4D" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                    <path d="M10.0001 14.1666H10.0075" stroke="#4B4D4D" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                </g>
+                <defs>
+                    <clipPath id="clip0_86_241">
+                        <rect width="20" height="20" fill="white" />
+                    </clipPath>
+                </defs>
+            </svg>
+        }
+    ])
+
+    const {
+        data: profileData,
+        isLoading: isProfileLoading,
+        isError: isProfileError,
+        refetch: refetchProfile,
+    } = useGetProfileQuery({});
+
     return (
         <>
             <nav
@@ -236,19 +208,35 @@ export default function Navbar({
 
                         {showDropdown && menuList.length > 0 && (
                             <ul className="absolute left-0 top-[50px] w-[200px] mt-1 bg-white border border-gray-200 rounded-[12px] shadow-[0_4px_25px_0_rgba(0,0,0,0.25)] z-10 max-h-48 overflow-y-auto">
-                                {menuList.map((item, index) => (
-                                    <li
-                                        key={index}
-                                        onMouseDown={() => {
-                                            // setQuery(location);
-                                            // setShowDropdown(false);
-                                        }}
-                                        className="flex items-center gap-3 px-3 sm:px-4 py-2 hover:bg-gray-100 cursor-pointer text-sm md:text-sm text-gray-700"
-                                    >
-                                        {item.icon}
-                                        {item.name}
-                                    </li>
-                                ))}
+                                {profileData?.data ? menuList.map((item, index) => (
+                                    <Link key={index} href={item?.path}>
+                                        <li
+                                            onMouseDown={() => {
+                                                // setQuery(location);
+                                                // setShowDropdown(false);
+                                            }}
+                                            className="flex items-center gap-3 px-3 sm:px-4 py-2 hover:bg-gray-100 cursor-pointer text-sm md:text-sm text-gray-700"
+                                        >
+                                            {item.icon}
+                                            {item.name}
+                                        </li>
+                                    </Link>
+                                ))
+                                    :
+                                    menuList2.map((item, index) => (
+                                        <li
+                                            key={index}
+                                            onMouseDown={() => {
+                                                // setQuery(location);
+                                                // setShowDropdown(false);
+                                            }}
+                                            className="flex items-center gap-3 px-3 sm:px-4 py-2 hover:bg-gray-100 cursor-pointer text-sm md:text-sm text-gray-700"
+                                        >
+                                            {item.icon}
+                                            {item.name}
+                                        </li>
+                                    ))
+                                }
                             </ul>
                         )}
                     </div>
@@ -542,16 +530,30 @@ export default function Navbar({
                                 )}
                             </AnimatePresence>
                         </div>
-                        <div>
-                            <Link href="/login" className="flex items-center space-x-2">
-                                <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M29.3334 16C29.3334 23.3637 23.3638 29.3333 16.0001 29.3333C8.63628 29.3333 2.66675 23.3637 2.66675 16C2.66675 8.6362 8.63628 2.66667 16.0001 2.66667C23.3638 2.66667 29.3334 8.6362 29.3334 16Z" stroke="#4B4D4D" strokeWidth="1.5" />
-                                    <path d="M19.6666 12.6667C19.6666 14.6917 18.025 16.3333 15.9999 16.3333C13.9749 16.3333 12.3333 14.6917 12.3333 12.6667C12.3333 10.6416 13.9749 9 15.9999 9C18.025 9 19.6666 10.6416 19.6666 12.6667Z" stroke="#4B4D4D" strokeWidth="1.5" />
-                                    <path d="M7.33325 25.3335L8.08045 24.0259C9.2674 21.9488 11.4764 20.6668 13.8688 20.6668H18.1311C20.5235 20.6668 22.7324 21.9488 23.9193 24.0259L24.6665 25.3335" stroke="#4B4D4D" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                                </svg>
-                                <span className="text-sm text-[12px] font-[400]">Login</span>
-                            </Link>
-                        </div>
+
+                        {!profileData?.data ?
+                            <div>
+                                <Link href="/sign-in" className="flex items-center space-x-2">
+                                    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M29.3334 16C29.3334 23.3637 23.3638 29.3333 16.0001 29.3333C8.63628 29.3333 2.66675 23.3637 2.66675 16C2.66675 8.6362 8.63628 2.66667 16.0001 2.66667C23.3638 2.66667 29.3334 8.6362 29.3334 16Z" stroke="#4B4D4D" strokeWidth="1.5" />
+                                        <path d="M19.6666 12.6667C19.6666 14.6917 18.025 16.3333 15.9999 16.3333C13.9749 16.3333 12.3333 14.6917 12.3333 12.6667C12.3333 10.6416 13.9749 9 15.9999 9C18.025 9 19.6666 10.6416 19.6666 12.6667Z" stroke="#4B4D4D" strokeWidth="1.5" />
+                                        <path d="M7.33325 25.3335L8.08045 24.0259C9.2674 21.9488 11.4764 20.6668 13.8688 20.6668H18.1311C20.5235 20.6668 22.7324 21.9488 23.9193 24.0259L24.6665 25.3335" stroke="#4B4D4D" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                                    </svg>
+                                    <span className="text-sm text-[12px] font-[400]">Login</span>
+                                </Link>
+                            </div>
+                            :
+                            <div>
+                                <Link href="/dashboard/reservations" className="flex items-center space-x-2">
+                                    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M29.3334 16C29.3334 23.3637 23.3638 29.3333 16.0001 29.3333C8.63628 29.3333 2.66675 23.3637 2.66675 16C2.66675 8.6362 8.63628 2.66667 16.0001 2.66667C23.3638 2.66667 29.3334 8.6362 29.3334 16Z" stroke="#4B4D4D" strokeWidth="1.5" />
+                                        <path d="M19.6666 12.6667C19.6666 14.6917 18.025 16.3333 15.9999 16.3333C13.9749 16.3333 12.3333 14.6917 12.3333 12.6667C12.3333 10.6416 13.9749 9 15.9999 9C18.025 9 19.6666 10.6416 19.6666 12.6667Z" stroke="#4B4D4D" strokeWidth="1.5" />
+                                        <path d="M7.33325 25.3335L8.08045 24.0259C9.2674 21.9488 11.4764 20.6668 13.8688 20.6668H18.1311C20.5235 20.6668 22.7324 21.9488 23.9193 24.0259L24.6665 25.3335" stroke="#4B4D4D" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                                    </svg>
+                                    <span className="text-sm text-[12px] font-[400]">{profileData?.data?.name}</span>
+                                </Link>
+                            </div>
+                        }
                     </div>
 
                 </div>
