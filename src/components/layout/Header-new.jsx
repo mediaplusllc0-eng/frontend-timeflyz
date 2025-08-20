@@ -131,7 +131,7 @@ export default function Navbar({
     const [menuList2, setMenuList2] = useState([
         {
             name: "How it works",
-            path: "/how-it-works",
+            path: "/how-its-work",
             icon: <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M5.83333 2.5V17.5" stroke="#4B4D4D" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                 <path d="M14.1667 2.5V17.5" stroke="#4B4D4D" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
@@ -141,7 +141,7 @@ export default function Navbar({
         },
         {
             name: "About us",
-            path: "/about",
+            path: "/about-us",
             icon: <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M2.5 9.99137V12.0834C2.5 14.8332 2.5 16.2081 3.35427 17.0625C4.20854 17.9167 5.58347 17.9167 8.33333 17.9167H11.6667C14.4165 17.9167 15.7914 17.9167 16.6457 17.0625C17.5 16.2081 17.5 14.8332 17.5 12.0834V9.99137C17.5 8.59029 17.5 7.88982 17.2034 7.28342C16.9068 6.67702 16.3539 6.24694 15.248 5.3868L13.5813 4.0905C11.8609 2.75242 11.0007 2.08337 10 2.08337C8.99925 2.08337 8.13908 2.75242 6.41868 4.0905L4.75201 5.3868C3.64611 6.24694 3.09316 6.67702 2.79658 7.28342C2.5 7.88982 2.5 8.59029 2.5 9.99137Z" stroke="#4B4D4D" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                 <path d="M12.5002 14.1666C11.8339 14.6853 10.9587 15 10.0002 15C9.04158 15 8.16642 14.6853 7.50015 14.1666" stroke="#4B4D4D" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
@@ -228,17 +228,19 @@ export default function Navbar({
                                 ))
                                     :
                                     menuList2.map((item, index) => (
-                                        <li
-                                            key={index}
-                                            onMouseDown={() => {
-                                                // setQuery(location);
-                                                // setShowDropdown(false);
-                                            }}
-                                            className="flex items-center gap-3 px-3 sm:px-4 py-2 hover:bg-gray-100 cursor-pointer text-sm md:text-sm text-gray-700"
-                                        >
-                                            {item.icon}
-                                            {item.name}
-                                        </li>
+                                        <Link key={index} href={item?.path}>
+                                            <li
+                                                key={index}
+                                                onMouseDown={() => {
+                                                    // setQuery(location);
+                                                    // setShowDropdown(false);
+                                                }}
+                                                className="flex items-center gap-3 px-3 sm:px-4 py-2 hover:bg-gray-100 cursor-pointer text-sm md:text-sm text-gray-700"
+                                            >
+                                                {item.icon}
+                                                {item.name}
+                                            </li>
+                                        </Link>
                                     ))
                                 }
                             </ul>
