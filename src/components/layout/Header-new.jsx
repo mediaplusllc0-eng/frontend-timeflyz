@@ -94,7 +94,7 @@ export default function Navbar({
         },
         {
             name: "How it works",
-            path: "/how-it-works",
+            path: "/how-its-work",
             icon: <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M5.83333 2.5V17.5" stroke="#4B4D4D" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                 <path d="M14.1667 2.5V17.5" stroke="#4B4D4D" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
