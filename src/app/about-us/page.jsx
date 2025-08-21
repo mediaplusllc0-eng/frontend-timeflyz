@@ -81,13 +81,13 @@ function page() {
                     <p className='text-[#4B4D4D] text-[16px] font-[400] '>We help them find the best place to stay and the best time to go. We empower them to book with confidence, saving them valuable time and money.</p>
                 </div>
                 <div className='w-[50%]'>
-                    <img className='w-full' src='/img/aboutSection1.webp' />
+                    <img alt='timeflyz' className='w-full' src='/img/aboutSection1.webp' />
                 </div>
             </div>
 
             <div className='flex items-center justify-between mt-[80px] px-[30px]'>
                 <div className='w-[50%]'>
-                    <img className='w-[calc(100%-60px)]' src='/img/aboutSection2.webp' />
+                    <img alt='timeflyz' className='w-[calc(100%-60px)]' src='/img/aboutSection2.webp' />
                 </div>
                 <div className='w-[50%] pl-[20px]'>
                     <h5 className='text-[#EF4A23] text-[16px] font-[400] mb-[10px]'>Our strategy</h5>
@@ -139,7 +139,7 @@ function page() {
                     <p className='text-[#4B4D4D] text-[16px] font-[400] '>Lorem ipsum dolor sit amet consectetur. Quis facilisis in turpis elementum fringilla. Velit quisque lacus habitasse phasellus bibendum libero pharetra velit. Ultrices lacus gravida vulputate fames eget malesuada auctor. Ipsum suspendisse bibendum volutpat lectus </p>
                 </div>
                 <div className='w-[50%]'>
-                    <img className='w-full pl-[140px]' src='/img/aboutSection3.png' />
+                    <im alt='timeflyz'g className='w-full pl-[140px]' src='/img/aboutSection3.png' />
                 </div>
             </div>
 
@@ -208,22 +208,22 @@ function page() {
 
                 <div className='w-[100%] flex justify-between my-[50px]'>
                     <div className='w-[calc(25%-15px)]'>
-                        <img className='w-full' src='/img/team1.png' />
+                        <img alt='timeflyz' className='w-full' src='/img/team1.png' />
                         <h3 className='text-[#4B4D4D] text-[18px] font-[600] mt-[20px]'>John Albart</h3>
                         <span className='text-[#848484] text-[16px] font-[400]'>Co Founder</span>
                     </div>
                     <div className='w-[calc(25%-15px)]'>
-                        <img className='w-full' src='/img/team2.png' />
+                        <img alt='timeflyz' className='w-full' src='/img/team2.png' />
                         <h3 className='text-[#4B4D4D] text-[18px] font-[600] mt-[20px]'>John Albart</h3>
                         <span className='text-[#848484] text-[16px] font-[400]'>Co Founder</span>
                     </div>
                     <div className='w-[calc(25%-15px)]'>
-                        <img className='w-full' src='/img/team3.png' />
+                        <img alt='timeflyz' className='w-full' src='/img/team3.png' />
                         <h3 className='text-[#4B4D4D] text-[18px] font-[600] mt-[20px]'>John Albart</h3>
                         <span className='text-[#848484] text-[16px] font-[400]'>Co Founder</span>
                     </div>
                     <div className='w-[calc(25%-15px)]'>
-                        <img className='w-full' src='/img/team4.png' />
+                        <img alt='timeflyz' className='w-full' src='/img/team4.png' />
                         <h3 className='text-[#4B4D4D] text-[18px] font-[600] mt-[20px]'>John Albart</h3>
                         <span className='text-[#848484] text-[16px] font-[400]'>Co Founder</span>
                     </div>
@@ -237,7 +237,7 @@ function page() {
                     <Slider className='w-full' infinite={false} autoplay={false} autoplaySpeed={2000} pauseOnHover={false} {...settings}>
                         <div>
                             <div className='w-[calc(100%-15px)] bg-[#F4F4F4] p-[12px] rounded-[20px]'>
-                                <img src='/img/news1.png' className='w-full h-[158px] object-cover rounded-[20px] overflow-hidden' />
+                                <img alt='timeflyz' src='/img/news1.png' className='w-full h-[158px] object-cover rounded-[20px] overflow-hidden' />
                                 <h2 className='text-[#4B4D4D] text-[18px] font-[700] mt-[12px]'>Timeflyz reports 17% growth in second consecutive quarter of strong performance</h2>
                                 <span className='text-[#848484] text-[14px] font-[400] mt-[50px] block'>Aug 6, 2025</span>
                             </div>
@@ -245,7 +245,7 @@ function page() {
 
                         <div>
                             <div className='w-[calc(100%-15px)] bg-[#F4F4F4] p-[12px] rounded-[20px]'>
-                                <img src='/img/news2.png' className='w-full h-[158px] object-cover rounded-[20px] overflow-hidden' />
+                                <img alt='timeflyz' src='/img/news2.png' className='w-full h-[158px] object-cover rounded-[20px] overflow-hidden' />
                                 <h2 className='text-[#4B4D4D] text-[18px] font-[700] mt-[12px]'>Timeflyz unveils savvy traveler guide, revealing what drives U.S. travel in 2025</h2>
                                 <span className='text-[#848484] text-[14px] font-[400] mt-[50px] block'>Aug 6, 2025</span>
                             </div>
@@ -253,7 +253,7 @@ function page() {
 
                         <div>
                             <div className='w-[calc(100%-15px)] bg-[#F4F4F4] p-[12px] rounded-[20px]'>
-                                <img src='/img/news3.png' className='w-full h-[158px] object-cover rounded-[20px] overflow-hidden' />
+                                <img alt='timeflyz' src='/img/news3.png' className='w-full h-[158px] object-cover rounded-[20px] overflow-hidden' />
                                 <h2 className='text-[#4B4D4D] text-[18px] font-[700] mt-[12px]'>Don’t let the 4th of july blow up your budget: Check out our affordable destination list</h2>
                                 <span className='text-[#848484] text-[14px] font-[400] mt-[50px] block'>Aug 6, 2025</span>
                             </div>
@@ -261,7 +261,7 @@ function page() {
 
                         <div>
                             <div className='w-[calc(100%-15px)] bg-[#F4F4F4] p-[12px] rounded-[20px]'>
-                                <img src='/img/news4.png' className='w-full h-[158px] object-cover rounded-[20px] overflow-hidden' />
+                                <img alt='timeflyz' src='/img/news4.png' className='w-full h-[158px] object-cover rounded-[20px] overflow-hidden' />
                                 <h2 className='text-[#4B4D4D] text-[18px] font-[700] mt-[12px]'>Timeflyz reports 17% growth in second consecutive quarter of strong performance</h2>
                                 <span className='text-[#848484] text-[14px] font-[400] mt-[50px] block'>Aug 6, 2025</span>
                             </div>

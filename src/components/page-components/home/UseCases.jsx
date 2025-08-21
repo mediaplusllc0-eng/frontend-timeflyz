@@ -11,19 +11,19 @@ function UseCases() {
 
             <div className='flex items-center justify-between flex-wrap md:flex-nowrap text-center md:text-left'>
                 <div className='w-full md:w-[32%] mb-10 md:mb-0'>
-                    <img src="/img/imagine1.png" className='w-full' />
+                    <img alt='timeflyz' src="/img/imagine1.png" className='w-full' />
                     <h3 className='text-[20px] text-[#4B4D4D] font-[700] mt-[16px]'>Relax</h3>
                     <p className='text-[16px] text-[#6B6B6B] font-[400] mt-[8px]'>Lorem ipsum dolor sit amet consectetur. Vel ut diam nulla faucibus elementum pellentesque sed gravida aenean. Fringilla tempor neque fermentum ultrices. Commodo turpis penatibus commodo ac aliquet ullamcorper amet ac facilisis.</p>
                 </div>
 
                 <div className='w-full md:w-[32%] mb-10 md:mb-0'>
-                    <img src="/img/imagine3.png" className='w-full' />
+                    <img alt='timeflyz' src="/img/imagine3.png" className='w-full' />
                     <h3 className='text-[20px] text-[#4B4D4D] font-[700] mt-[16px]'>Travel</h3>
                     <p className='text-[16px] text-[#6B6B6B] font-[400] mt-[8px]'>Lorem ipsum dolor sit amet consectetur. Vel ut diam nulla faucibus elementum pellentesque sed gravida aenean. Fringilla tempor neque fermentum ultrices. Commodo turpis penatibus commodo ac aliquet ullamcorper </p>
                 </div>
 
                 <div className='w-full md:w-[32%] mb-10 md:mb-0'>
-                    <img src="/img/imagine2.png" className='w-full' />
+                    <img alt='timeflyz' src="/img/imagine2.png" className='w-full' />
                     <h3 className='text-[20px] text-[#4B4D4D] font-[700] mt-[16px]'>Business</h3>
                     <p className='text-[16px] text-[#6B6B6B] font-[400] mt-[8px]'>Lorem ipsum dolor sit amet consectetur. Vel ut diam nulla faucibus elementum pellentesque sed gravida aenean. Fringilla tempor neque fermentum ultrices. </p>
                 </div>
@@ -34,7 +34,7 @@ function UseCases() {
                 <h2 className='text-[28px] md:text-[55px] text-[#4B4D4D] font-[700] mt-[16px]'>
                     <span className='flex items-center gap-4 mb-5 md:mb-0'>
                         for
-                        <img src='/img/forBusiness.png' />
+                        <img alt='timeflyz' src='/img/forBusiness.png' />
                         <span className='underline'>
                             <Link href="#">
                                 business
@@ -43,7 +43,7 @@ function UseCases() {
                     </span>
                     <span className='flex items-center gap-4'>
                         and
-                        <img src='/img/forHolidays.png' />
+                        <img alt='timeflyz' src='/img/forHolidays.png' />
                         <span className='underline'>
                             <Link href="#">
                                 holidays

@@ -13,7 +13,7 @@ function page() {
                         <div className="relative w-full overflow-hidden">
                             <img
                                 src={'/img/hotel1.png'}
-                                alt={"abc"}
+                                alt='timeflyz'
                                 className="h-[200px] md:h-[164px] w-full rounded-[20px] object-cover"
                             />
                             <div className='absolute top-[20px] right-[20px]'>
@@ -56,7 +56,7 @@ function page() {
                         <div className="relative w-full overflow-hidden">
                             <img
                                 src={'/img/hotel2.png'}
-                                alt={"abc"}
+                                alt='timeflyz'
                                 className="h-[200px] md:h-[164px] w-full rounded-[20px] object-cover"
                             />
                             <div className='absolute top-[20px] right-[20px]'>
@@ -99,7 +99,7 @@ function page() {
                         <div className="relative w-full overflow-hidden">
                             <img
                                 src={'/img/hotel3.png'}
-                                alt={"abc"}
+                                alt='timeflyz'
                                 className="h-[200px] md:h-[164px] w-full rounded-[20px] object-cover"
                             />
                             <div className='absolute top-[20px] right-[20px]'>
@@ -142,7 +142,7 @@ function page() {
                         <div className="relative w-full overflow-hidden">
                             <img
                                 src={'/img/hotel4.png'}
-                                alt={"abc"}
+                                alt='timeflyz'
                                 className="h-[200px] md:h-[164px] w-full rounded-[20px] object-cover"
                             />
                             <div className='absolute top-[20px] right-[20px]'>

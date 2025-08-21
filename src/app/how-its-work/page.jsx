@@ -91,13 +91,13 @@ function page() {
                     </Button>
                 </div>
                 <div className='w-[50%]'>
-                    <img className='w-full' src='/img/howWorkSection1.webp' />
+                    <img alt='timeflyz' className='w-full' src='/img/howWorkSection1.webp' />
                 </div>
             </div>
 
             <div className='flex items-center justify-between mt-[80px] px-[30px]'>
                 <div className='w-[50%]'>
-                    <img className='w-[calc(100%-60px)]' src='/img/howWorkSection2.webp' />
+                    <img alt='timeflyz' className='w-[calc(100%-60px)]' src='/img/howWorkSection2.webp' />
                 </div>
                 <div className='w-[50%]'>
                     <h1 className='text-[#4B4D4D] text-[55px] font-[700] mb-[16px]'>What is Timeflyz?</h1>
@@ -149,7 +149,7 @@ function page() {
 
             <div className='flex items-center justify-between mt-[80px] px-[30px]'>
                 <div className='w-[50%]'>
-                    <img className='w-[calc(100%-60px)]' src='/img/howWorkSection3.webp' />
+                    <img alt='timeflyz' className='w-[calc(100%-60px)]' src='/img/howWorkSection3.webp' />
                 </div>
                 <div className='w-[50%]'>
                     <h1 className='text-[#4B4D4D] text-[55px] font-[700] mb-[16px]'>Why choose Timeflyz?</h1>
@@ -178,25 +178,25 @@ function page() {
                     <div className='w-full flex justify-between mt-[40px]'>
 
                         <div className='w-[calc(25%-20px)] flex flex-col'>
-                            <img className='w-full object-cover h-[260px] rounded-[20px] overflow-hidden' src='/img/how1.png' />
+                            <img alt='timeflyz' className='w-full object-cover h-[260px] rounded-[20px] overflow-hidden' src='/img/how1.png' />
                             <h1 className='text-[#4B4D4D] text-[20px] font-[700] mt-[20px]'>Business travelers</h1>
                             <p className='text-[#4B4D4D] text-[16px] font-[400] mt-[2px]'>Take a break between meetings or use the hotel as a temporary workspace.</p>
                         </div>
 
                         <div className='w-[calc(25%-20px)] flex flex-col'>
-                            <img className='w-full object-cover h-[260px] rounded-[20px] overflow-hidden' src='/img/how2.png' />
+                            <img alt='timeflyz' className='w-full object-cover h-[260px] rounded-[20px] overflow-hidden' src='/img/how2.png' />
                             <h1 className='text-[#4B4D4D] text-[20px] font-[700] mt-[20px]'>Tourists</h1>
                             <p className='text-[#4B4D4D] text-[16px] font-[400] mt-[2px]'>Rest a few hours before or after your flight.</p>
                         </div>
 
                         <div className='w-[calc(25%-20px)] flex flex-col'>
-                            <img className='w-full object-cover h-[260px] rounded-[20px] overflow-hidden' src='/img/how3.png' />
+                            <img alt='timeflyz' className='w-full object-cover h-[260px] rounded-[20px] overflow-hidden' src='/img/how3.png' />
                             <h1 className='text-[#4B4D4D] text-[20px] font-[700] mt-[20px]'>Special events</h1>
                             <p className='text-[#4B4D4D] text-[16px] font-[400] mt-[2px]'>Relax before a wedding, meeting or event.</p>
                         </div>
 
                         <div className='w-[calc(25%-20px)] flex flex-col'>
-                            <img className='w-full object-cover h-[260px] rounded-[20px] overflow-hidden' src='/img/how4.png' />
+                            <img alt='timeflyz' className='w-full object-cover h-[260px] rounded-[20px] overflow-hidden' src='/img/how4.png' />
                             <h1 className='text-[#4B4D4D] text-[20px] font-[700] mt-[20px]'>Day stays</h1>
                             <p className='text-[#4B4D4D] text-[16px] font-[400] mt-[2px]'>Enjoy a quick getaway without the need for a full stay.</p>
                         </div>

@@ -105,18 +105,18 @@ function FooterNew() {
                 <div className='w-full flex justify-between flex-wrap md:flex-nowrap mt-[40px]'>
                     <div className='w-full md:w-[30%]'>
                         <Link href="#">
-                            <img src='/img/logo-black.png' className='m-auto md:m-0 w-[265px]' />
+                            <img alt='timeflyz' src='/img/logo-black.png' className='m-auto md:m-0 w-[265px]' />
                         </Link>
                         <p className='text-center md:text-left text-[#4B4D4D] text-[16px] font-[400]'>
                             Lorem ipsum dolor sit amet consectetur. Malesuada congue in vitae elementum suspendisse nec orci euismod enim. At dignissim id vel egestas in cursus.
                         </p>
                         <div className='flex justify-center md:justify-start gap-2 mt-[25px]'>
                             <Link href="#">
-                                <img src="/img/appStore.png" />
+                                <img alt='timeflyz' src="/img/appStore.png" />
                             </Link>
 
                             <Link href="#">
-                                <img src="/img/playStore.png" />
+                                <img alt='timeflyz' src="/img/playStore.png" />
                             </Link>
                         </div>
                     </div>

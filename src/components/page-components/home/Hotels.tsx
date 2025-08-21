@@ -118,7 +118,7 @@ export default function Hotels() {
                 <div className="relative w-full overflow-hidden">
                   <img
                     src={hotel?.images[0]}
-                    alt={"abc"}
+                    alt='timeflyz'
                     className="h-[200px] md:h-[164px] w-full rounded-[20px] object-cover"
                   />
                 </div>

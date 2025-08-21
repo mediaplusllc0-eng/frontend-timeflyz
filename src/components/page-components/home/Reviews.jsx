@@ -55,8 +55,8 @@ function Reviews() {
                     <h5 className="text-center md:text-left text-[16px] text-[#4B4D4D] font-[400]">People who have tried daytime hotels have not been disappointed. Read about<br /> their experiences!</h5>
                 </div>
                 <div className='mt-5 w-full md:w-auto'>
-                    <img className='m-auto' src="/img/trustpilot-logo.png" />
-                    <img src="/img/trustpilot_5_stars.png" className='m-auto mt-[10px]' />
+                    <img alt='timeflyz' className='m-auto' src="/img/trustpilot-logo.png" />
+                    <img alt='timeflyz' src="/img/trustpilot_5_stars.png" className='m-auto mt-[10px]' />
                     <span className='inline-block w-full text-center md:text-right text-[12px] text-[#181818] font-[400] mt-[7px]'><span className='font-[700]'>4.8</span> out of 5</span>
                 </div>
             </div>
@@ -68,7 +68,7 @@ function Reviews() {
                             <h3 className='text-[20px] text-[#000] font-[400]'>Lorem ipsum dolor sit amet consectetur. Placerat mauris lorem sed vitae. Amet eget viverra at placerat quis consequat. Blandit ac ut eget vitae varius amet. </h3>
 
                             <div>
-                                <img src="/img/trustpilot_5_stars.png" className='w-[144px]' />
+                                <img alt='timeflyz' src="/img/trustpilot_5_stars.png" className='w-[144px]' />
                                 <h2 className='text-[20px] text-[#4B4D4D] font-[700] mt-[6px]'>Marc</h2>
                             </div>
                         </div>
@@ -79,7 +79,7 @@ function Reviews() {
                             <h3 className='text-[20px] text-[#000] font-[400]'>Lorem ipsum dolor sit amet consectetur. Placerat mauris lorem sed vitae. Amet eget viverra at placerat quis consequat. </h3>
 
                             <div>
-                                <img src="/img/trustpilot_5_stars.png" className='w-[144px]' />
+                                <img alt='timeflyz' src="/img/trustpilot_5_stars.png" className='w-[144px]' />
                                 <h2 className='text-[20px] text-[#4B4D4D] font-[700] mt-[6px]'>John</h2>
                             </div>
                         </div>
@@ -90,7 +90,7 @@ function Reviews() {
                             <h3 className='text-[20px] text-[#000] font-[400]'>Lorem ipsum dolor sit amet consectetur. Placerat mauris lorem sed vitae. Amet eget viverra at place ratlorem lorem sed vitae sed vitae. </h3>
 
                             <div>
-                                <img src="/img/trustpilot_5_stars.png" className='w-[144px]' />
+                                <img alt='timeflyz' src="/img/trustpilot_5_stars.png" className='w-[144px]' />
                                 <h2 className='text-[20px] text-[#4B4D4D] font-[700] mt-[6px]'>Sophia</h2>
                             </div>
                         </div>
@@ -101,7 +101,7 @@ function Reviews() {
                             <h3 className='text-[20px] text-[#000] font-[400]'>Lorem ipsum dolor sit amet consectetur. Placerat mauris lorem sed vitae. Amet eget viverra at placerat quis consequat. Blandit ac ut eget vitae  </h3>
 
                             <div>
-                                <img src="/img/trustpilot_5_stars.png" className='w-[144px]' />
+                                <img alt='timeflyz' src="/img/trustpilot_5_stars.png" className='w-[144px]' />
                                 <h2 className='text-[20px] text-[#4B4D4D] font-[700] mt-[6px]'>Ava</h2>
                             </div>
                         </div>

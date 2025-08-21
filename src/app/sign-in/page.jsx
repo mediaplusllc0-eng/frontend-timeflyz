@@ -86,19 +86,19 @@ function page() {
                     <div className="sliderDiv w-full h-full mx-auto">
                         <Slider touchMove={true} pauseOnHover={false} autoplay={true} autoplaySpeed={4000} {...settings}>
                             <div className="text-black">
-                                <img src="/img/loginSlide1.webp" className="w-full h-[calc(100vh-80px)] object-cover" />
+                                <img alt='timeflyz' src="/img/loginSlide1.webp" className="w-full h-[calc(100vh-80px)] object-cover" />
                             </div>
                             <div className="text-black">
-                                <img src="/img/loginSlide2.webp" className="w-full h-[calc(100vh-80px)] object-cover" />
+                                <img alt='timeflyz' src="/img/loginSlide2.webp" className="w-full h-[calc(100vh-80px)] object-cover" />
                             </div>
                             <div className="text-black">
-                                <img src="/img/loginSlide3.webp" className="w-full h-[calc(100vh-80px)] object-cover" />
+                                <img alt='timeflyz' src="/img/loginSlide3.webp" className="w-full h-[calc(100vh-80px)] object-cover" />
                             </div>
                             <div className="text-black">
-                                <img src="/img/loginSlide4.webp" className="w-full h-[calc(100vh-80px)] object-cover" />
+                                <img alt='timeflyz' src="/img/loginSlide4.webp" className="w-full h-[calc(100vh-80px)] object-cover" />
                             </div>
                             <div className="text-black">
-                                <img src="/img/loginSlide5.webp" className="w-full h-[calc(100vh-80px)] object-cover" />
+                                <img alt='timeflyz' src="/img/loginSlide5.webp" className="w-full h-[calc(100vh-80px)] object-cover" />
                             </div>
                         </Slider>
                     </div>
@@ -156,11 +156,11 @@ function page() {
                                 <div className='w-full flex gap-[16px]'>
                                     <Button type="submit" fullWidth={false} className="w-full md:w-[163px] rounded-[12px] h-[60px] mt-[10px]">Sign in</Button>
                                     <Button theme="google" type="submit" fullWidth={false} className="flex items-center gap-[3px] bg-[#4285F4] w-full md:w-[180px] rounded-[12px] h-[60px] mt-[10px]">
-                                        <img src='/img/googleIcon.png' />
+                                        <img alt='timeflyz' src='/img/googleIcon.png' />
                                         Sign in google
                                     </Button>
                                     <Button theme="apple" type="submit" fullWidth={false} className="flex items-center gap-[3px] bg-[#000000] w-full md:w-[170px] rounded-[12px] h-[60px] mt-[10px]">
-                                        <img src='/img/appleIcon.png' />
+                                        <img alt='timeflyz' src='/img/appleIcon.png' />
                                         Sign in apple
                                     </Button>
                                 </div>

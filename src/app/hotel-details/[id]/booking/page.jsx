@@ -65,7 +65,7 @@ function page() {
           <div className='mt-5 md:mt-[30px]' id='rooms'>
             <div className='flex flex-wrap md:flex-nowrap shadow-[0_4px_10px_0_#00000026] p-[10px] rounded-[20px] mb-[20px]'>
               <div className='w-full md:w-[236px] h-[175px]'>
-                <img src='/img/hotelDetail1.png' className='w-full md:w-auto h-full rounded-[12px] overflow-hidden' />
+                <img alt='timeflyz' src='/img/hotelDetail1.png' className='w-full md:w-auto h-full rounded-[12px] overflow-hidden' />
               </div>
               <div className='w-full md:w-[calc(100%-159px)] flex justify-between md:px-[20px] py-[10px]'>
                 <div className=''>
