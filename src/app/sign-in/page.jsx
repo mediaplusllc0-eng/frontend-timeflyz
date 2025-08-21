@@ -86,19 +86,19 @@ function page() {
                     <div className="sliderDiv w-full h-full mx-auto">
                         <Slider touchMove={true} pauseOnHover={false} autoplay={true} autoplaySpeed={4000} {...settings}>
                             <div className="text-black">
-                                <img src="/img/loginSlide1.png" className="w-full h-[calc(100vh-80px)] object-cover" />
+                                <img src="/img/loginSlide1.webp" className="w-full h-[calc(100vh-80px)] object-cover" />
                             </div>
                             <div className="text-black">
-                                <img src="/img/loginSlide2.png" className="w-full h-[calc(100vh-80px)] object-cover" />
+                                <img src="/img/loginSlide2.webp" className="w-full h-[calc(100vh-80px)] object-cover" />
                             </div>
                             <div className="text-black">
-                                <img src="/img/loginSlide3.png" className="w-full h-[calc(100vh-80px)] object-cover" />
+                                <img src="/img/loginSlide3.webp" className="w-full h-[calc(100vh-80px)] object-cover" />
                             </div>
                             <div className="text-black">
-                                <img src="/img/loginSlide4.png" className="w-full h-[calc(100vh-80px)] object-cover" />
+                                <img src="/img/loginSlide4.webp" className="w-full h-[calc(100vh-80px)] object-cover" />
                             </div>
                             <div className="text-black">
-                                <img src="/img/loginSlide5.png" className="w-full h-[calc(100vh-80px)] object-cover" />
+                                <img src="/img/loginSlide5.webp" className="w-full h-[calc(100vh-80px)] object-cover" />
                             </div>
                         </Slider>
                     </div>

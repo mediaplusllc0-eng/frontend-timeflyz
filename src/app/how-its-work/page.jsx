@@ -91,13 +91,13 @@ function page() {
                     </Button>
                 </div>
                 <div className='w-[50%]'>
-                    <img className='w-full' src='/img/howWorkSection1.png' />
+                    <img className='w-full' src='/img/howWorkSection1.webp' />
                 </div>
             </div>
 
             <div className='flex items-center justify-between mt-[80px] px-[30px]'>
                 <div className='w-[50%]'>
-                    <img className='w-[calc(100%-60px)]' src='/img/howWorkSection2.png' />
+                    <img className='w-[calc(100%-60px)]' src='/img/howWorkSection2.webp' />
                 </div>
                 <div className='w-[50%]'>
                     <h1 className='text-[#4B4D4D] text-[55px] font-[700] mb-[16px]'>What is Timeflyz?</h1>
@@ -149,7 +149,7 @@ function page() {
 
             <div className='flex items-center justify-between mt-[80px] px-[30px]'>
                 <div className='w-[50%]'>
-                    <img className='w-[calc(100%-60px)]' src='/img/howWorkSection4.png' />
+                    <img className='w-[calc(100%-60px)]' src='/img/howWorkSection3.webp' />
                 </div>
                 <div className='w-[50%]'>
                     <h1 className='text-[#4B4D4D] text-[55px] font-[700] mb-[16px]'>Why choose Timeflyz?</h1>

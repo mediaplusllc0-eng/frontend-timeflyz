@@ -81,13 +81,13 @@ function page() {
                     <p className='text-[#4B4D4D] text-[16px] font-[400] '>We help them find the best place to stay and the best time to go. We empower them to book with confidence, saving them valuable time and money.</p>
                 </div>
                 <div className='w-[50%]'>
-                    <img className='w-full' src='/img/aboutSection1.png' />
+                    <img className='w-full' src='/img/aboutSection1.webp' />
                 </div>
             </div>
 
             <div className='flex items-center justify-between mt-[80px] px-[30px]'>
                 <div className='w-[50%]'>
-                    <img className='w-[calc(100%-60px)]' src='/img/aboutSection2.png' />
+                    <img className='w-[calc(100%-60px)]' src='/img/aboutSection2.webp' />
                 </div>
                 <div className='w-[50%] pl-[20px]'>
                     <h5 className='text-[#EF4A23] text-[16px] font-[400] mb-[10px]'>Our strategy</h5>

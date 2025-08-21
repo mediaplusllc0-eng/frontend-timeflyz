@@ -401,19 +401,19 @@ export default function Hero() {
                 <div className="sliderDiv w-full mx-auto md:mt-[-50px] px-5 md:px-[30px]">
                     <Slider touchMove={false} pauseOnHover={false} autoplay autoplaySpeed={2000} {...settings}>
                         <div className="text-black">
-                            <img src="/img/heroSlide1.png" className="w-full rounded-[20px]" />
+                            <img src="/img/heroSlide1.webp" className="w-full rounded-[20px]" />
                         </div>
                         <div className="text-black">
-                            <img src="/img/heroSlide2.png" className="w-full rounded-[20px]" />
+                            <img src="/img/heroSlide2.webp" className="w-full rounded-[20px]" />
                         </div>
                         <div className="text-black">
-                            <img src="/img/heroSlide3.png" className="w-full rounded-[20px]" />
+                            <img src="/img/heroSlide3.webp" className="w-full rounded-[20px]" />
                         </div>
                         <div className="text-black">
-                            <img src="/img/heroSlide4.png" className="w-full rounded-[20px]" />
+                            <img src="/img/heroSlide4.webp" className="w-full rounded-[20px]" />
                         </div>
                         <div className="text-black">
-                            <img src="/img/heroSlide5.png" className="w-full rounded-[20px]" />
+                            <img src="/img/heroSlide5.webp" className="w-full rounded-[20px]" />
                         </div>
                     </Slider>
                 </div>
