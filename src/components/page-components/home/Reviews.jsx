@@ -110,7 +110,7 @@ function Reviews() {
             </div>
 
             <div className='w-full text-center mt-[48px]'>
-                <Button fullWidth={false} className="mx-auto text-md capitalize w-[217px] h-[60px] rounded-[12px]">
+                <Button fullWidth={false} className="mx-auto text-md w-[217px] h-[60px] rounded-[12px]">
                     Read more reviews
                 </Button>
             </div>

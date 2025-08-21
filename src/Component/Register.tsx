@@ -50,7 +50,7 @@ export default function Register({
   return (
     <div className="space-y-6">
       <h1 className="text-center text-2xl font-bold underline font-lora">
-        Sign Up
+        Sign up
       </h1>
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>

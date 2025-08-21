@@ -65,7 +65,7 @@ export default function ResetPassword({
   return (
     <div className="w-full max-w-md mx-auto">
       <h2 className="text-2xl font-bold text-center text-gray-700 mb-2">
-        Reset Password
+        Reset password
       </h2>
       <p className="text-sm text-center text-gray-500 mb-6">
         Please enter your new password to complete the reset process.

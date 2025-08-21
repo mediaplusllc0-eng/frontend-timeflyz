@@ -119,7 +119,7 @@ function page() {
                                 <path d="M20 26.6666H23.3333M20 40H23.3333M20 53.3333H23.3333" stroke="#EF4A23" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
                                 <path d="M56.666 26.6666H59.9993M56.666 40H59.9993M56.666 53.3333H59.9993" stroke="#EF4A23" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
                             </svg>
-                            <h1 className='text-[#4B4D4D] text-[24px] font-[700] text-center mb-[12px] mt-[10px]'>Choose your Hotel</h1>
+                            <h1 className='text-[#4B4D4D] text-[24px] font-[700] text-center mb-[12px] mt-[10px]'>Choose your hotel</h1>
                             <p className='text-[#4B4D4D] text-[16px] font-[400] text-center'>Search among hundreds of quality hotels around the world, from large chains to small boutique hotels.</p>
                         </div>
 
@@ -175,29 +175,29 @@ function page() {
                 <div className='bg-[#F4F4F4] w-full h-[657px] rounded-[20px] p-[50px]'>
                     <h2 className='text-center text-[#4B4D4D] text-[55px] font-[700]'>Who is Timeflyz for?</h2>
                     <p className='text-[#4B4D4D] text-[16px] font-[400] mt-[16px] text-center'>It doesn't matter if you're traveling for business, tourism or just need a place to relax for a few hours.</p>
-                    <div className='w-full flex justify-between items-center mt-[40px]'>
+                    <div className='w-full flex justify-between mt-[40px]'>
 
                         <div className='w-[calc(25%-20px)] flex flex-col'>
-                            <img className='w-full object-cover' src='/img/how1.png' />
+                            <img className='w-full object-cover h-[260px] rounded-[20px] overflow-hidden' src='/img/how1.png' />
                             <h1 className='text-[#4B4D4D] text-[20px] font-[700] mt-[20px]'>Business travelers</h1>
                             <p className='text-[#4B4D4D] text-[16px] font-[400] mt-[2px]'>Take a break between meetings or use the hotel as a temporary workspace.</p>
                         </div>
 
                         <div className='w-[calc(25%-20px)] flex flex-col'>
-                            <img className='w-full object-cover' src='/img/how2.png' />
+                            <img className='w-full object-cover h-[260px] rounded-[20px] overflow-hidden' src='/img/how2.png' />
                             <h1 className='text-[#4B4D4D] text-[20px] font-[700] mt-[20px]'>Tourists</h1>
                             <p className='text-[#4B4D4D] text-[16px] font-[400] mt-[2px]'>Rest a few hours before or after your flight.</p>
                         </div>
 
                         <div className='w-[calc(25%-20px)] flex flex-col'>
-                            <img className='w-full object-cover' src='/img/how3.png' />
-                            <h1 className='text-[#4B4D4D] text-[20px] font-[700] mt-[20px]'>Special Events</h1>
+                            <img className='w-full object-cover h-[260px] rounded-[20px] overflow-hidden' src='/img/how3.png' />
+                            <h1 className='text-[#4B4D4D] text-[20px] font-[700] mt-[20px]'>Special events</h1>
                             <p className='text-[#4B4D4D] text-[16px] font-[400] mt-[2px]'>Relax before a wedding, meeting or event.</p>
                         </div>
 
                         <div className='w-[calc(25%-20px)] flex flex-col'>
-                            <img className='w-full object-cover' src='/img/how4.png' />
-                            <h1 className='text-[#4B4D4D] text-[20px] font-[700] mt-[20px]'>Day Stays</h1>
+                            <img className='w-full object-cover h-[260px] rounded-[20px] overflow-hidden' src='/img/how4.png' />
+                            <h1 className='text-[#4B4D4D] text-[20px] font-[700] mt-[20px]'>Day stays</h1>
                             <p className='text-[#4B4D4D] text-[16px] font-[400] mt-[2px]'>Enjoy a quick getaway without the need for a full stay.</p>
                         </div>
 
@@ -207,7 +207,7 @@ function page() {
 
             <div className='flex items-center justify-between mt-[80px] px-[30px]'>
                 <div className='w-[50%]'>
-                    <h1 className='text-[#4B4D4D] text-[55px] font-[700] mb-[16px]'>Frequently Asked Questions</h1>
+                    <h1 className='text-[#4B4D4D] text-[55px] font-[700] mb-[16px]'>Frequently asked questions</h1>
                     <p className='text-[#4B4D4D] text-[16px] font-[400] '>Do you have questions? Here are the answers to the most common questions about Timeflyz.</p>
                 </div>
                 <div className='w-[50%] pl-[20px]'>

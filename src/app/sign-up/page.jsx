@@ -113,7 +113,7 @@ function page() {
                                 <div
                                     tabIndex={0}
                                     className="mb-5 md:mb-0 relative cursor-pointer inputDiv flex flex-col rounded-[12px] bg-[#E4E4E4] py-[12px] px-[16px] w-[100%] md:w-[calc(50%-5px)] h-[60px]">
-                                    <label className="cursor-pointer m-0 text-[16px] text-[#4B4D4D] font-[500] mt-[-2px]">Retype Password</label>
+                                    <label className="cursor-pointer m-0 text-[16px] text-[#4B4D4D] font-[500] mt-[-2px]">Retype password</label>
                                     <input
                                         type={passwordRetypeShow ? "text" : "password"}
                                         placeholder='Eg: @Example123'
@@ -153,15 +153,23 @@ function page() {
 
                                     <span className='text-[#848484] text-[16px] font-[400]'>Apply <Link href="/terms" className='text-[#EF4A23]'>terms and conditions</Link></span>
                                 </div>
-                                <div className='w-full'>
-                                    <Button fullWidth={false} className="w-full md:w-[163px] rounded-[12px] h-[60px] mt-[10px]">Sign In</Button>
+                                <div className='w-full flex gap-[16px]'>
+                                    <Button type="submit" fullWidth={false} className="w-full md:w-[163px] rounded-[12px] h-[60px] mt-[10px]">Sign up</Button>
+                                    <Button theme="google" type="submit" fullWidth={false} className="flex items-center gap-[3px] bg-[#4285F4] w-full md:w-[180px] rounded-[12px] h-[60px] mt-[10px]">
+                                        <img src='/img/googleIcon.png' />
+                                        Sign up google
+                                    </Button>
+                                    <Button theme="apple" type="submit" fullWidth={false} className="flex items-center gap-[3px] bg-[#000000] w-full md:w-[170px] rounded-[12px] h-[60px] mt-[10px]">
+                                        <img src='/img/appleIcon.png' />
+                                        Sign up apple
+                                    </Button>
                                 </div>
                             </div>
                         </form>
                     </div>
                     <div className='absolute bottom-[20px] w-[calc(100%-100px)]'>
                         <div className='h-[1px] w-full bg-[#CECECE] mb-[15px]' />
-                        <p className='text-center text-[#848484] text-[16px] font-[400] '>Already have an account? <Link href="/sign-in" className='text-[#EF4A23]'>Sign In</Link></p>
+                        <p className='text-center text-[#848484] text-[16px] font-[400] '>Already have an account? <Link href="/sign-in" className='text-[#EF4A23]'>Sign in</Link></p>
                     </div>
                 </div>
             </div>

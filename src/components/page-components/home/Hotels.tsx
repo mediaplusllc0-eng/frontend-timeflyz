@@ -64,7 +64,7 @@ export default function Hotels() {
     page: currentPage,
   });
 
-  const countries = ["dubai", "sydney", "sharjah", "melbourne"];
+  const countries = ["Dubai", "Sydney", "Sharjah", "Melbourne"];
 
   const hotels: Hotel[] = data?.data || [];
   const totalCount: number = data?.totalCount || 0;
@@ -95,7 +95,7 @@ export default function Hotels() {
           {countries.map((country) => (
             <button
               key={country}
-              className={`w-[48%] md:w-auto capitalize px-5 py-2 rounded-full text-base font-[500] transition md:my-0 my-2 ${selectedCountry === country
+              className={`w-[48%] md:w-auto px-5 py-2 rounded-full text-base font-[500] transition md:my-0 my-2 ${selectedCountry === country
                 ? "bg-[#F1F1F1] text-[#EF4A23] border-[1px]"
                 : "bg-[#F1F1F1] text-gray-70 border-[1px] border-[transparent] hover:bg-[#F1F1F1] hover:text-[#EF4A23] hover:border-[1px] hover:border-[#EF4A23]"
                 }`}
@@ -154,7 +154,7 @@ export default function Hotels() {
           ))
         ) : (
           <>
-            No Result Found
+            No result found
           </>
         )}
 
@@ -198,7 +198,7 @@ export default function Hotels() {
           href={`/hotel-listings?city=${selectedCountry}&checkInDate=${selectedDate.toISOString().split("T")[0]
             }`}
         >
-          <Button fullWidth={false} className="text-md capitalize w-[191px] h-[60px] rounded-[12px]">
+          <Button fullWidth={false} className="text-md w-[191px] h-[60px] rounded-[12px]">
             See more hotels
           </Button>
         </Link>

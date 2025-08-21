@@ -41,7 +41,7 @@ function CTA() {
                                 placeholder="Enter email"
                             />
                         </div>
-                        <Button fullWidth={false} className="w-full mx-auto text-md capitalize md:w-[163px] h-[60px] rounded-[12px]">
+                        <Button fullWidth={false} className="w-full mx-auto text-md md:w-[163px] h-[60px] rounded-[12px]">
                             Subscribe
                         </Button>
                     </div>

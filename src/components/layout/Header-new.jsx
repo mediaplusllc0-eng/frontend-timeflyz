@@ -289,7 +289,7 @@ export default function Navbar({
                                                                 : selectedLanguage === "Nederlands"
                                                                     ? "Neder"
                                                                     : selectedLanguage}
-                                    {" • "}
+                                    {" - "}
                                     {selectedCurrency}
                                 </span>
                             </button>

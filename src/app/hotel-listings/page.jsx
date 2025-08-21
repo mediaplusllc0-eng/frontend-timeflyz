@@ -1160,7 +1160,7 @@ function page() {
                         {/* Left arrow */}
                         <button
                             onClick={() => scroll(-150)}
-                            className="shadow-[0_0_30px_25px_rgb(255,255,255)] absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white rounded-full p-1"
+                            className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white rounded-full p-1"
                         >
                             <FaChevronLeft className="text-gray-500" />
                         </button>

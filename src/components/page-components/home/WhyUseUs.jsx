@@ -9,7 +9,7 @@ function WhyUseUs() {
                     <div className='w-full md:w-[50%] text-center md:text-left'>
                         <h2 className='text-center md:text-left text-[28px] md:text-[55px] text-[#4B4D4D] font-[700]'>Why use us for hotel booking?</h2>
                         <p className='text-center md:text-left text-[16px] text-[#4B4D4D] font-[400] mt-[16px]'>Whatever your business, we’re your little black book of trusted big holiday hotels.</p>
-                        <Button fullWidth={false} className="text-md capitalize w-[191px] h-[60px] rounded-[12px] mt-[30px]">
+                        <Button fullWidth={false} className="text-md w-[191px] h-[60px] rounded-[12px] mt-[30px]">
                             Search hotels
                         </Button>
                     </div>

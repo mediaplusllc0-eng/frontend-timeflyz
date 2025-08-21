@@ -410,7 +410,7 @@ function page() {
               2 Guests
             </h5>
             <p className='text-[#4B4D4D] text-[16px] font-[400]'>Deluxe king room</p>
-            <p className='text-[#4B4D4D] text-[16px] font-[400] flex justify-between items-center'><span>Deluxe king room</span><span>4 Hours</span></p>
+            <p className='text-[#4B4D4D] text-[16px] font-[400] flex justify-between items-center'><span>Total hours</span><span>4 Hours</span></p>
           </div>
 
           <div className='h-[1px] bg-[#CECECE] my-[10px]' />

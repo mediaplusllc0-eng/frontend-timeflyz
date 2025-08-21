@@ -283,6 +283,14 @@ a {
   transition: 0.3s;
 }
 
+.customButtom.google::after {
+  background: #4286f4b5;
+}
+
+.customButtom.apple::after {
+  background: #000000b5;
+}
+
 .customButtom:hover:after {
   opacity: 1;
 }

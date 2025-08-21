@@ -238,7 +238,7 @@ function page() {
                         <div>
                             <div className='w-[calc(100%-15px)] bg-[#F4F4F4] p-[12px] rounded-[20px]'>
                                 <img src='/img/news1.png' className='w-full h-[158px] object-cover rounded-[20px] overflow-hidden' />
-                                <h2 className='text-[#4B4D4D] text-[18px] font-[700] mt-[12px]'>Timeflyz Reports 17% Growth in Second Consecutive Quarter of Strong Performance</h2>
+                                <h2 className='text-[#4B4D4D] text-[18px] font-[700] mt-[12px]'>Timeflyz reports 17% growth in second consecutive quarter of strong performance</h2>
                                 <span className='text-[#848484] text-[14px] font-[400] mt-[50px] block'>Aug 6, 2025</span>
                             </div>
                         </div>
@@ -246,7 +246,7 @@ function page() {
                         <div>
                             <div className='w-[calc(100%-15px)] bg-[#F4F4F4] p-[12px] rounded-[20px]'>
                                 <img src='/img/news2.png' className='w-full h-[158px] object-cover rounded-[20px] overflow-hidden' />
-                                <h2 className='text-[#4B4D4D] text-[18px] font-[700] mt-[12px]'>Timeflyz Unveils Savvy Traveler Guide, Revealing What Drives U.S. Travel in 2025</h2>
+                                <h2 className='text-[#4B4D4D] text-[18px] font-[700] mt-[12px]'>Timeflyz unveils savvy traveler guide, revealing what drives U.S. travel in 2025</h2>
                                 <span className='text-[#848484] text-[14px] font-[400] mt-[50px] block'>Aug 6, 2025</span>
                             </div>
                         </div>
@@ -254,7 +254,7 @@ function page() {
                         <div>
                             <div className='w-[calc(100%-15px)] bg-[#F4F4F4] p-[12px] rounded-[20px]'>
                                 <img src='/img/news3.png' className='w-full h-[158px] object-cover rounded-[20px] overflow-hidden' />
-                                <h2 className='text-[#4B4D4D] text-[18px] font-[700] mt-[12px]'>Don’t let the 4th of July blow up your budget: Check out our affordable destination list</h2>
+                                <h2 className='text-[#4B4D4D] text-[18px] font-[700] mt-[12px]'>Don’t let the 4th of july blow up your budget: Check out our affordable destination list</h2>
                                 <span className='text-[#848484] text-[14px] font-[400] mt-[50px] block'>Aug 6, 2025</span>
                             </div>
                         </div>
@@ -262,7 +262,7 @@ function page() {
                         <div>
                             <div className='w-[calc(100%-15px)] bg-[#F4F4F4] p-[12px] rounded-[20px]'>
                                 <img src='/img/news4.png' className='w-full h-[158px] object-cover rounded-[20px] overflow-hidden' />
-                                <h2 className='text-[#4B4D4D] text-[18px] font-[700] mt-[12px]'>Timeflyz Reports 17% Growth in Second Consecutive Quarter of Strong Performance</h2>
+                                <h2 className='text-[#4B4D4D] text-[18px] font-[700] mt-[12px]'>Timeflyz reports 17% growth in second consecutive quarter of strong performance</h2>
                                 <span className='text-[#848484] text-[14px] font-[400] mt-[50px] block'>Aug 6, 2025</span>
                             </div>
                         </div>

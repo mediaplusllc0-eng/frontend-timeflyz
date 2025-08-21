@@ -105,7 +105,7 @@ function page() {
                     </div>
                     <div className='absolute bottom-[20px] w-[calc(100%-100px)]'>
                         <div className='h-[1px] w-full bg-[#CECECE] mb-[15px]' />
-                        <p className='text-center text-[#848484] text-[16px] font-[400] '>Already have an account? <Link href="/sign-in" className='text-[#EF4A23]'>Sign In</Link></p>
+                        <p className='text-center text-[#848484] text-[16px] font-[400] '>Already have an account? <Link href="/sign-in" className='text-[#EF4A23]'>Sign in</Link></p>
                     </div>
                 </div>
             </div>

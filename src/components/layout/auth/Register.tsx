@@ -85,7 +85,7 @@ export default function Register({
     <>
       <div className="space-y-6">
         <h1 className="text-center text-2xl font-bold text-gray-900">
-          Sign Up
+          Sign up
         </h1>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <Controller

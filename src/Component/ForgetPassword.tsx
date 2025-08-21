@@ -22,7 +22,7 @@ export default function ForgetPassword({
 
   return (
     <div className="w-full max-w-md">
-      <h2 className="text-2xl font-bold text-center mb-6 text-gold">Reset Password</h2>
+      <h2 className="text-2xl font-bold text-center mb-6 text-gold">Reset password</h2>
       {/* Tabs */}
       <div className="flex mb-6">
         <button

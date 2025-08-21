@@ -56,7 +56,7 @@ function page() {
                 </div>
                 <div className='w-[50%] h-full relative p-[50px] flex flex-col justify-center overflow-y-scroll'>
                     <div className='h-[calc(100%-60px)] flex flex-col justify-center'>
-                        <h1 className='text-[#4B4D4D] text-[24px] font-[600] '>Reset Password</h1>
+                        <h1 className='text-[#4B4D4D] text-[24px] font-[600] '>Reset password</h1>
                         <p className='text-[#848484] text-[16px] font-[400] '>Please enter your registered email or phone to reset</p>
 
                         <div className='mt-[20px] w-[292px] h-[35px] bg-[#E4E4E4] flex justify-between rounded-[50px]'>
@@ -103,7 +103,7 @@ function page() {
                     </div>
                     <div className='absolute bottom-[20px] w-[calc(100%-100px)]'>
                         <div className='h-[1px] w-full bg-[#CECECE] mb-[15px]' />
-                        <p className='text-center text-[#848484] text-[16px] font-[400] '>Don’t have an account? <Link href="sign-up" className='text-[#EF4A23]'>Sign Up</Link></p>
+                        <p className='text-center text-[#848484] text-[16px] font-[400] '>Don’t have an account? <Link href="sign-up" className='text-[#EF4A23]'>Sign up</Link></p>
                     </div>
                 </div>
             </div>

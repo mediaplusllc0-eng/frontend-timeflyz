@@ -138,7 +138,7 @@ export default function Hero() {
     const dateInputRef = useRef(null);
     const [query, setQuery] = useState("");
     const [showDropdown, setShowDropdown] = useState(false);
-    const locations = ["dubai", "sydney", "sharjah", "melbourne"];
+    const locations = ["Dubai", "Sydney", "Sharjah", "Melbourne"];
     const filtered = locations.filter((loc) =>
         loc.toLowerCase().includes(query.toLowerCase())
     );

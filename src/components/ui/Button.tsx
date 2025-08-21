@@ -10,7 +10,7 @@ interface ButtonProps {
   disabled?: boolean;
   loading?: boolean;
   variant?: "solid" | "gradient";
-  theme?: "primary" | "secondary" | "danger" | "success" | "outline";
+  theme?: "primary" | "secondary" | "danger" | "success" | "outline" | "google" | "apple";
   size?: "sm" | "md" | "lg";
   fullWidth?: boolean;
   selectedBut?: boolean;
@@ -22,6 +22,8 @@ const themeClasses = {
     secondary: "bg-gray-600 text-white",
     danger: "bg-red-600 text-white",
     success: "bg-green-600 text-white",
+    google: "bg-[#4285F4] text-white",
+    apple: "bg-[#000000] text-white",
     outline: ""
   },
   gradient: {
@@ -35,6 +37,10 @@ const themeClasses = {
       "bg-gradient-to-r from-green-400 to-green-600 hover:from-green-500 hover:to-green-700 text-white",
     outline:
       "bg-[#fff] text-[#EF4A23] border-[#EF4A23] border-[1px] hover:bg-[#EF4A23] hover:text-[#fff]",
+    google:
+      "bg-[#4285F4] text-[#fff] border-[#4285F4] border-[1px] hover:bg-[#4285F4] hover:text-[#fff]",
+    apple:
+      "bg-[#000000] text-[#fff] border-[#000000] border-[1px] hover:bg-[#000000] hover:text-[#fff]",
   },
 };
 
@@ -70,6 +76,7 @@ const Button: React.FC<ButtonProps> = ({
         fullWidth && "w-full",
         sizeClass,
         colorClass,
+        theme,
         {
           "opacity-50 cursor-not-allowed": disabled || loading,
         },
