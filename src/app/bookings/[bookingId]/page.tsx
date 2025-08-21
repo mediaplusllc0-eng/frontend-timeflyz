@@ -250,7 +250,7 @@ export default function ReservationPage() {
                 <span className="font-medium text-gray-800">
                   Arriving time:{" "}
                 </span>
-                <span className="text-gray-400">11:00</span>
+                <span className="text-[#4B4D4D]">11:00</span>
               </div>
               <button className="border rounded-full px-4 py-1 text-sm text-black">
                 Edit

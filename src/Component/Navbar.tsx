@@ -199,7 +199,7 @@ export default function Navbar({
                     onKeyPress={handleKeyPress}
                     className="w-full px-4 py-2 pl-10 pr-4 border border-gray-300 rounded-full text-black focus:outline-none focus:ring-2 focus:ring-[#ff8200] focus:border-transparent"
                   />
-                  <HiMagnifyingGlass className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+                  <HiMagnifyingGlass className="absolute left-3 top-1/2 transform -translate-y-1/2 text-[#4B4D4D]" />
                 </div>
               </motion.div>
             ) : (
@@ -220,7 +220,7 @@ export default function Navbar({
                       onKeyPress={handleKeyPress}
                       className="w-full px-4 py-2 pl-10 pr-4 border border-gray-300 rounded-full text-black focus:outline-none focus:ring-2 focus:ring-[#ff8200] focus:border-transparent"
                     />
-                    <HiMagnifyingGlass className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+                    <HiMagnifyingGlass className="absolute left-3 top-1/2 transform -translate-y-1/2 text-[#4B4D4D]" />
                   </div>
                 </motion.div>
               )
@@ -294,7 +294,7 @@ export default function Navbar({
                               ? "Nederlands"
                               : selectedLanguage}
                           </span>
-                          <RiArrowDropDownLine className="w-4 h-4 text-gray-400" />
+                          <RiArrowDropDownLine className="w-4 h-4 text-[#4B4D4D]" />
                         </button>
                         <AnimatePresence>
                           {isLangDropdownOpen && (
@@ -390,7 +390,7 @@ export default function Navbar({
                           className="flex items-center justify-between w-full px-4 py-3 text-sm text-gray-700 hover:bg-gray-50 transition-colors duration-150 border rounded-full mt-3"
                         >
                           <span>{selectedCurrency}</span>
-                          <RiArrowDropDownLine className="w-4 h-4 text-gray-400" />
+                          <RiArrowDropDownLine className="w-4 h-4 text-[#4B4D4D]" />
                         </button>
                         <AnimatePresence>
                           {isCurrencyDropdownOpen && (
@@ -526,7 +526,7 @@ export default function Navbar({
                       className="flex items-center justify-between w-full px-4 py-3 text-sm text-gray-700 hover:bg-gray-50 transition-colors duration-150"
                     >
                       <span>Reservation</span>
-                      <HiArrowRight className="w-4 h-4 text-gray-400" />
+                      <HiArrowRight className="w-4 h-4 text-[#4B4D4D]" />
                     </button>
                     <button
                       onClick={() => {
@@ -536,21 +536,21 @@ export default function Navbar({
                       className="flex items-center justify-between w-full px-4 py-3 text-sm text-gray-700 hover:bg-gray-50 transition-colors duration-150"
                     >
                       <span>My Favorites</span>
-                      <HiArrowRight className="w-4 h-4 text-gray-400" />
+                      <HiArrowRight className="w-4 h-4 text-[#4B4D4D]" />
                     </button>
                     <button
                       onClick={openLoginModal}
                       className="flex items-center justify-between w-full px-4 py-3 text-sm text-gray-700 hover:bg-gray-50 transition-colors duration-150"
                     >
                       <span>Login</span>
-                      <HiArrowRight className="w-4 h-4 text-gray-400" />
+                      <HiArrowRight className="w-4 h-4 text-[#4B4D4D]" />
                     </button>
                     <button
                       onClick={openRegisterModal}
                       className="flex items-center justify-between w-full px-4 py-3 text-sm text-gray-700 hover:bg-gray-50 transition-colors duration-150"
                     >
                       <span>Register</span>
-                      <HiArrowRight className="w-4 h-4 text-gray-400" />
+                      <HiArrowRight className="w-4 h-4 text-[#4B4D4D]" />
                     </button>
                     <div className="border-t border-gray-100 my-1">
                       <button
@@ -573,7 +573,7 @@ export default function Navbar({
           {/* Mobile Menu Button */}
           <div className="md:hidden flex items-center space-x-2">
             <button
-              className="p-2 text-gray-400 hover:text-white transition-colors"
+              className="p-2 text-[#4B4D4D] hover:text-white transition-colors"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             >
               {mobileMenuOpen ? (
@@ -583,7 +583,7 @@ export default function Navbar({
               )}
             </button>
             <button
-              className="p-2 text-gray-400 hover:text-white transition-colors"
+              className="p-2 text-[#4B4D4D] hover:text-white transition-colors"
               onClick={() => setIsSearchOpen(!isSearchOpen)}
             >
               <HiMagnifyingGlass className="w-6 h-6" />
@@ -608,7 +608,7 @@ export default function Navbar({
                     onKeyPress={onKeyPress}
                     className="w-full px-4 py-2 pl-10 pr-4 border border-gray-300 rounded-full text-black focus:outline-none focus:ring-2 focus:ring-[#ff8200] focus:border-transparent"
                   />
-                  <HiMagnifyingGlass className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+                  <HiMagnifyingGlass className="absolute left-3 top-1/2 transform -translate-y-1/2 text-[#4B4D4D]" />
                 </div>
               </motion.div>
             )}

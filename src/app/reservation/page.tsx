@@ -96,7 +96,7 @@ export default function ReservationPage() {
                   onChange={(e) => setBookingId(e.target.value)}
                   className="w-full p-4 pl-12 border border-gray-300 rounded-lg focus:outline-none text-gray-500"
                 />
-                <FaSearch className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" />
+                <FaSearch className="absolute left-4 top-1/2 -translate-y-1/2 text-[#4B4D4D]" />
               </div>
 
               <div className="space-y-4">
@@ -115,7 +115,7 @@ export default function ReservationPage() {
                   >
                     <FaEnvelope
                       className={
-                        method === "email" ? "text-gold" : "text-gray-400"
+                        method === "email" ? "text-gold" : "text-[#4B4D4D]"
                       }
                     />
                     <span>Email</span>
@@ -131,7 +131,7 @@ export default function ReservationPage() {
                   >
                     <IoCall
                       className={
-                        method === "phone" ? "text-gold" : "text-gray-400"
+                        method === "phone" ? "text-gold" : "text-[#4B4D4D]"
                       }
                     />
                     <span>Phone</span>

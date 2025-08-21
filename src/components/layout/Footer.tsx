@@ -11,7 +11,7 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 px-5">
           <div>
             <h3 className="text-2xl font-bold mb-6"><Image src={"/img/logo.png"} alt="logo" width={200} height={100}/></h3>
-            <p className="text-gray-400 mb-6">
+            <p className="text-[#4B4D4D] mb-6">
               Where timeless elegance meets modern luxury for unforgettable
               experiences.
             </p>
@@ -37,7 +37,7 @@ export default function Footer() {
             <h4 className="text-lg font-semibold mb-6 uppercase tracking-wider">
               Contact
             </h4>
-            <address className="text-gray-400 not-italic space-y-3">
+            <address className="text-[#4B4D4D] not-italic space-y-3">
               <div className="flex items-start">
                 <LocationIcon className="h-5 w-5 mr-3 mt-1 text-primary-600" />
                 <span>
@@ -60,7 +60,7 @@ export default function Footer() {
             <h4 className="text-lg font-semibold mb-6 uppercase tracking-wider">
               Newsletter
             </h4>
-            <p className="text-gray-400 mb-6">
+            <p className="text-[#4B4D4D] mb-6">
               Subscribe for exclusive offers and luxury travel inspiration.
             </p>
             <div className="flex rounded-xl bg-white">
@@ -108,7 +108,7 @@ function FooterLink({ href, text }: FooterLinkProps) {
     <li>
       <Link
         href={href}
-        className="text-gray-400 hover:text-primary-200 transition-colors duration-300 flex items-center group "
+        className="text-[#4B4D4D] hover:text-primary-200 transition-colors duration-300 flex items-center group "
       >
         <IoIosLink className="me-2 text-primary-600" />
         {text}

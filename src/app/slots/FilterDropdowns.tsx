@@ -166,7 +166,7 @@ export default function FilterDropdowns({
         onClick={() => handleClearAll()}
         disabled={activeCount === 0}
         className={`flex items-center gap-2 px-4 py-0 rounded-full border border-gray-200 text-sm font-medium ${
-          activeCount > 0 ? "text-gray-800" : "text-gray-400 cursor-not-allowed"
+          activeCount > 0 ? "text-gray-800" : "text-[#4B4D4D] cursor-not-allowed"
         }`}
       >
         Clear

@@ -124,7 +124,7 @@ const TimePicker: React.FC<TimePickerProps> = ({ value, onChange }) => {
         value={`${hour}:${minute}:${second} ${ampm}`}
         onClick={() => setOpen(!open)}
         readOnly
-        className="border border-gray-300 text-gray-400 rounded-md px-4 py-2 text-sm w-48 cursor-pointer focus:outline-none focus:border-primary-300"
+        className="border border-gray-300 text-[#4B4D4D] rounded-md px-4 py-2 text-sm w-48 cursor-pointer focus:outline-none focus:border-primary-300"
       />
 
       {open && (

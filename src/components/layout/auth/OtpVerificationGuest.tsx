@@ -115,7 +115,7 @@ export default function OtpVerificationGuest({
         <div className="mt-4 text-center">
           <button
             type="button"
-            className="text-sm text-primary-600 hover:underline disabled:text-gray-400"
+            className="text-sm text-primary-600 hover:underline disabled:text-[#4B4D4D]"
             onClick={handleResendOtp}
             disabled={isResending || cooldown > 0}
           >

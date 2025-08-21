@@ -150,7 +150,7 @@ export default function BookingForm() {
             {/* Identification Section */}
             <div className="bg-white rounded-lg p-6 mb-4 shadow-sm">
               <div className="flex items-center">
-                <h2 className="text-gray-400 text-xl font-light">
+                <h2 className="text-[#4B4D4D] text-xl font-light">
                   IDENTIFICATION
                 </h2>
                 {authCheck && (

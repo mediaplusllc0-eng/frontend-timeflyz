@@ -81,7 +81,7 @@ export default function ResetPassword({
             New Password
           </label>
           <div className="relative">
-            <span className="absolute left-3 top-2.5 text-gray-400">
+            <span className="absolute left-3 top-2.5 text-[#4B4D4D]">
               <HiOutlineLockClosed className="w-5 h-5" />
             </span>
             <Controller
@@ -101,7 +101,7 @@ export default function ResetPassword({
             />
             <button
               type="button"
-              className="absolute right-3 top-2.5 text-gray-400"
+              className="absolute right-3 top-2.5 text-[#4B4D4D]"
               onClick={() => setShow((prev) => !prev)}
               tabIndex={-1}
             >
@@ -128,7 +128,7 @@ export default function ResetPassword({
             Confirm Password
           </label>
           <div className="relative">
-            <span className="absolute left-3 top-2.5 text-gray-400">
+            <span className="absolute left-3 top-2.5 text-[#4B4D4D]">
               <HiOutlineLockClosed className="w-5 h-5" />
             </span>
             <Controller
@@ -148,7 +148,7 @@ export default function ResetPassword({
             />
             <button
               type="button"
-              className="absolute right-3 top-2.5 text-gray-400"
+              className="absolute right-3 top-2.5 text-[#4B4D4D]"
               onClick={() => setShow((prev) => !prev)}
               tabIndex={-1}
             >

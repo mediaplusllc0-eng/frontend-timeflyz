@@ -120,7 +120,7 @@ export default function index() {
                       value={info}
                       onChange={(e) => setInfo(e.target.value)}
                     />
-                    <p className="text-xs text-gray-400 text-right mt-1">
+                    <p className="text-xs text-[#4B4D4D] text-right mt-1">
                       {info.length}/500
                     </p>
                   </div>

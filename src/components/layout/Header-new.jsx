@@ -332,7 +332,7 @@ export default function Navbar({
                                                                                     ? "Nederlands"
                                                                                     : selectedLanguage}
                                                 </span>
-                                                <RiArrowDropDownLine className="w-4 h-4 text-gray-400" />
+                                                <RiArrowDropDownLine className="w-4 h-4 text-[#4B4D4D]" />
                                             </button>
                                             <AnimatePresence>
                                                 {isLangDropdownOpen && (
@@ -428,7 +428,7 @@ export default function Navbar({
                                                 className="flex items-center justify-between w-full px-4 py-3 text-sm text-gray-700 hover:bg-gray-50 transition-colors duration-150 border rounded-full mt-3"
                                             >
                                                 <span>{selectedCurrency}</span>
-                                                <RiArrowDropDownLine className="w-4 h-4 text-gray-400" />
+                                                <RiArrowDropDownLine className="w-4 h-4 text-[#4B4D4D]" />
                                             </button>
                                             <AnimatePresence>
                                                 {isCurrencyDropdownOpen && (

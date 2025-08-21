@@ -136,7 +136,7 @@ export default function Hero() {
               {!selectedDate ? (
                 <span
                   onClick={handlePlaceholderClick}
-                  className="absolute left-1 md:left-1.5 top-0 text-gray-400 pointer-events-auto cursor-pointer text-sm sm:text-base font-lora select-none user-select-none"
+                  className="absolute left-1 md:left-1.5 top-0 text-[#4B4D4D] pointer-events-auto cursor-pointer text-sm sm:text-base font-lora select-none user-select-none"
                   style={{
                     userSelect: "none",
                     WebkitUserSelect: "none",

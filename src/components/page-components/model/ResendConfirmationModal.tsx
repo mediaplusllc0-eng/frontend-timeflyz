@@ -28,7 +28,7 @@ export default function ResendConfirmationModal({
       <div className="bg-white rounded-xl w-[90%] max-w-sm p-6 relative shadow-lg">
         <button
           onClick={onClose}
-          className="absolute top-3 right-3 text-gray-400 hover:text-gray-600"
+          className="absolute top-3 right-3 text-[#4B4D4D] hover:text-gray-600"
         >
           <X className="w-5 h-5" />
         </button>

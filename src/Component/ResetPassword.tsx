@@ -30,7 +30,7 @@ export default function ResetPassword({
             New Password
           </label>
           <div className="relative">
-            <span className="absolute left-3 top-2.5 text-gray-400">
+            <span className="absolute left-3 top-2.5 text-[#4B4D4D]">
               <HiOutlineLockClosed className="w-5 h-5" />
             </span>
             <input
@@ -43,7 +43,7 @@ export default function ResetPassword({
             />
             <button
               type="button"
-              className="absolute right-3 top-2.5 text-gray-400 hover:text-gold"
+              className="absolute right-3 top-2.5 text-[#4B4D4D] hover:text-gold"
               tabIndex={-1}
               onClick={() => setShow((s) => !s)}
             >

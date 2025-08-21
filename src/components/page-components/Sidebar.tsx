@@ -94,7 +94,7 @@ const Sidebar: React.FC<{ children: React.ReactNode }> = ({ children }) => {
                       : ""
                   }`}
                 >
-                  <BookOpen className="h-5 w-5 mr-4 text-gray-400 group-hover:text-gold transition-colors duration-200" />
+                  <BookOpen className="h-5 w-5 mr-4 text-[#4B4D4D] group-hover:text-gold transition-colors duration-200" />
                   <span className="group-hover:text-gray-800 transition-colors duration-200">
                     Reservations
                   </span>
@@ -125,7 +125,7 @@ const Sidebar: React.FC<{ children: React.ReactNode }> = ({ children }) => {
                     pathname === "/profile" ? "bg-primary-50 text-gray-800" : ""
                   }`}
                 >
-                  <User className="h-5 w-5 mr-4 text-gray-400 group-hover:text-gold transition-colors duration-200" />
+                  <User className="h-5 w-5 mr-4 text-[#4B4D4D] group-hover:text-gold transition-colors duration-200" />
                   <span className="group-hover:text-gray-800 transition-colors duration-200">
                     My information
                   </span>

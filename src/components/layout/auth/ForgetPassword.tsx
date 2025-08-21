@@ -78,7 +78,7 @@ export default function ForgetPassword({
               Email
             </label>
             <div className="relative">
-              <span className="absolute left-3 top-2.5 text-gray-400">
+              <span className="absolute left-3 top-2.5 text-[#4B4D4D]">
                 <HiOutlineMail className="w-5 h-5" />
               </span>
               <Controller
@@ -107,7 +107,7 @@ export default function ForgetPassword({
               Phone
             </label>
             <div className="relative">
-              <span className="absolute left-3 top-2.5 text-gray-400">
+              <span className="absolute left-3 top-2.5 text-[#4B4D4D]">
                 <HiOutlinePhone className="w-5 h-5" />
               </span>
               <Controller

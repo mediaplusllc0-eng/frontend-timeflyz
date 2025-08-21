@@ -32,7 +32,7 @@ const StyledDatePicker = ({
         calendarClassName="!p-4 !rounded-xl !shadow-xl !border !border-gray-200 z-[50]"
         customInput={
           <button
-            className={`w-full flex items-center gap-4 rounded-md text-gray-400 text-sm justify-start cursor-pointer ${fromReview ? "datee" : ""}`}
+            className={`w-full flex items-center gap-4 rounded-md text-[#4B4D4D] text-sm justify-start cursor-pointer ${fromReview ? "datee" : ""}`}
             onClick={() => setOpen(!open)}
           >
             {selectedDate
