@@ -401,19 +401,49 @@ export default function Hero() {
                 <div className="sliderDiv w-full mx-auto md:mt-[-50px] px-5 md:px-[30px]">
                     <Slider touchMove={false} pauseOnHover={false} autoplay autoplaySpeed={2000} {...settings}>
                         <div className="text-black">
-                            <img alt='timeflyz' src="/img/heroSlide1.webp" className="w-full rounded-[20px]" />
+                            <img
+                                alt="timeflyz"
+                                className="w-full rounded-[20px]"
+                                src="/img/heroSlide1.webp"
+                                loading="eager"
+                                fetchPriority="high"
+                            />
                         </div>
                         <div className="text-black">
-                            <img alt='timeflyz' src="/img/heroSlide2.webp" className="w-full rounded-[20px]" />
+                            <img
+                                alt="timeflyz"
+                                className="w-full rounded-[20px]"
+                                src="/img/heroSlide2.webp"
+                                loading="eager"
+                                fetchPriority="high"
+                            />
                         </div>
                         <div className="text-black">
-                            <img alt='timeflyz' src="/img/heroSlide3.webp" className="w-full rounded-[20px]" />
+                            <img
+                                alt="timeflyz"
+                                className="w-full rounded-[20px]"
+                                src="/img/heroSlide3.webp"
+                                loading="eager"
+                                fetchPriority="high"
+                            />
                         </div>
                         <div className="text-black">
-                            <img alt='timeflyz' src="/img/heroSlide4.webp" className="w-full rounded-[20px]" />
+                            <img
+                                alt="timeflyz"
+                                className="w-full rounded-[20px]"
+                                src="/img/heroSlide4.webp"
+                                loading="eager"
+                                fetchPriority="high"
+                            />
                         </div>
                         <div className="text-black">
-                            <img alt='timeflyz' src="/img/heroSlide5.webp" className="w-full rounded-[20px]" />
+                            <img
+                                alt="timeflyz"
+                                className="w-full rounded-[20px]"
+                                src="/img/heroSlide5.webp"
+                                loading="eager"
+                                fetchPriority="high"
+                            />
                         </div>
                     </Slider>
                 </div>

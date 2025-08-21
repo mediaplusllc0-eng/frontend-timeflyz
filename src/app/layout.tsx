@@ -26,6 +26,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${inter.variable}`}>
+      <link rel="preload" as="image" href="/img/heroSlide1.webp" fetchPriority="high"></link>
+      <link rel="preload" as="image" href="/img/heroSlide2.webp" fetchPriority="high"></link>
+      <link rel="preload" as="image" href="/img/heroSlide3.webp" fetchPriority="high"></link>
+      <link rel="preload" as="image" href="/img/heroSlide4.webp" fetchPriority="high"></link>
+      <link rel="preload" as="image" href="/img/heroSlide5.webp" fetchPriority="high"></link>
       <body className="antialiased">
         <ToastContainer position="top-right" autoClose={3000} />
         <Providers>
