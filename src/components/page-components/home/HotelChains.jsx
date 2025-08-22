@@ -23,59 +23,59 @@ function HotelChains() {
         { name: "Millennium", src: "/img/millennium.png" },
     ];
 
-var settings = {
-    dots: false,
-    arrows: true,
-    speed: 500,
-    slidesToShow: 6,
-    slidesToScroll: 1,
-    centerMode: true,
-    centerPadding: "80px",
-    responsive: [
-        {
-            breakpoint: 1536, // 2xl
-            settings: {
-                slidesToShow: 5,
-                centerPadding: "60px",
+    var settings = {
+        dots: false,
+        arrows: true,
+        speed: 500,
+        slidesToShow: 6,
+        slidesToScroll: 1,
+        centerMode: true,
+        centerPadding: "80px",
+        responsive: [
+            {
+                breakpoint: 1536, // 2xl
+                settings: {
+                    slidesToShow: 5,
+                    centerPadding: "60px",
+                },
             },
-        },
-        {
-            breakpoint: 1280, // xl
-            settings: {
-                slidesToShow: 4,
-                centerPadding: "60px",
+            {
+                breakpoint: 1280, // xl
+                settings: {
+                    slidesToShow: 4,
+                    centerPadding: "60px",
+                },
             },
-        },
-        {
-            breakpoint: 1024, // lg
-            settings: {
-                slidesToShow: 3,
-                centerPadding: "40px",
+            {
+                breakpoint: 1024, // lg
+                settings: {
+                    slidesToShow: 3,
+                    centerPadding: "40px",
+                },
             },
-        },
-        {
-            breakpoint: 768, // md
-            settings: {
-                slidesToShow: 2,
-                centerPadding: "30px",
+            {
+                breakpoint: 768, // md
+                settings: {
+                    slidesToShow: 2,
+                    centerPadding: "30px",
+                },
             },
-        },
-        {
-            breakpoint: 640, // sm
-            settings: {
-                slidesToShow: 2,
-                centerPadding: "20px",
+            {
+                breakpoint: 640, // sm
+                settings: {
+                    slidesToShow: 2,
+                    centerPadding: "20px",
+                },
             },
-        },
-        {
-            breakpoint: 480, // mobile
-            settings: {
-                slidesToShow: 2,
-                centerPadding: "10px",
+            {
+                breakpoint: 480, // mobile
+                settings: {
+                    slidesToShow: 2,
+                    centerPadding: "10px",
+                },
             },
-        },
-    ],
-};
+        ],
+    };
 
 
     return (

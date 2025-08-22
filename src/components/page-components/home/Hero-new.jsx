@@ -2,8 +2,6 @@
 import React from "react";
 import { useState, useRef } from "react";
 import { useRouter } from "next/navigation";
-import { FaMapMarkerAlt, FaCalendarAlt } from "react-icons/fa";
-import Navbar from "@/components/layout/Header";
 import StyledDatePicker from "@/components/ui/StyledDatePicker";
 import { CalendarDays } from "lucide-react";
 import Button from "@/components/ui/Button";
@@ -132,24 +130,7 @@ let cities = [
 ]
 
 export default function Hero() {
-    const [selectedDate, setSelectedDate] = useState(
-        new Date()
-    );
-    const dateInputRef = useRef(null);
-    const [query, setQuery] = useState("");
-    const [showDropdown, setShowDropdown] = useState(false);
-    const locations = ["Dubai", "Sydney", "Sharjah", "Melbourne"];
-    const filtered = locations.filter((loc) =>
-        loc.toLowerCase().includes(query.toLowerCase())
-    );
     const router = useRouter();
-
-    const handlePlaceholderClick = () => {
-        dateInputRef.current?.showPicker?.();
-        dateInputRef.current?.click();
-    };
-
-    const duration = "3";
 
     const handleSearch = () => {
         router.push(
@@ -212,9 +193,6 @@ export default function Hero() {
             value: 0
         }
     ])
-
-    let [checkedIn, setCheckedIn] = useState("")
-    let [checkedOut, setCheckedOut] = useState("")
 
     let [selectedRegion, setselectedRegion] = useState({
         cityName: "Dubai",
