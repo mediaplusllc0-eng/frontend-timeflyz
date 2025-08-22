@@ -85,7 +85,7 @@ function page() {
             <div className='flex items-center p-[30px] pb-[0px]'>
                 <div className='w-[50%]'>
                     <h1 className='text-[#4B4D4D] text-[55px] font-[700] mb-[16px]'>Pay only for the time you need</h1>
-                    <p className='text-[#4B4D4D] text-[16px] font-[400] '>Select your city or hotel, choose your stay length, and set your own check-in time. The flexibility you need, when you need it.</p>
+                    <p className='pr-[20px] text-[#4B4D4D] text-[16px] font-[400] '>Select your city or hotel, choose your stay length, and set your own check-in time. The flexibility you need, when you need it.</p>
                     <Button fullWidth={false} className="mx-auto text-[16px] w-[228px] h-[60px] rounded-[12px] mt-[20px]">
                         Search hotel by hour
                     </Button>

@@ -84,7 +84,7 @@ export default function Hotels() {
 
   return (
     <section className="md:px-[30px] px-5 md:pt-0 pt-0 pb-[30px] md:pb-[80px]">
-      <h5 className="text-center md:text-left text-[16px] text-[#4B4D4D] font-[400]">Hotels and destinations</h5>
+      <h5 className="text-center md:text-left text-[16px] text-[#4B4D4D] font-[400] mb-[16px]">Hotels and destinations</h5>
       <h2 className="text-center md:text-left text-[28px] md:text-[55px] font-[700] text-[#4B4D4D] mb-[26px] tracking-normal">
         Anytime, Anywhere
       </h2>

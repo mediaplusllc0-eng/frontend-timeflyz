@@ -4,7 +4,7 @@ import React from 'react'
 function UseCases() {
     return (
         <section className="px-5 md:px-[30px] md:py-[80px] py-[30px]">
-            <h5 className="text-center md:text-left text-[16px] text-[#4B4D4D] font-[400]">Use cases</h5>
+            <h5 className="text-center md:text-left text-[16px] text-[#4B4D4D] font-[400] mb-[16px]">Use cases</h5>
             <h2 className="text-center md:text-left text-[28px] md:text-[55px] font-[700] text-[#4B4D4D] mb-10 tracking-normal">
                 More than you can imagine
             </h2>

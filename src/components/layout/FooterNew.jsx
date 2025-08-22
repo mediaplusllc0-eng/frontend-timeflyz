@@ -183,12 +183,12 @@ function FooterNew() {
 
                             <ul>
                                 <li className='text-[#4B4D4D] text-[16px] font-[400] mt-[16px]'>
-                                    <Link href="#">
+                                    <Link href="/contact">
                                         Contact
                                     </Link>
                                 </li>
                                 <li className='text-[#4B4D4D] text-[16px] font-[400] mt-[16px]'>
-                                    <Link href="#">
+                                    <Link href="/faqs">
                                         FAQs
                                     </Link>
                                 </li>

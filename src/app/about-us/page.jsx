@@ -139,7 +139,7 @@ function page() {
                     <p className='text-[#4B4D4D] text-[16px] font-[400] '>Lorem ipsum dolor sit amet consectetur. Quis facilisis in turpis elementum fringilla. Velit quisque lacus habitasse phasellus bibendum libero pharetra velit. Ultrices lacus gravida vulputate fames eget malesuada auctor. Ipsum suspendisse bibendum volutpat lectus </p>
                 </div>
                 <div className='w-[50%]'>
-                    <im alt='timeflyz'g className='w-full pl-[140px]' src='/img/aboutSection3.png' />
+                    <img alt='timeflyz' className='w-full pl-[140px]' src='/img/aboutSection3.png' />
                 </div>
             </div>
 

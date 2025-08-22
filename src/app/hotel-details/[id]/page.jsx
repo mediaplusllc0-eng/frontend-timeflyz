@@ -352,18 +352,13 @@ function page() {
     const [showDropdownWho, setShowDropdownWho] = useState(false);
     const [whoList, setWhoList] = useState([
         {
-            name: "Guests",
-            value: 0
-        },
-        {
-            name: "Bedrooms",
-            value: 0
-        },
-        {
-            name: "Bathrooms",
-            value: 0
+            name: "Rooms",
+            value: 0,
         }
     ])
+
+    let [guests, setGuests] = useState([])
+    let [childrens, setChildrens] = useState([])
 
     const handleSearch = () => {
         router.push(
@@ -614,7 +609,7 @@ function page() {
                         className="inline-block w-full text-[16px] text-[#848484] font-[400] mt-[-5px] cursor-pointer">Add guests</span>
                     {showDropdownWho && whoList.length > 0 && (
                         <ul className="pb-3 absolute left-0 top-[50px] w-[100%] mt-1 bg-white border border-gray-200 rounded-[12px] shadow-[0_4px_25px_0_rgba(0,0,0,0.25)] z-10 max-h-auto overflow-y-auto">
-                            <li className=" mb-2 flex items-center justify-between px-3 sm:px-4 py-3 border-b-1 border-b-gray-100">
+                            <li className=" mb-2 flex items-center justify-between px-3 sm:px-4 py-3 pb-0">
                                 Select
                                 <svg
                                     onClick={() => setTimeout(() => setShowDropdownWho(false), 150)}
@@ -629,30 +624,164 @@ function page() {
                                         // setQuery(location);
                                         // setShowDropdown(false);
                                     }}
-                                    className="flex items-center justify-between gap-2 px-3 py-3 hover:bg-gray-100 cursor-pointer text-sm md:text-sm text-gray-700"
+                                    className="flex flex-wrap items-center justify-between gap-2 py-3 cursor-pointer text-sm md:text-[16px] text-[#4B4D4D]"
                                 >
-                                    {item?.name}
-                                    <div className="w-full flex items-center justify-between w-max gap-2">
+                                    <span className="px-[20px]">
+                                        {item?.name}
+                                    </span>
+                                    <div className="px-[20px] w-full flex items-center justify-between w-max gap-2">
                                         <div
                                             onClick={() => {
                                                 let arr = [...whoList]
                                                 if (Number(arr[index].value) > 0) {
                                                     arr[index].value = Number(arr[index].value) - 1
                                                 }
+                                                let arr2 = [...guests]
+                                                arr2.pop()
+                                                let arr3 = [...childrens]
+                                                arr3.pop()
+                                                setChildrens(arr3)
+                                                setGuests(arr2)
                                                 setWhoList(arr)
                                             }}
-                                            className="cursor-pointer w-[30px] h-[30px] rounded-[30px] border-[1px] border-[lightgrey] flex items-center justify-center text-[16px] text-[gray]"
+                                            className="cursor-pointer w-[30px] h-[30px] rounded-[10px] border-[1px] border-[#626363] hover:border-[#EF4A23] hover:text-[#EF4A23] flex items-center justify-center text-[16px] text-[#4B4D4D]"
                                         >-</div>
-                                        <span className="w-[30px] h-[30px] rounded-[5px] border-[1px] border-[lightgrey] flex items-center justify-center text-[16px] text-[gray]" >{item?.value ? item?.value : 0}</span>
+                                        <span className="w-[30px] h-[30px] rounded-[5px] flex items-center justify-center text-[16px] text-[#4B4D4D]" >{item?.value ? item?.value : 0}</span>
                                         <div
                                             onClick={() => {
                                                 let arr = [...whoList]
                                                 arr[index].value = Number(arr[index].value) + 1
+                                                let arr2 = [...guests]
+                                                arr2.push({
+                                                    room_no: arr[index].value,
+                                                    guests: 0
+                                                })
+                                                let arr3 = [...childrens]
+                                                arr3.push({
+                                                    room_no: arr[index].value,
+                                                    value: 0,
+                                                    childrens: []
+                                                })
+                                                setChildrens(arr3)
+                                                setGuests(arr2)
                                                 setWhoList(arr)
                                             }}
-                                            className="cursor-pointer w-[30px] h-[30px] rounded-[30px] border-[1px] border-[lightgrey] flex items-center justify-center text-[16px] text-[gray]"
+                                            className="cursor-pointer w-[30px] h-[30px] rounded-[10px] border-[1px] border-[#626363] hover:border-[#EF4A23] hover:text-[#EF4A23] flex items-center justify-center text-[16px] text-[#4B4D4D]"
                                         >+</div>
                                     </div>
+                                    {guests.length ?
+                                        guests.map((a, i) => (
+                                            <React.Fragment key={`room${i}`}>
+                                                <div className="w-full mt-[10px] px-[20px]">
+                                                    <span className="text-[#4B4D4D] text-[16px] font-[700] w-full flex justify-between items-center">
+                                                        Room {i + 1}
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                                            <path d="M19.5 5.5L18.8803 15.5251C18.7219 18.0864 18.6428 19.3671 18.0008 20.2879C17.6833 20.7431 17.2747 21.1273 16.8007 21.416C15.8421 22 14.559 22 11.9927 22C9.42312 22 8.1383 22 7.17905 21.4149C6.7048 21.1257 6.296 20.7408 5.97868 20.2848C5.33688 19.3626 5.25945 18.0801 5.10461 15.5152L4.5 5.5" stroke="#EB001B" strokeWidth="1.5" strokeLinecap="round" />
+                                                            <path d="M3 5.5H21M16.0557 5.5L15.3731 4.09173C14.9196 3.15626 14.6928 2.68852 14.3017 2.39681C14.215 2.3321 14.1231 2.27454 14.027 2.2247C13.5939 2 13.0741 2 12.0345 2C10.9688 2 10.436 2 9.99568 2.23412C9.8981 2.28601 9.80498 2.3459 9.71729 2.41317C9.32164 2.7167 9.10063 3.20155 8.65861 4.17126L8.05292 5.5" stroke="#EB001B" strokeWidth="1.5" strokeLinecap="round" />
+                                                            <path d="M9.5 16.5V10.5" stroke="#EB001B" strokeWidth="1.5" strokeLinecap="round" />
+                                                            <path d="M14.5 16.5V10.5" stroke="#EB001B" strokeWidth="1.5" strokeLinecap="round" />
+                                                        </svg>
+                                                    </span>
+                                                </div>
+                                                <div className="bg-[#FFF1ED] rounded-[6px] w-full mx-[10px] px-[10px] flex flex-col gap-[10px] py-[10px]">
+                                                    <div
+                                                        onMouseDown={() => {
+                                                            // setQuery(location);
+                                                            // setShowDropdown(false);
+                                                        }}
+                                                        className="flex flex-wrap items-center justify-between gap-2 py-0 cursor-pointer text-sm md:text-[16px] text-[#4B4D4D] w-full"
+                                                    >
+                                                        Guest
+                                                        <div className="w-full flex items-center justify-between w-max gap-2">
+                                                            <div
+                                                                onClick={() => {
+                                                                    let arr = [...guests]
+                                                                    if (Number(arr[i].guests) > 0) {
+                                                                        arr[i].guests = Number(arr[i].guests) - 1
+                                                                    }
+                                                                    setGuests(arr)
+                                                                }}
+                                                                className="cursor-pointer w-[30px] h-[30px] rounded-[10px] border-[1px] border-[#626363] hover:border-[#EF4A23] hover:text-[#EF4A23] flex items-center justify-center text-[16px] text-[#4B4D4D]"
+                                                            >-</div>
+                                                            <span className="w-[30px] h-[30px] rounded-[5px] flex items-center justify-center text-[16px] text-[#4B4D4D]" >{guests[i]?.guests ? guests[i]?.guests : 0}</span>
+                                                            <div
+                                                                onClick={() => {
+                                                                    let arr = [...guests]
+                                                                    arr[i].guests = Number(arr[i].guests) + 1
+                                                                    setGuests(arr)
+                                                                }}
+                                                                className="cursor-pointer w-[30px] h-[30px] rounded-[10px] border-[1px] border-[#626363] hover:border-[#EF4A23] hover:text-[#EF4A23] flex items-center justify-center text-[16px] text-[#4B4D4D]"
+                                                            >+</div>
+                                                        </div>
+                                                    </div>
+                                                    <div
+                                                        onMouseDown={() => {
+                                                            // setQuery(location);
+                                                            // setShowDropdown(false);
+                                                        }}
+                                                        className="flex flex-wrap items-center justify-between gap-2 py-0 cursor-pointer text-sm md:text-[16px] text-[#4B4D4D] w-full"
+                                                    >
+                                                        <span className="flex flex-col">
+                                                            Children
+                                                            <span className="text-[#4B4D4D] text-[10px] font-[400]">0-17 years Old</span>
+                                                        </span>
+                                                        <div className="w-full flex items-center justify-between w-max gap-2">
+                                                            <div
+                                                                onClick={() => {
+                                                                    let arr = [...childrens]
+                                                                    if (Number(arr[i].value) > 0) {
+                                                                        arr[i].value = Number(arr[i].value) - 1
+                                                                    }
+                                                                    arr[i].childrens.pop()
+                                                                    setChildrens(arr)
+                                                                }}
+                                                                className="cursor-pointer w-[30px] h-[30px] rounded-[10px] border-[1px] border-[#626363] hover:border-[#EF4A23] hover:text-[#EF4A23] flex items-center justify-center text-[16px] text-[#4B4D4D]"
+                                                            >-</div>
+                                                            <span className="w-[30px] h-[30px] rounded-[5px] flex items-center justify-center text-[16px] text-[#4B4D4D]" >{childrens[i]?.value ? childrens[i]?.value : 0}</span>
+                                                            <div
+                                                                onClick={() => {
+                                                                    let arr = [...childrens]
+                                                                    arr[i].value = Number(arr[i].value) + 1
+                                                                    arr[i].childrens?.push({
+                                                                        name: `Child ${arr[i].value}`,
+                                                                        value: 5
+                                                                    })
+                                                                    setChildrens(arr)
+                                                                }}
+                                                                className="cursor-pointer w-[30px] h-[30px] rounded-[10px] border-[1px] border-[#626363] hover:border-[#EF4A23] hover:text-[#EF4A23] flex items-center justify-center text-[16px] text-[#4B4D4D]"
+                                                            >+</div>
+                                                        </div>
+                                                    </div>
+                                                    <p className="pb-[10px] border-b-1 border-[#B5B3B3] text-[10px] text-[#4B4D4D] font-[400]">Please provide the right number of children's with there right age for best options and prices.</p>
+                                                    {childrens[i]?.childrens?.length ?
+                                                        <div className="flex flex-wrap items-center justify-between w-full ">
+                                                            <div
+                                                                onMouseDown={() => {
+                                                                    // setQuery(location);
+                                                                    // setShowDropdown(false);
+                                                                }}
+                                                                className="flex flex-wrap items-center justify-between gap-2 py-0 cursor-pointer text-sm md:text-[16px] text-[#4B4D4D] w-full"
+                                                            >
+                                                                Age of Children
+                                                            </div>
+                                                            {childrens[i]?.childrens?.map((b, ind) => (
+                                                                <div className="mt-[10px] flex items-center justify-between w-[calc(50%-10px)]">
+                                                                    {b.name}
+                                                                    <select className="text-center border-[#626363] border-1 w-[54px] h-[21.579px] rounded-[6px]">
+                                                                        {Array.from({ length: 17 - 5 + 1 }, (_, i) => (
+                                                                            <option key={i} value={i + 5}>
+                                                                                {i + 5}
+                                                                            </option>
+                                                                        ))}
+                                                                    </select>
+                                                                </div>
+                                                            ))}
+                                                        </div>
+                                                        : null}
+                                                </div>
+                                            </React.Fragment>
+                                        ))
+                                        : null}
                                 </li>
                             ))}
                         </ul>

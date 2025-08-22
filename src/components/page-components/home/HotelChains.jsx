@@ -80,7 +80,7 @@ function HotelChains() {
 
     return (
         <div className='px-5 md:px-[30px] hotelChain pb-[80px] w-full overflow-x-hidden'>
-            <h5 className="text-center md:text-left text-[16px] text-[#4B4D4D] font-[400]">Hotel chains</h5>
+            <h5 className="text-center md:text-left text-[16px] text-[#4B4D4D] font-[400] mb-[16px]">Hotel chains</h5>
             <h2 className="text-center md:text-left text-[28px] md:text-[55px] font-[700] text-[#4B4D4D] mb-10 tracking-normal">
                 Always with the best
             </h2>
