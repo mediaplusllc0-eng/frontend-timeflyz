@@ -4,8 +4,19 @@ import Navbar from "@/components/layout/Header-new";
 import Slider from 'react-slick';
 import Link from 'next/link';
 import Button from "@/components/ui/Button";
+import { useRegisterMutation } from '../../components/layout/auth/authApi';
+import { useGetProfileQuery } from "@/app/profile/services/userApi";
+import { toast } from 'react-toastify';
 
 function page() {
+
+    const [register, { isLoading }] = useRegisterMutation();
+    const {
+        data: profileData,
+        isLoading: isProfileLoading,
+        isError: isProfileError,
+        refetch: refetchProfile,
+    } = useGetProfileQuery({});
 
     var settings = {
         dots: true,
@@ -18,6 +29,53 @@ function page() {
 
     let [passwordShow, setPasswordShow] = useState(false)
     let [passwordRetypeShow, setPasswordRetypeShow] = useState(false)
+
+    let [passwordRetype, setPasswordRetype] = useState("")
+
+    let [formData, setFormData] = useState({
+        firstName: "",
+        lastName: "",
+        email: "",
+        phone: "",
+        password: "",
+    })
+
+    const onSubmit = async (e) => {
+        e.preventDefault()
+        const loginData = formData
+
+        try {
+            const response = await register(loginData).unwrap();
+            const { access_token, refresh_token, ...userData } = response.data;
+            console.log(response.data)
+            // if (access_token && refresh_token && userData) {
+            //     dispatch(
+            //         setAuthUser({
+            //             token: access_token,
+            //             refreshToken: refresh_token,
+            //             user: userData,
+            //         })
+            //     );
+
+            //     localStorage.setItem("token", access_token);
+            //     localStorage.setItem("refreshToken", refresh_token);
+            //     localStorage.removeItem("guestFavorites");
+            //     toast.success(response.message);
+
+            //     const profileRes = await refetchProfile();
+            //     if (profileRes.data) {
+            //         dispatch(setProfile(profileRes.data));
+            //     }
+
+            //     router.push("/dashboard/reservations")
+            // } else {
+            //     toast.error(response.message);
+            // }
+        } catch (error) {
+            const message = "Registration failed";
+            toast.error(message);
+        }
+    };
 
     return (
         <div className='loginMain h-[100vh] overflow-hidden'>
@@ -49,52 +107,62 @@ function page() {
                         <h1 className='text-[#4B4D4D] text-[24px] font-[600] '>Sign up</h1>
                         <p className='text-[#848484] text-[16px] font-[400] '>Register your account with valid details and explore reservations</p>
 
-                        <form>
+                        <form onSubmit={(e) => onSubmit(e)}>
                             <div className='flex flex-wrap justify-between items-center gap-y-[10px] mt-[20px]'>
                                 <div
-                                    tabIndex={0}
                                     className="mb-5 md:mb-0 relative cursor-pointer inputDiv flex flex-col rounded-[12px] bg-[#E4E4E4] py-[12px] px-[16px] w-[100%] md:w-[calc(50%-5px)] h-[60px]">
                                     <label className="cursor-pointer m-0 text-[16px] text-[#4B4D4D] font-[500] mt-[-2px]">First name</label>
                                     <input
                                         type='text'
                                         placeholder='Enter first name'
-                                        className="outline-0 inline-block w-full text-[16px] text-[#848484] font-[400] mt-[-5px] cursor-pointer" />
+                                        className="outline-0 inline-block w-full text-[16px] text-[#848484] font-[400] mt-[-5px] cursor-pointer"
+                                        value={formData.firstName}
+                                        onChange={(e) => setFormData({ ...formData, firstName: e.target.value })}
+                                    />
                                 </div>
                                 <div
-                                    tabIndex={0}
                                     className="mb-5 md:mb-0 relative cursor-pointer inputDiv flex flex-col rounded-[12px] bg-[#E4E4E4] py-[12px] px-[16px] w-[100%] md:w-[calc(50%-5px)] h-[60px]">
                                     <label className="cursor-pointer m-0 text-[16px] text-[#4B4D4D] font-[500] mt-[-2px]">Last name</label>
                                     <input
                                         type='text'
                                         placeholder='Enter last name'
-                                        className="outline-0 inline-block w-full text-[16px] text-[#848484] font-[400] mt-[-5px] cursor-pointer" />
+                                        className="outline-0 inline-block w-full text-[16px] text-[#848484] font-[400] mt-[-5px] cursor-pointer"
+                                        value={formData.lastName}
+                                        onChange={(e) => setFormData({ ...formData, lastName: e.target.value })}
+                                    />
                                 </div>
                                 <div
-                                    tabIndex={0}
                                     className="mb-5 md:mb-0 relative cursor-pointer inputDiv flex flex-col rounded-[12px] bg-[#E4E4E4] py-[12px] px-[16px] w-[100%] md:w-[calc(50%-5px)] h-[60px]">
                                     <label className="cursor-pointer m-0 text-[16px] text-[#4B4D4D] font-[500] mt-[-2px]">Email</label>
                                     <input
                                         type='email'
                                         placeholder='Enter email address'
-                                        className="outline-0 inline-block w-full text-[16px] text-[#848484] font-[400] mt-[-5px] cursor-pointer" />
+                                        className="outline-0 inline-block w-full text-[16px] text-[#848484] font-[400] mt-[-5px] cursor-pointer"
+                                        value={formData.email}
+                                        onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                                    />
                                 </div>
                                 <div
-                                    tabIndex={0}
                                     className="mb-5 md:mb-0 relative cursor-pointer inputDiv flex flex-col rounded-[12px] bg-[#E4E4E4] py-[12px] px-[16px] w-[100%] md:w-[calc(50%-5px)] h-[60px]">
                                     <label className="cursor-pointer m-0 text-[16px] text-[#4B4D4D] font-[500] mt-[-2px]">Phone number</label>
                                     <input
                                         type='number'
                                         placeholder='+971'
-                                        className="outline-0 inline-block w-full text-[16px] text-[#848484] font-[400] mt-[-5px] cursor-pointer" />
+                                        className="outline-0 inline-block w-full text-[16px] text-[#848484] font-[400] mt-[-5px] cursor-pointer"
+                                        value={formData.phone}
+                                        onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                                    />
                                 </div>
                                 <div
-                                    tabIndex={0}
                                     className="mb-5 md:mb-0 relative cursor-pointer inputDiv flex flex-col rounded-[12px] bg-[#E4E4E4] py-[12px] px-[16px] w-[100%] md:w-[calc(50%-5px)] h-[60px]">
                                     <label className="cursor-pointer m-0 text-[16px] text-[#4B4D4D] font-[500] mt-[-2px]">Password</label>
                                     <input
                                         type={passwordShow ? "text" : "password"}
                                         placeholder='Eg: @Example123'
-                                        className="outline-0 inline-block w-full text-[16px] text-[#848484] font-[400] mt-[-5px] cursor-pointer" />
+                                        className="outline-0 inline-block w-full text-[16px] text-[#848484] font-[400] mt-[-5px] cursor-pointer"
+                                        value={formData.password}
+                                        onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+                                    />
                                     <div onClick={() => setPasswordShow(!passwordShow)} className='absolute right-[15px] top-[20px] '>
                                         {passwordShow ?
                                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -111,13 +179,15 @@ function page() {
                                     </div>
                                 </div>
                                 <div
-                                    tabIndex={0}
                                     className="mb-5 md:mb-0 relative cursor-pointer inputDiv flex flex-col rounded-[12px] bg-[#E4E4E4] py-[12px] px-[16px] w-[100%] md:w-[calc(50%-5px)] h-[60px]">
                                     <label className="cursor-pointer m-0 text-[16px] text-[#4B4D4D] font-[500] mt-[-2px]">Retype password</label>
                                     <input
                                         type={passwordRetypeShow ? "text" : "password"}
                                         placeholder='Eg: @Example123'
-                                        className="outline-0 inline-block w-full text-[16px] text-[#848484] font-[400] mt-[-5px] cursor-pointer" />
+                                        className="outline-0 inline-block w-full text-[16px] text-[#848484] font-[400] mt-[-5px] cursor-pointer"
+                                        value={passwordRetype}
+                                        onChange={(e) => setPasswordRetype(e.target.value)}
+                                    />
                                     <div onClick={() => setPasswordRetypeShow(!passwordRetypeShow)} className='absolute right-[15px] top-[20px] '>
                                         {passwordRetypeShow ?
                                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">

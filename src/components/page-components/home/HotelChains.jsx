@@ -64,14 +64,19 @@ function HotelChains() {
                 breakpoint: 640, // sm
                 settings: {
                     slidesToShow: 2,
-                    centerPadding: "20px",
+                    centerPadding: "0px",
+                    centerMode: false,
+                    initialSlide: 1
                 },
             },
             {
                 breakpoint: 480, // mobile
                 settings: {
                     slidesToShow: 2,
-                    centerPadding: "10px",
+                    centerPadding: "0px",
+                    centerMode: false,
+                    autoplay: false,
+                    initialSlide: 1
                 },
             },
         ],
@@ -79,9 +84,9 @@ function HotelChains() {
 
 
     return (
-        <div className='px-5 md:px-[30px] hotelChain pb-[80px] w-full overflow-x-hidden'>
-            <h5 className="text-center md:text-left text-[16px] text-[#4B4D4D] font-[400] mb-[16px]">Hotel chains</h5>
-            <h2 className="text-center md:text-left text-[28px] md:text-[55px] font-[700] text-[#4B4D4D] mb-10 tracking-normal">
+        <div className='px-[16px] md:px-[30px] hotelChain pb-[80px] w-full overflow-x-hidden'>
+            <h5 className="text-[16px] text-[#4B4D4D] font-[400] mb-[16px]">Hotel chains</h5>
+            <h2 className="text-[40px] md:text-[55px] font-[700] text-[#4B4D4D] mb-10 tracking-normal">
                 Always with the best
             </h2>
 
@@ -89,7 +94,7 @@ function HotelChains() {
                 <Slider autoplay={true} infinite={true} pauseOnHover={false} initialSlide={5} {...settings} arrows={false}>
                     {brands?.map((a, i) => (
                         <div key={i}>
-                            <img className='h-[60px] w-auto mx-auto grayscale transition hover:grayscale-0' src={a.src} alt={a.name} />
+                            <img className='h-[60px] md:w-auto mx-auto grayscale transition hover:grayscale-0' src={a.src} alt={a.name} />
                         </div>
                     ))}
                 </Slider>

@@ -6,7 +6,7 @@ const CustomNextArrow = (props) => {
     const { className, style, onClick } = props;
     return (
         <div
-            className="absolute top-1/2 right-[-20px] transform -translate-y-1/2 z-10 w-10 h-10 rounded-full flex items-center justify-center cursor-pointer"
+            className="absolute top-1/2 md:right-[-20px] right-[-10px] transform -translate-y-1/2 z-10 w-10 h-10 rounded-full flex items-center justify-center cursor-pointer"
             onClick={onClick}
         >
             {/* Your custom SVG */}
@@ -21,7 +21,7 @@ const CustomPrevArrow = (props) => {
     const { className, style, onClick } = props;
     return (
         <div
-            className="absolute top-1/2 left-[-20px] transform -translate-y-1/2 z-10 w-10 h-10 rounded-full flex items-center justify-center cursor-pointer"
+            className="absolute top-1/2 md:left-[-20px] left-[-10px] transform -translate-y-1/2 z-10 w-10 h-10 rounded-full flex items-center justify-center cursor-pointer"
             onClick={onClick}
         >
             {/* Your custom SVG */}
@@ -86,14 +86,14 @@ function FooterNew() {
 
 
     return (
-        <div className='md:px-[30px] footerNew'>
-            <footer className='pt-10 md:pt-[50px] px-5 md:px-[40px] pb-[27px] w-full bg-[#E4E4E4] md:rounded-t-[20px] rounded-b-none '>
+        <div className='px-[16px] md:px-[30px] footerNew'>
+            <footer className='pt-[20px] md:pt-[50px] px-5 md:px-[40px] pb-[27px] w-full bg-[#E4E4E4] rounded-t-[20px] rounded-b-none '>
                 <div className="w-full mx-auto md:px-[30px]">
                     <Slider {...settings}>
                         {["Hotel for the stay", "Short Stay hotel", "Room by the hour", "Day rooms", "Early check in hotels", "9 to 5 hotels"].map((a, i) => (
                             <div key={i}>
                                 <p className='text-[#4B4D4D] text-[16px] font-[400] text-center'>
-                                    <Link href="#">
+                                    <Link href="#" className='text-center w-full block'>
                                         {a}
                                     </Link>
                                 </p>

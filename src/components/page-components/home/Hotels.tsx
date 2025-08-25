@@ -64,7 +64,7 @@ export default function Hotels() {
     page: currentPage,
   });
 
-  const countries = ["Dubai", "Sydney", "Sharjah", "Melbourne"];
+  const countries = ["Dubai", "Abu Dhabi", "Al Ain", "Shahrjah"];
 
   const hotels: Hotel[] = data?.data || [];
   const totalCount: number = data?.totalCount || 0;
@@ -83,19 +83,19 @@ export default function Hotels() {
   );
 
   return (
-    <section className="md:px-[30px] px-5 md:pt-0 pt-0 pb-[30px] md:pb-[80px]">
-      <h5 className="text-center md:text-left text-[16px] text-[#4B4D4D] font-[400] mb-[16px]">Hotels and destinations</h5>
-      <h2 className="text-center md:text-left text-[28px] md:text-[55px] font-[700] text-[#4B4D4D] mb-[26px] tracking-normal">
+    <section className="mt-[40px] md:mt-0 md:px-[30px] px-[16px] md:pt-0 pt-0 pb-[80px] md:pb-[80px]">
+      <h5 className="text-[16px] text-[#4B4D4D] font-[400] mb-[16px]">Hotels and destinations</h5>
+      <h2 className="text-[40px] md:text-[55px] font-[700] text-[#4B4D4D] mb-[26px] tracking-normal">
         Anytime, Anywhere
       </h2>
 
       {/* Location Filters */}
-      <div className="rounded-full text-base font-semibold transition">
-        <div className="flex flex-wrap mb-6 md:space-x-4 justify-between md:justify-start">
+      <div className="w-full overflow-x-scroll md:overflow-hidden text-base font-semibold transition">
+        <div className="w-[calc(120px*4+40px)] flex mb-6 space-x-[10px] md:space-x-4 justify-start md:justify-start">
           {countries.map((country) => (
             <button
               key={country}
-              className={`w-[48%] md:w-auto px-5 py-2 rounded-full text-base font-[500] transition md:my-0 my-2 ${selectedCountry === country
+              className={`text-[16px] w-[120px] px-[20px] py-2 rounded-full text-base font-[500] transition md:my-0 my-2 ${selectedCountry === country
                 ? "bg-[#F1F1F1] text-[#EF4A23] border-[1px]"
                 : "bg-[#F1F1F1] text-gray-70 border-[1px] border-[transparent] hover:bg-[#F1F1F1] hover:text-[#EF4A23] hover:border-[1px] hover:border-[#EF4A23]"
                 }`}
@@ -108,7 +108,7 @@ export default function Hotels() {
       </div>
 
       {/* Hotel Cards or Skeleton */}
-      <div className="container max-w-[100%] flex items-center flex-wrap gap-[18px] mt-[28px]">
+      <div className="container max-w-[100%] md:flex items-center flex-wrap gap-[18px] mt-[28px] hidden">
         {isLoading || isFetching ? (
           Array.from({ length: 4 }).map((_, idx) => <SkeletonCard key={idx} />)
         ) : hotels.length > 0 ? (

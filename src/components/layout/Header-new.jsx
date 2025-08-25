@@ -44,6 +44,9 @@ export default function Navbar({
     const langDropdownRef = useRef(null);
     const currencyDropdownRef = useRef(null);
 
+    const dropdownRef2 = useRef(null);
+
+
     useEffect(() => {
         const handleScroll = () => {
             setScrolled(window.scrollY > 10);
@@ -51,10 +54,16 @@ export default function Navbar({
 
         const handleClickOutside = (event) => {
             const dropdown = document.querySelector(".absolute.right-0.mt-2");
+            const dropdown2 = document.querySelector(".fixed.left-0.top-0");
+            console.log(dropdown2)
             if (dropdown && !dropdown.contains(event.target)) {
                 setIsLnDropdownOpen(false);
                 setIsLangDropdownOpen(false);
                 setIsCurrencyDropdownOpen(false);
+            }
+
+            if (dropdown2 && !dropdown2.contains(event.target)) {
+                // setShowDropdown(false)
             }
 
             if (
@@ -62,6 +71,12 @@ export default function Navbar({
                 !dropdownRef.current.contains(event.target)
             ) {
                 setIsUserDropdownOpen(false);
+            }
+            if (
+                dropdownRef2.current &&
+                !dropdownRef2.current.contains(event.target)
+            ) {
+                // setShowDropdown(false);
             }
         };
 
@@ -176,61 +191,57 @@ export default function Navbar({
         console.log(selectedCurrency)
     }, [selectedCurrency])
 
+
     return (
         <>
             <nav
                 className={` z-50 sticky top-0  backdrop-blur bg-white/90 ${isFixed
                     ? `fixed top-0 left-0 right-0 ${scrolled ? "bg-[#FFFFFF] shadow-md" : "bg-transparent"
                     }`
-                    : "relative bg-[#FFFFFF] shadow-sm"
+                    : "md:relative bg-[#FFFFFF] shadow-sm"
                     } transition-all duration-300 ease-in-out`}
             >
-                <div className="mx-auto px-4 md:px-6 lg:px-8 flex flex-wrap md:flex-nowrap justify-between items-center gap-y-2 md:h-20 h-auto py-3 w-full">
+                <div className="mx-auto px-4 md:px-6 lg:px-8 flex md:flex-nowrap justify-between items-center gap-y-2 md:h-20 h-auto py-3 w-full">
 
                     {/* Desktop Menu */}
                     <div className="flex items-center lg:gap-6 gap-2 relative">
                         <div
                             tabIndex={0}
                             className="cursor-pointer flex items-center gap-2 relative"
-                            onClick={() => setShowDropdown(!showDropdown)}
-                            onBlur={() => setTimeout(() => setShowDropdown(!showDropdown), 150)}
+                        // onBlur={() => setTimeout(() => setShowDropdown(!showDropdown), 150)}
                         >
                             {showDropdown ?
-                                <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <svg onClick={() => setShowDropdown(false)} width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M24 8L8.00108 23.9989M23.9989 24L8 8.00113" stroke="#4B4D4D" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                                 </svg>
                                 :
                                 <svg
+                                    onClick={() => {
+                                        setShowDropdown(true)
+                                    }}
                                     width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M13.3334 6.66667H26.6667" stroke="#4B4D4D" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                                     <path d="M5.33337 16H26.6667" stroke="#4B4D4D" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                                     <path d="M5.33337 25.3333H18.6667" stroke="#4B4D4D" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                                 </svg>
                             }
-                            <p className="text-[12px] font-[400]">Menu</p>
+                            <p className="text-[12px] font-[400] hidden md:block">Menu</p>
                         </div>
 
                         {showDropdown && menuList.length > 0 && (
-                            <ul className="absolute left-0 top-[50px] w-[200px] mt-1 bg-white border border-gray-200 rounded-[12px] shadow-[0_4px_25px_0_rgba(0,0,0,0.25)] z-10 max-h-48 overflow-y-auto">
-                                {profileData?.data ? menuList.map((item, index) => (
-                                    <Link key={index} href={item?.path}>
-                                        <li
-                                            onMouseDown={() => {
-                                                // setQuery(location);
-                                                // setShowDropdown(false);
-                                            }}
-                                            className="flex items-center gap-3 px-3 sm:px-4 py-2 hover:bg-gray-100 cursor-pointer text-sm md:text-sm text-gray-700"
-                                        >
-                                            {item.icon}
-                                            {item.name}
-                                        </li>
-                                    </Link>
-                                ))
-                                    :
-                                    menuList2.map((item, index) => (
+                            <>
+                                <div onClick={() => setShowDropdown(false)} className="md:hidden block h-[100vh] w-[100vw] fixed top-0 left-0 bg-[#000000CC]">
+
+                                </div>
+                                <ul ref={dropdownRef2} className="fixed md:absolute left-0 top-0 md:top-[50px] w-[337px] md:w-[200px] md:mt-1 bg-white border border-gray-200 md:rounded-[12px] shadow-[0_4px_25px_0_rgba(0,0,0,0.25)] z-10 max-h-[100vh] md:max-h-48 h-[100vh] md:h-auto overflow-y-auto">
+                                    <li className="md:hidden flex items-center gap-3 px-[16px] sm:px-4 py-[20px] hover:bg-gray-100 cursor-pointer text-sm md:text-sm text-gray-700">
+                                        <svg onClick={() => setShowDropdown(false)} width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M24 8L8.00108 23.9989M23.9989 24L8 8.00113" stroke="#4B4D4D" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                                        </svg>
+                                    </li>
+                                    {profileData?.data ? menuList.map((item, index) => (
                                         <Link key={index} href={item?.path}>
                                             <li
-                                                key={index}
                                                 onMouseDown={() => {
                                                     // setQuery(location);
                                                     // setShowDropdown(false);
@@ -242,8 +253,25 @@ export default function Navbar({
                                             </li>
                                         </Link>
                                     ))
-                                }
-                            </ul>
+                                        :
+                                        menuList2.map((item, index) => (
+                                            <Link key={index} href={item?.path}>
+                                                <li
+                                                    key={index}
+                                                    onMouseDown={() => {
+                                                        // setQuery(location);
+                                                        // setShowDropdown(false);
+                                                    }}
+                                                    className="flex items-center gap-3 px-[16px] md:px-3 sm:px-4 md:py-2 py-[15px] hover:bg-gray-100 cursor-pointer text-sm md:text-sm text-gray-700"
+                                                >
+                                                    {item.icon}
+                                                    {item.name}
+                                                </li>
+                                            </Link>
+                                        ))
+                                    }
+                                </ul>
+                            </>
                         )}
                     </div>
 
@@ -253,7 +281,7 @@ export default function Navbar({
                             <img
                                 src={isSearchOpen ? "img/timeFlyz.png" : "/img/logo-black.png"}
                                 alt="Logo"
-                                className="h-auto w-32 md:w-40 lg:w-52 xl:w-54 object-contain"
+                                className="h-auto w-[188px] md:w-[218px] lg:w-[218px] xl:w-54 object-contain"
                                 width={200}
                                 height={110}
                             // priority
@@ -262,11 +290,11 @@ export default function Navbar({
                     </Link>
 
                     {/* Desktop Buttons */}
-                    <div className="flex items-center space-x-4 md:space-x-4 flex-wrap justify-end md:justify-start">
-                        <div ref={dropdownRef} className="relative hidden md:block">
+                    <div className="flex items-center space-x-4 md:space-x-4 justify-end md:justify-start">
+                        <div ref={dropdownRef} className="relative block">
                             <button
                                 onClick={() => setIsLnDropdownOpen(!isLnDropdownOpen)}
-                                className="flex items-center space-x-2 py-2 md:py-2 md:px-2 px-4 border-gray-300"
+                                className="flex items-center space-x-2 py-2 md:py-2 md:px-2 px-0 border-gray-300"
                             >
                                 <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M16.0001 29.3333C8.63628 29.3333 2.66675 23.3637 2.66675 16C2.66675 12.2766 4.19295 8.90969 6.65391 6.49069M16.0001 29.3333C14.7161 28.3819 14.921 27.274 15.5651 26.1663C16.5555 24.4632 16.5555 24.4632 16.5555 22.1925C16.5555 19.9219 17.9049 18.8572 22.6667 19.8095C24.8063 20.2375 26.3655 17.2812 29.1431 18.2573M16.0001 29.3333C22.5945 29.3333 28.0707 24.5461 29.1431 18.2573M6.65391 6.49069C7.78629 6.6102 8.42031 7.21685 9.47336 8.32955C11.4726 10.442 13.4718 10.6183 14.8047 9.91413C16.8039 8.85791 15.1239 7.14707 17.4703 6.21731C18.9089 5.64735 19.183 4.15465 18.5022 2.90105M6.65391 6.49069C9.06001 4.12561 12.3597 2.66667 16.0001 2.66667C16.8553 2.66667 17.6917 2.74719 18.5022 2.90105M29.1431 18.2573C29.2682 17.5236 29.3334 16.7695 29.3334 16C29.3334 9.49143 24.6699 4.07207 18.5022 2.90105" stroke="#4B4D4D" strokeWidth="1.5" strokeLinejoin="round" />
